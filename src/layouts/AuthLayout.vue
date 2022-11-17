@@ -1,0 +1,15 @@
+<template>
+<q-page-container>
+  <router-view />
+</q-page-container>
+</template>
+
+<script>
+export default {
+  name: "AuthLayout"
+}
+</script>
+
+<style scoped>
+
+</style>
