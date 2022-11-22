@@ -9,7 +9,13 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/auth',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: 'login',name:'loginPage', component: () => import('pages/Auth/LoginPage.vue') }],
+    children: [
+      { path: 'login',name:'loginPage', component: () => import('pages/Auth/LoginPage.vue') },
+      { path: 'register',name:'registerPage', component: () => import('pages/Auth/RegisterPage.vue') },
+      { path: 'renew-password',name:'renewPasswordPage', component: () => import('pages/Auth/RenewPasswordPage.vue') },
+      { path: 'opt-verification',name:'optVerificationPage', component: () => import('pages/Auth/OptPasswordVerification.vue') },
+      { path: 'success',name:'optVerificationSuccessPage', component: () => import('pages/Auth/VerificationSuccess.vue') },
+    ],
   },
 
   // Always leave this as last one,
