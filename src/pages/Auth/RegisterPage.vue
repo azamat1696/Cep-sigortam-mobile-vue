@@ -2,10 +2,10 @@
  <div class="fullscreen flex flex-center  no-padding">
    <q-card
      class="no-shadow transparent"
-     style="height: auto; min-width: 370px;"
+     style="height: auto; min-width: 370px; margin-top: 130px"
    >
      <q-card-section class="q-pb-xs">
-       <div class="text-primary text-uppercase text-left cep-sigortam ">Cep Sigortam</div>
+       <div class="text-primary text-uppercase text-left cep-sigortam ">Hesap Oluştur</div>
      </q-card-section>
      <q-card-section class="q-pt-xs">
        <q-form>
@@ -42,38 +42,20 @@
          <q-btn
            color="primary"
            text-color="white"
-           label="Giriş"
+           label="Üye ol"
            no-caps
            class="full-width q-mt-md"
            style="border-radius: 8px"
            size="20px"
 
          />
-         <q-checkbox
-           v-model="formFields.rememberMe"
-           dense
-           label="Beni Hatirla"
-           class="q-pt-md q-pb-sm text-subtitle2"
-         />
-         <div class="flex justify-between q-pt-sm">
-
-              <div class="custom-text cursor-pointer" @click="$router.push({name:'renewPasswordPage'})">Sifremi Unuttum</div>
-
-             <div class="custom-text cursor-pointer" @click="$router.push({name:'registerPage'})" >Üye Ol</div>
-
+         <div class="flex justify-between q-pt-md">
+             <div class="custom-text cursor-pointer" @click="$router.push({name:'loginPage'})">Üye Girişi</div>
          </div>
        </q-form>
      </q-card-section>
      <q-card-section class="q-pt-xl">
-         <q-btn
-           color="primary"
-           text-color="white"
-           label="Teklif Al"
-           no-caps
-           class="full-width q-mt-md"
-           style="border-radius: 8px"
-           size="20px"
-         />
+
      </q-card-section>
    </q-card>
  </div>
@@ -83,7 +65,7 @@
 import {defineComponent, reactive, ref} from "vue";
 
 export default defineComponent({
-  name: "LoginPae",
+  name: "Register",
   setup(){
     return{
       test: ref(false),
@@ -92,7 +74,6 @@ export default defineComponent({
         citizenOfTC: false,
         phoneNo: '',
         password: '',
-        rememberMe: false
       })
     }
   },
@@ -117,6 +98,5 @@ export default defineComponent({
   color: #5E5E5E;
   line-height: 16px;
 }
-
 
 </style>
