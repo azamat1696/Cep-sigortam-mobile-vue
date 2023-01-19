@@ -1,0 +1,392 @@
+<ArrayOfSoruCevap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://tempuri.org/">
+<SoruCevap>
+<Soru>UrunKodu</Soru>
+<Cevap>310 olarak gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AcenteNo</Soru>
+<Cevap>Acente numarasını belirtir. Örnek değer: 101001</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaliNo</Soru>
+<Cevap>Tali numarasını belirtir. 4 hane olmalıdır. Örnek değer : 0001</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KullaniciAdi</Soru>
+<Cevap>Kullanıcının şirket web sistemine bağlanmak için kullandığı kullanıcı adını belirtir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Parola</Soru>
+<Cevap>Kullanıcının şirket web sistemine bağlanmak için kullandığı şifresini belirtir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriTcKimlikNo</Soru>
+<Cevap>Müşteri kimlik numarasını belirtir. Tüzel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriVergiNo</Soru>
+<Cevap>Müşteri M.Ş./Y.Ş. no belirtir. Özel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriUyruk</Soru>
+<Cevap>Müşteri uyruğunu belirtir. Örnek değer: T.C.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCepTelefonNo</Soru>
+<Cevap>Kayıt işlemlerinde ve belli ürünlerin hesaplamalarında zorunludur. Müşterinin cep telefon numarası. 532XXXXXXX formatından gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliTcKimlikNo</Soru>
+<Cevap>Sigortalı kimlik numarasını belirtir. Tüzel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliVergiNo</Soru>
+<Cevap>Sigortalı M.Ş./Y.Ş. no belirtir. Özel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliUyruk</Soru>
+<Cevap>Sigortalının uyruğunu belirtir. Örnek değer: T.C. Trafik ürününde müşteri/sigortalı bilgileri aynı olduğu için boş gönderilebilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCepTelefonNo</Soru>
+<Cevap>Kayıt işlemlerinde ve belli ürünlerin hesaplamalarında zorunludur. Sigortalının cep telefon numarası. 532XXXXXXX formatından gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Komisyoner</Soru>
+<Cevap>Varsa poliçenin ek komisyonerinin kodunu belirtir. Boş geçilebilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>UretimAraci</Soru>
+<Cevap>Kesilen teklifin / poliçenin üretim aracını belirtir. Internet üzerinden müşterinin bilgilerini kendisi girerek üretim yapılması durumunda, Internet Satış olduğunu ifade etmek için 2 gönderilmelidir. Acente / brokerin kendi yazılımı üzerinden, kendi personeli veya şubelerinin personeli tarafından satılmış olması durumunda CRM olduğunu ifade etmek için 3 gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>VadeBaslangic</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>VadeBitis</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinTip</Soru>
+<Cevap>Varsa daini mürtehin tipini gönderin. 1 - Banka ... 2 - Finans Kurumu... 3 - Diğer. D/M yoksa boş bırakılmalıdır.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinKurumKod</Soru>
+<Cevap>Varsa daini mürtehin kurum kodunu gönderin. D/M yoksa boş bırakılmalıdır.. Kurumların listesini SecenekGetirDainiMurtehinKurumlari servisi ile alabilirsiniz.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinBankaSubeKod</Soru>
+<Cevap>Varsa daini mürtehin olarak seçilen bankanın şube kodunu gönderin. Eğer D/M yoksa veya D/M olarak finans kurumu seçtiyseniz bu alan boş bırakılmalıdır. Şubelerin listesini SecenekGetirDainiMurtehinBankaSubeleri servisi ile alabilirsiniz.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinKimlikNo</Soru>
+<Cevap>Varsa daini mürtehin kimlik numarasını gönderin. Eğer D/M yoksa bu alan boş bırakılmalıdır.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>PoliceHesapLogEkle</Soru>
+<Cevap>Hesaplama detaylarını içeren text dosyası oluşturur. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakKurallaridaGetir</Soru>
+<Cevap>Taslak Kuralları Çağırır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakYetkilendirmelerideGetir</Soru>
+<Cevap>Taslak Yetkilendirme Kurallarıda kullanılır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakIndirimArttirimlaridaGetir</Soru>
+<Cevap>Taslak indirim arttırımlar kullanılır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakBedelFiyatPrimlerideGetir</Soru>
+<Cevap>Taslak Bedel Fiyat Prim Tanımları Kullanılır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakTarifeKurallaridaGetir</Soru>
+<Cevap>Taslak Tarife Kurallarida getirir. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>LogoluBasimYap</Soru>
+<Cevap>Poliçeleştirme sonrası otomatik oluşan pdf basımında şirket logosunun bulunması için 1 gönderilmelidir. (Opsiyonel) </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DisTahsilatTipi</Soru>
+<Cevap>Dış tahsilat tipi varsa gönderilir. 1: Havale , 2: Kredi kartı, 3: Çek, 4:Hesaptan (Opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>WebServisBeklenenToplamNetPrim</Soru>
+<Cevap>Poliçeleştirme anında kullanılır, hesaplama sonucunda dönen net prim değeri gönderilir. Poliçeleştirme anında farklı bir prim hesaplanırsa sistem hata mesajı döner. (Opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliDogumYeri</Soru>
+<Cevap>Sigortalının doğum yeri</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliDogumTarihi</Soru>
+<Cevap>Sigortalının doğum tarihi (GG.AA.YYYY formatında gönderilmelidir)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCinsiyet</Soru>
+<Cevap>Sigortalının cinsiyeti (E veya K)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliIlKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi il kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliIlceKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi ilçe kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliKoyKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi köy kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliMahalleKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi mahalle kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCSBMKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi Cadde/Sokak/Bulvar/Meydan kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliApartmanAdi</Soru>
+<Cevap>Sigortalı için apartman adı (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliApartmanNo</Soru>
+<Cevap>Sigortalı için apartman numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliDaireNo</Soru>
+<Cevap>Sigortalı için daire numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliKat</Soru>
+<Cevap>Sigortalı için dairenin bulunduğu kat (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriDogumYeri</Soru>
+<Cevap>Sigorta ettiren doğum yeri</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriDogumTarihi</Soru>
+<Cevap>Sigorta ettiren doğum tarihi (GG.AA.YYYY formatında gönderilmelidir)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCinsiyet</Soru>
+<Cevap>Sigorta ettiren cinsiyeti (E veya K)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriIlKodu</Soru>
+<Cevap>Sigorta ettiren için KKTC adres sistemi il kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriIlceKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi ilçe kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriKoyKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi köy kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriMahalleKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi mahalle kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCSBMKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi Cadde/Sokak/Bulvar/Meydan kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriApartmanAdi</Soru>
+<Cevap>Sigorta ettiren için apartman adı (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriApartmanNo</Soru>
+<Cevap>Sigorta ettiren için apartman numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriDaireNo</Soru>
+<Cevap>Sigorta ettiren için daire numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriKat</Soru>
+<Cevap>Sigorta ettiren için dairenin bulunduğu kat (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_SbmCarColorCode</Soru>
+<Cevap>Araç Rengi. Seçenekli alan. Seçenekler : Seçiniz için "0", Altınımsı için "174", Altunî için "12", Bej için "21", Beyaz için "22", Bordo için "24", Burgonya için "27", Camgöbeği için "28", Gri için "50", Gül için "169", Gümüşi için "53", Haki için "54", Kahverengi için "62", Karanfil için "66", Kardinal için "164", Kehribar için "70", Kestane için "71", Keten için "72", Kırmızı için "73", Krem için "99", Kuşkonmaz için "101", Lacivert için "102", Lavanta için "103", Leylak için "113", Lime için "114", Limoni için "111", Mandalina için "115", Mavi için "117", Menekşe için "118", Mercan için "170", Mor için "122", Nar için "125", Orkide için "128", Papaya için "194", Pas rengi için "131", Pembe için "135", Safir için "140", Safran için "139", Sarı için "143", Siyah için "144", Tarçın için "150", Turkuaz için "153", Turuncu için "192", Yeşil için "156", Yeşim için "182", Zeytuni için "160"</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_AracVitesBilgisi</Soru>
+<Cevap>Araç Vites Türü. Seçenekli alan. Seçenekler : Seçiniz için "0", Manuel için "Manuel", Otomatik için "Otomatik"</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MaskelemeAktif</Soru>
+<Cevap>KVKK gereği veri maskelemesini uygulayarak web servis isteklerine cevap verir. 1 değeri gönderilmelidir. Gelen cevapta MaskelemeAnahtari alanı PoliceKayit servisine kendi değeriyle gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>UrunGrubu</Soru>
+<Cevap>trafik</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracKodu</Soru>
+<Cevap>Marka değer listesindeki 6 veya 7 haneli araç kodunu belirtir. Örnek değer: 154148</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracMarka</Soru>
+<Cevap>AracKodu 999999 olursa marka adını belirtir. Kayıt için teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracTipi</Soru>
+<Cevap>AracKodu 999999 olursa tip adını belirtir. Kayıt için teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracTarz</Soru>
+<Cevap>Tramer araç tarz kodunu belirtir. Örnek değer (otomobil için): 01</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracKullanimSekli</Soru>
+<Cevap>Araç kullanım şeklini belirtir (0 = Özel, 1 = Resmi, 2 = Ticari). Örnek değer: 1</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracModelYili</Soru>
+<Cevap>Araç model yılını belirtir. Örnek değer: 2001</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracPlakaIlKodu</Soru>
+<Cevap>Araç plaka il kodunu belirtir. 3 haneli olarak girilmelidir. Örnek değerler: 034 006 081</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracPlaka</Soru>
+<Cevap>Araç plakasının il kodundan sonraki kısmını belirtir. Boşluk kullanılmaz. Örnek değer: FF7845</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracMotorNo</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin - YK araçlar için kendiniz gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracSasiNo</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin - YK araçlar için kendiniz gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracKisiSayisi</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AracSilindirHacmi</Soru>
+<Cevap>Aracın silindi hacmini belirtir. Örnek değer: 1600</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_SBMAracTipi</Soru>
+<Cevap>KKTC SBM araç tipini belirtir. Rakam olarak gönderilir. Olası değerler listesi - 1 (Salon) - 2 (Estate) - 3 (Jeep Tourer) - 4 (Jeep Trooper) - 5 (Motobisiklet) - 6 (Motosiklet) - 7 (3 Teker. Motosiklet) - 8 (Van) - 9 (Pickup) - 10 (Cift Kabin) - 11 (Kamyonet) - 12 (Motor Karavan) - 13 (Kamyon) - 14 (Kamyon Ağir) - 15 (Kamyon Vincli) - 16 (Birleştirilen Araç) - 17 (Ralli Araci) - 18 (Su Tankeri) - 19 (Vidanjör) - 20 (Otobüs) - 21 (Minibüs) - 22 (Romörk) - 23 (Ağir Lokomotif) - 24 (Kazici) - 25 (Yükleyici) - 26 (Kazici Yükleyici) - 27 (Yol Silindir) - 28 (Yol Süpürme Araci) - 29 (Düzeltici) - 30 (Uçak Merdiveni) - 31 (Fork Lift) - 32 (Biçer Döver) - 33 (Çim Biçme Makinesi) - 34 (Motosiklet Tarimsal) - 35 (Motorlu Traktör) - 36 (Traktör) - 37 (Ambulans) - 38 (Cenaze Araci) - 39 (Seyyar Motorlu Vinç) - 40 (İtfaiye)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_YakitTipi</Soru>
+<Cevap>KKTC SBM yakıt tipini belirtir. Rakam olarak gönderilir. Olası değerler listesi - 1 (Benzin) - 2 (Dizel) - 3 (Hibrid) - 4 (Elektrik) - 5 (LPG)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_PlakaUlkesi</Soru>
+<Cevap>Plaka ülkesini belirtir. Olası değerler 1 (FRANSA) - 2 (BELÇİKA) - 3 (HOLLANDA) - 4 (ALMANYA) - 5 (İTALYA) - 6 (BİRLEŞİK KRALLIK) - 7 (İRLANDA) - 8 (DANİMARKA) - 9 (YUNANİSTAN) - 10 (PORTEKİZ) - 11 (İSPANYA) - 12 (LÜKSEMBURG) - 21 (KANARYA ADALARI) - 22 (CEUTA VE MELILLA) - 24 (İZLANDA) - 25 (FAROE ADALARI) - 28 (NORVEÇ) - 30 (İSVEÇ) - 32 (FİNLANDİYA) - 36 (İSVİÇRE) - 38 (AVUSTURYA) - 43 (ANDORRA) - 44 (CEBELİTARIK) - 45 (VATİKAN) - 46 (MALTA) - 48 (YUGOSLAVYA) - 52 (TÜRKİYE) - 53 (ESTONYA) - 54 (LETONYA) - 55 (LİTVANYA) - 60 (POLONYA) - 62 (ÇEK CUMHURİYETİ) - 63 (SLOVAKYA) - 64 (MACARİSTAN) - 66 (ROMANYA) - 68 (BULGARİSTAN) - 70 (ARNAVUTLUK) - 72 (UKRANYA) - 73 (BEYAZ RUSYA) - 74 (MOLDAVYA) - 75 (RUSYA FEDERASYONU) - 76 (GÜRCİSTAN) - 77 (ERMENİSTAN) - 78 (AZERBEYCAN-MAHÇIVAN) - 79 (KAZAKİSTAN) - 80 (TÜRKMENİSTAN) - 81 (ÖZBEKİSTAN) - 82 (TACİKİSTAN) - 83 (KIRGIZİSTAN) - 84 (ÇEÇEN CUMHURİYETİ) - 85 (DAĞİSTAN CUMHURİYETİ) - 86 (TATARİSTAN) - 87 (YAKUTİSTAN) - 91 (SLOVENYA) - 92 (HIRVATİSTAN) - 93 (BOSNA-HERSEK) - 94 (SIRBİSTAN) - 96 (MAKEDONYA) - 182 (COOK ADALARI) - 204 (FAS) - 212 (TUNUS) - 216 (LİBYA) - 220 (MISIR) - 224 (SUDAN) - 228 (MORİTANYA) - 232 (MALİ) - 236 (BURKİNA FASO) - 240 (NİDER) - 244 (ÇAT) - 247 (CAPE) - 248 (SENEGAL) - 252 (GAMBİYA) - 257 (GİNE BİSSAU) - 260 (GİNE) - 264 (SIERRA LEONE) - 268 (LİBERYA) - 272 (FİL DİŞİ SAHİLLERİ) - 276 (GANA) - 280 (TOGO) - 284 (BENİN) - 288 (NİJERYA) - 302 (KAMERUN) - 306 (MERKEZİ AFRİKA CUMHURİYETİ) - 310 (EKVADOR GİNESİ) - 311 (SAOTOME PRA) - 314 (GABON) - 318 (KONGO) - 322 (ZAİRE) - 324 (RUANDA) - 328 (BURUNDİ) - 329 (ST. HELENA VE BAĞLANTILARI) - 330 (ANGOLA) - 334 (ETİYOPYA) - 338 (CİBUTİ) - 342 (SOMALİ) - 346 (KENYA) - 350 (UGANDA) - 352 (TANZANYA) - 355 (SEYŞEL ADALARI VE BAĞLANTILARI) - 357 (İNGİLİZ HİNT OK. TOPRAKLARI) - 366 (MOZAMBİK) - 370 (MADAGASKAR) - 372 (RUNION) - 373 (MAOURİTES) - 375 (KOMORO ADALARI) - 377 (MAYOTTE) - 378 (ZAMBİYA) - 382 (ZİMBAVVE) - 386 (MALAVİ) - 389 (NAMİBYA) - 390 (GÜNEY AFRİKA CUMHURİYETİ) - 391 (BOSTVANA) - 393 (SWEZILAND) - 395 (LESOTHO) - 400 (AMERİKA BİRLEŞİK DEVLETLERİ) - 404 (KANADA) - 406 (GRÖNLAND) - 408 (ST. PIERRE VE MIKUELON) - 412 (MEKSİKA) - 413 (BERMUDA) - 416 (GUATEMALA) - 421 (BELİZE) - 424 (HONDURAS) - 428 (EL SALVADOR) - 432 (NİKARAGUA) - 436 (KOSTA RİKA) - 442 (PANAMA) - 446 (ANGUILA) - 448 (KÜBA) - 449 (ST. CRISTOPHER VE NEVİS) - 452 (HAİTİ) - 453 (BAHAMA) - 454 (TURKS VE CAİCOS ADASI) - 456 (DOMİNİK CUMHURİYETİ) - 457 (ABD VIRGIN ADALARI) - 458 (GUADELUP) - 459 (ANTIGUA VE BERMUDA) - 460 (DOMİNİKA) - 461 (İNGİLİZ VIRGIN ADALARI) - 462 (MARTİNİK) - 463 (CEYMAN ADALARI) - 464 (JAMAİKA) - 465 (ST. LUCİA) - 467 (ST. VİNGENT) - 469 (BARBADOS) - 472 (TRİNİDAD VE TABAGO) - 473 (GRENADA) - 474 (ARUBA) - 478 (HOLLANDA ANTİLLERİ) - 480 (KOLOMBİYA) - 484 (VENEZULLA) - 488 (GUYANA) - 492 (SURİNAM) - 493 (MONAKO) - 496 (FRANSIZ GUYANASI) - 500 (EKVADOR) - 504 (PERU) - 508 (BREZİLYA) - 512 (ŞİLİ) - 516 (BOLİVYA) - 520 (PARAGUAY) - 524 (URUGUAY) - 528 (ARJANTİN) - 529 (FALKLAND ADALARI) - 600 (GÜNEY KIBRIS RUM KESİMİ) - 601 (KKTC) - 604 (LÜBNAN) - 608 (SURİYE) - 612 (IRAK) - 616 (İRAN) - 624 (İSRAİL) - 625 (GAZZE) - 628 (ÜRDÜN) - 632 (SUUDİ ARABİSTAN) - 636 (KUVEYT) - 640 (BAHREYN) - 644 (KATAR) - 647 (BİRLEŞİK ARAP EMİRLİKLERİ) - 648 (DUBAİ) - 649 (UMMAN) - 652 (KUZEY YEMEN) - 656 (GÜNEY YEMEN) - 660 (AFGANİSTAN) - 662 (PAKİSTAN) - 664 (HİNDİSTAN) - 666 (BANGLADEŞ) - 667 (MALDİV ADALARI) - 669 (SRİ LANKA) - 672 (NEPAL) - 675 (BHUTAN) - 676 (BURMA) - 680 (TAYLAND) - 684 (LAOS) - 690 (VIETNAM) - 696 (KAMBOÇYA) - 700 (ENDONEZYA) - 701 (MALEZYA) - 703 (BRUNEİ) - 706 (SINGAPUR) - 708 (FİLİPİNLER) - 716 (MOĞOLİSTAN) - 720 (ÇİN HALK CUMHURİYETİ) - 724 (KUZEY KORE DEMOKRATİK HALK CUM.) - 728 (GÜNEY KORE CUMHURİYETİ) - 732 (JAPONYA) - 736 (TAYVAN) - 740 (HONGKONG) - 743 (MAKAO) - 800 (AVUSTURALYA) - 801 (PAPUA YENİ GİNE) - 802 (AVUSTURALYA OKYANUSU) - 803 (NAURU) - 804 (YENİ ZELANDA) - 806 (SOLOMON ADALARI) - 807 (TUVALU) - 808 (AMERİKAN OKYANUSYASI) - 809 (YENİ KALEDONYA VE BAĞLANTILARI) - 811 (WALLACE VE TUNA ADALARI) - 812 (KİRİBATİ) - 813 (PİTCAİRN) - 814 (YENİ ZELANDA OKYANUSU) - 815 (FİJİ) - 816 (VANUATU) - 817 (TONGA) - 819 (BATI SAMAO)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_273_Prim</Soru>
+<Cevap>273 kodlu BEDENİ ZARARLAR teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_279_Prim</Soru>
+<Cevap>279 kodlu MADDİ ZARARLAR teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_041_Prim</Soru>
+<Cevap>041 kodlu ASGARİ PRİM FARKI teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_041</Soru>
+<Cevap>041 kodlu ASGARİ PRİM FARKI teminatının bedelini belirtir. Bu teminat zorunludur. Eğer bedel tarifesi tanımlı değilse bedeli servise gönderilmelidir. Rakam olarak gönderilmelidir. Örnek: 15000</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_014_Prim</Soru>
+<Cevap>014 kodlu İDARİ HARÇ teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+</ArrayOfSoruCevap>
