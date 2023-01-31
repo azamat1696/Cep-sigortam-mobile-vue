@@ -1,7 +1,0 @@
-{
-  "appId": "cep.sigortam.mobile",
-  "appName": "Cep Sigortam",
-  "bundledWebRuntime": false,
-  "npmClient": "npm",
-  "webDir": "www"
-}
