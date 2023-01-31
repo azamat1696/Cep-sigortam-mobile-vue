@@ -4,11 +4,25 @@ const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
-    children: [{ path: '', component: () => import('pages/IndexPage.vue') }],
+    children: [
+      { path: '', name: 'home', component: () => import('pages/Home/HomePage.vue') },
+      { path: 'home-login',name:'homeLogin', component: () => import('pages/Home/HomePageWithLogin.vue') }
+    ],
+  },
+  {
+    path: '/my',
+    component: () => import('layouts/EmptyLayout.vue'),
+    children: [
+      { path: 'teklif-al', name:'teklifAl', component: () => import('pages/Home/TeklifAlPage.vue') },
+      { path: 'damage', name:'showDamage', component: () => import('pages/Home/ShowDamagePage.vue') },
+      { path: 'police', name:'showPolice', component: () => import('pages/Home/ShowPolicePage.vue') },
+      { path: 'profile', name:'showProfile', component: () => import('pages/Home/MyProfilePage.vue') },
+      { path: 'services', name:'showServices', component: () => import('pages/Home/ShowServicesPage.vue') },
+    ],
   },
   {
     path: '/auth',
-    component: () => import('layouts/MainLayout.vue'),
+    component: () => import('layouts/AuthLayout.vue'),
     children: [
       { path: 'login',name:'loginPage', component: () => import('pages/Auth/LoginPage.vue') },
       { path: 'register',name:'registerPage', component: () => import('pages/Auth/RegisterPage.vue') },

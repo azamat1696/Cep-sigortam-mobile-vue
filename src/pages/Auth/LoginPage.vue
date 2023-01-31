@@ -73,6 +73,7 @@
            class="full-width q-mt-md"
            style="border-radius: 8px"
            size="20px"
+           :to="{name:'home'}"
          />
      </q-card-section>
    </q-card>
