@@ -1,0 +1,542 @@
+<ArrayOfSoruCevap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://tempuri.org/">
+<SoruCevap>
+<Soru>UrunKodu</Soru>
+<Cevap>260 olarak gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>AcenteNo</Soru>
+<Cevap>Acente numarasını belirtir. Örnek değer: 101001</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaliNo</Soru>
+<Cevap>Tali numarasını belirtir. 4 hane olmalıdır. Örnek değer : 0001</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KullaniciAdi</Soru>
+<Cevap>Kullanıcının şirket web sistemine bağlanmak için kullandığı kullanıcı adını belirtir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Parola</Soru>
+<Cevap>Kullanıcının şirket web sistemine bağlanmak için kullandığı şifresini belirtir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriTcKimlikNo</Soru>
+<Cevap>Müşteri kimlik numarasını belirtir. Tüzel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriVergiNo</Soru>
+<Cevap>Müşteri M.Ş./Y.Ş. no belirtir. Özel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriUyruk</Soru>
+<Cevap>Müşteri uyruğunu belirtir. Örnek değer: T.C.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCepTelefonNo</Soru>
+<Cevap>Kayıt işlemlerinde ve belli ürünlerin hesaplamalarında zorunludur. Müşterinin cep telefon numarası. 532XXXXXXX formatından gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliTcKimlikNo</Soru>
+<Cevap>Sigortalı kimlik numarasını belirtir. Tüzel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliVergiNo</Soru>
+<Cevap>Sigortalı M.Ş./Y.Ş. no belirtir. Özel kişilerde boş gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliUyruk</Soru>
+<Cevap>Sigortalının uyruğunu belirtir. Örnek değer: T.C. Trafik ürününde müşteri/sigortalı bilgileri aynı olduğu için boş gönderilebilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCepTelefonNo</Soru>
+<Cevap>Kayıt işlemlerinde ve belli ürünlerin hesaplamalarında zorunludur. Sigortalının cep telefon numarası. 532XXXXXXX formatından gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Komisyoner</Soru>
+<Cevap>Varsa poliçenin ek komisyonerinin kodunu belirtir. Boş geçilebilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>UretimAraci</Soru>
+<Cevap>Kesilen teklifin / poliçenin üretim aracını belirtir. Internet üzerinden müşterinin bilgilerini kendisi girerek üretim yapılması durumunda, Internet Satış olduğunu ifade etmek için 2 gönderilmelidir. Acente / brokerin kendi yazılımı üzerinden, kendi personeli veya şubelerinin personeli tarafından satılmış olması durumunda CRM olduğunu ifade etmek için 3 gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TanzimTarihi</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>VadeBaslangic</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>VadeBitis</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinTip</Soru>
+<Cevap>Varsa daini mürtehin tipini gönderin. 1 - Banka ... 2 - Finans Kurumu... 3 - Diğer. D/M yoksa boş bırakılmalıdır.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinKurumKod</Soru>
+<Cevap>Varsa daini mürtehin kurum kodunu gönderin. D/M yoksa boş bırakılmalıdır.. Kurumların listesini SecenekGetirDainiMurtehinKurumlari servisi ile alabilirsiniz.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinBankaSubeKod</Soru>
+<Cevap>Varsa daini mürtehin olarak seçilen bankanın şube kodunu gönderin. Eğer D/M yoksa veya D/M olarak finans kurumu seçtiyseniz bu alan boş bırakılmalıdır. Şubelerin listesini SecenekGetirDainiMurtehinBankaSubeleri servisi ile alabilirsiniz.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DainiMurtehinKimlikNo</Soru>
+<Cevap>Varsa daini mürtehin kimlik numarasını gönderin. Eğer D/M yoksa bu alan boş bırakılmalıdır.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KrediKartiNo</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart ödemesindeki kart numarasını belirtir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KrediKartiSonKullanmaAy</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart ödemesindeki kart son kullanma tarihinin ayını belirtir. Ocak için örnek değer: 01 </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KrediKartiSonKullanmaYil</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart ödemesindeki kart son kullanma tarihinin yılını belirtir. Örnek değer: 2012 </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KrediKartiUstundekiIsim</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart ödemesindeki kart üstündeki ismi belirtir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KrediKartiGuvenlikNo</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart ödemesindeki kart güvenlik numarasını belirtir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>BlokeliTaksitAdedi</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart ödemesindeki taksit adedini belirtir. Değer geçirilmezse peşin ödeme (1) kabul edilir. Taksit adedini belirtir. Örnek değerler: 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12. Açık poliçe kesimlerinde (yetkiniz varsa) %25 peşin 5 eşit taksit için 0 geçirin.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KrediKartBilgileriSifreli</Soru>
+<Cevap>KayitTuru sorusunun cevabının P olması durumunda (Poliçeleştir), bu soru kart bilgilerinin RSA şifrelemesi ile gönderilip gönderilmediğini belirtir, 1 değeri bilgilerin şifreli olduğunu belirtir. Değer geçirilmesse veya 1 dışında bir değer geçirilirse bilgiler şifresiz anlamına gelir. RSA şifrelemeye dahil olan alanlar; KrediKartiNo, KrediKartiSonKullanmaAy, KrediKartiSonKullanmaYil, KrediKartiUstundekiIsim ve KrediKartiGuvenlikNo alanlarıdır. RSA şifrelemesi için public key için Optional asymmetric encryption padding false geçirilmelidir. Ayrıntılı bilgi için https://yardim.adayazilim.com/yardim?proje=asw&sayfa=Acente%20Poli%C3%A7e%20Servisleri adresini ziyaret edebilirsiniz. RSA public key parametreleri: Exponent (Base64): AQAB, Modulus (Base64): sku1zfxd2pzAE1veUIxu4Ko+cbX3gh8v2CWIR2P2PtOVKTB/H5Lgi+z+7bN4n//gVRQ+2d6ycpPxAsLV+EMHZQ1TYq2WhWSiJu3MF4p8k2T/6P+D3aQ54Mx2hVaSoI/2tlx3USRU5lfuVTqDyw5FtmBiN/uWVvcRjz19MFCTYN0=</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>3DSecureIleOdemeYap</Soru>
+<Cevap>Kredi kartı çekiminin 3D Secure ile yapılıp yapılmayacağını belirtir. 3D secure ile ödeme yapmak için 1 gönderin. 1 gönderilmezse standart kredi kartı çekimi yapılacaktır. </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>3DSecureDonusUrl</Soru>
+<Cevap>3D Secure doğrulaması sonrasında, sonucu belirtmek için hangi URL'e POST isteği gönderileceğini belirtir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>3DSIstemciIslemNo</Soru>
+<Cevap>3D Secure doğrulaması sonrasında, sonucu belirtmek için gönderilen POST isteğinde bu değer bulunur. İstemci tarafında hangi işlemin başarılı/başarısız olduğunun takibi için kullanılır. Değerlerin eşsiz gönderlmesi istemci sorumluluğundadır, şirket tarafında bir kontrol yapılmaz.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TeklifHash</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen TeklifHash değeri PoliceKayit metodu için gönderilmelidir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>UrunAdi</Soru>
+<Cevap>Teklif hesaplama sonucunda dönen değeri aynen gönderin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>KayitTuru</Soru>
+<Cevap>Kaydın türünü belirtir. Teklif için T, Poliçe için P gönderin. Boş gönderilirse T kabul edilir. Test amaçlı kullanımlarda T olarak gönderin.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>HesaplanmisBrutPrim</Soru>
+<Cevap>Hesaplama sonucunda dönen brüt primi bu alanda gönderin. Sistem poliçe kaydı sırasında farklı bir brüt prim hesaplarsa işleme devam etmeyip hata dönecektir. Ek bir brüt prim kontrol yapısı amacıyla kullanılır. Gönderilmesi tavsiye edilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>GuncellenecekTeklifNo</Soru>
+<Cevap>PoliceKayit servisi çağırılırken, bu alanın değeri dolu gönderilirse sistem yeni bir teklif / poliçe üretmeyecek, mevcut teklif kaydını güncelleyecektir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>GuncellenecekTecditNo</Soru>
+<Cevap>Güncellenecek kaydın ilgili teklifin hangi tecditi olduğunu anlamak için gönderdiğimiz soru.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>EkSigortali_X_N</Soru>
+<Cevap>Poliçede ek sigortalı varsa bunların bilgisi. X = ek sigortalı indeksi (indeks sıfırdan başlar), N = ek sigortalı soru adı. Örnek : EkSigortali_0_TcKimlikNo. Tüm ek sigortalı soru adları için doküman şu adreste : http://yardim.adayazilim.com/yardim?proje=asw&sayfa=Acente%20Poli%C3%A7e%20Servisler%20Ek%20Sigortal%C4%B1%20Soru%20Adlar%C4%B1 </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>PoliceHesapLogEkle</Soru>
+<Cevap>Hesaplama detaylarını içeren text dosyası oluşturur. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakKurallaridaGetir</Soru>
+<Cevap>Taslak Kuralları Çağırır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakYetkilendirmelerideGetir</Soru>
+<Cevap>Taslak Yetkilendirme Kurallarıda kullanılır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakIndirimArttirimlaridaGetir</Soru>
+<Cevap>Taslak indirim arttırımlar kullanılır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakBedelFiyatPrimlerideGetir</Soru>
+<Cevap>Taslak Bedel Fiyat Prim Tanımları Kullanılır. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>TaslakTarifeKurallaridaGetir</Soru>
+<Cevap>Taslak Tarife Kurallarida getirir. Yalnızca yetkili kullanıcılar kullanabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>LogoluBasimYap</Soru>
+<Cevap>Poliçeleştirme sonrası otomatik oluşan pdf basımında şirket logosunun bulunması için 1 gönderilmelidir. (Opsiyonel) </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>WsIcinIngilizceBasimYapilacak</Soru>
+<Cevap>Başarılı kayıttan sonra Türkçe basıma ek olarak İngilizce basım oluşması için 1 gönderilmelidir. Basım dosyası bilgisini içeren servis cevap alanı : PdfBasimIngilizceWsIcin</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>DisTahsilatTipi</Soru>
+<Cevap>Dış tahsilat tipi varsa gönderilir. 1: Havale , 2: Kredi kartı, 3: Çek, 4:Hesaptan (Opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>WebServisBeklenenToplamNetPrim</Soru>
+<Cevap>Poliçeleştirme anında kullanılır, hesaplama sonucunda dönen net prim değeri gönderilir. Poliçeleştirme anında farklı bir prim hesaplanırsa sistem hata mesajı döner. (Opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliAdi</Soru>
+<Cevap>Sigortalının adı / ünvanı</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliSoyadi</Soru>
+<Cevap>Sigortalının soyadı</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliDogumYeri</Soru>
+<Cevap>Sigortalının doğum yeri</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliDogumTarihi</Soru>
+<Cevap>Sigortalının doğum tarihi (GG.AA.YYYY formatında gönderilmelidir)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCinsiyet</Soru>
+<Cevap>Sigortalının cinsiyeti (E veya K)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliPostaKodu</Soru>
+<Cevap>Sigortalının sokağını belirtir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliEvTelefonNo</Soru>
+<Cevap>Sigortalının ev telefon numarası.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliIsTelefonNo</Soru>
+<Cevap>Sigortalının ev telefon numarası.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCepTelefonNo</Soru>
+<Cevap>Sigortalının cep telefon numarası.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliEPosta</Soru>
+<Cevap>Sigortalının e-posta adresi</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliPasaportNo</Soru>
+<Cevap>Sigortalının pasaport numarası</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_SigortaliMsYsSecim</Soru>
+<Cevap>Sigortalının kimlik tipini belirtir. İki karakter olarak kod gönderilmelidir. Olası değerler KK (Kollektif Komandıd) - BL (Belediyeler) - KN (Kimlik no) - JV (Joint venture) - KK (Kollektif komandid şirketler) - KM (Kamu(Devlet daireleri)) - KP (Kooperatif şirketler) - MŞ (Mahalli şirketler) - PN (Pasaport no) - UŞ (Uluslararası şirket) - VK (Vakıflar) - YK (Dernek,Kulüp vs.) - YŞ (Yabancı Şirketler)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliIlKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi il kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliIlceKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi ilçe kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliKoyKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi köy kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliMahalleKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi mahalle kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliCSBMKodu</Soru>
+<Cevap>Sigortalı için KKTC adres sistemi Cadde/Sokak/Bulvar/Meydan kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliApartmanAdi</Soru>
+<Cevap>Sigortalı için apartman adı (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliApartmanNo</Soru>
+<Cevap>Sigortalı için apartman numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliDaireNo</Soru>
+<Cevap>Sigortalı için daire numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>SigortaliKat</Soru>
+<Cevap>Sigortalı için dairenin bulunduğu kat (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriAdi</Soru>
+<Cevap>Sigorta ettiren adı / ünvanı</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriSoyadi</Soru>
+<Cevap>Sigorta ettiren soyadı</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriDogumYeri</Soru>
+<Cevap>Sigorta ettiren doğum yeri</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriDogumTarihi</Soru>
+<Cevap>Sigorta ettiren doğum tarihi (GG.AA.YYYY formatında gönderilmelidir)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCinsiyet</Soru>
+<Cevap>Sigorta ettiren cinsiyeti (E veya K)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriPostaKodu</Soru>
+<Cevap>Sigorta ettiren sokağını belirtir</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriEvTelefonNo</Soru>
+<Cevap>Sigorta ettiren ev telefon numarası.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriIsTelefonNo</Soru>
+<Cevap>Sigorta ettiren ev telefon numarası.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCepTelefonNo</Soru>
+<Cevap>Sigorta ettiren cep telefon numarası.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriEPosta</Soru>
+<Cevap>Sigorta ettiren e-posta adresi</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriPasaportNo</Soru>
+<Cevap>Sigorta ettiren pasaport numarası</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_SigortaEttirenMsYsSecim</Soru>
+<Cevap>Sigorta ettiren kimlik tipini belirtir. İki karakter olarak kod gönderilmelidir. Olası değerler KK (Kollektif Komandıd) - BL (Belediyeler) - KN (Kimlik no) - JV (Joint venture) - KK (Kollektif komandid şirketler) - KM (Kamu(Devlet daireleri)) - KP (Kooperatif şirketler) - MŞ (Mahalli şirketler) - PN (Pasaport no) - UŞ (Uluslararası şirket) - VK (Vakıflar) - YK (Dernek,Kulüp vs.) - YŞ (Yabancı Şirketler)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriIlKodu</Soru>
+<Cevap>Sigorta ettiren için KKTC adres sistemi il kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriIlceKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi ilçe kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriKoyKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi köy kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriMahalleKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi mahalle kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriCSBMKodu</Soru>
+<Cevap>Sigorta ettiren KKTC adres sistemi Cadde/Sokak/Bulvar/Meydan kodu</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriApartmanAdi</Soru>
+<Cevap>Sigorta ettiren için apartman adı (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriApartmanNo</Soru>
+<Cevap>Sigorta ettiren için apartman numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriDaireNo</Soru>
+<Cevap>Sigorta ettiren için daire numarası (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MusteriKat</Soru>
+<Cevap>Sigorta ettiren için dairenin bulunduğu kat (opsiyonel)</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>_ToplamSigortaliSayisi</Soru>
+<Cevap>Toplam Sigortalı Sayısı. Sayı tipinde alan. </Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MaskelemeAktif</Soru>
+<Cevap>KVKK gereği veri maskelemesini uygulayarak web servis isteklerine cevap verir. 1 değeri gönderilmelidir. Gelen cevapta MaskelemeAnahtari alanı PoliceKayit servisine kendi değeriyle gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>UrunGrubu</Soru>
+<Cevap>ferdiKaza</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Menfaattar</Soru>
+<Cevap>Menfaattar ismi. Boş gelirse Kanuni Varisleri verilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>MeslekSinifi</Soru>
+<Cevap>Sigortalının meslek sınıfı gönderilmelidir. SecenekGetirFerdiKazaMeslekSiniflari metodu ile olası değerler alınabilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>IstenilenTeminatMiktari</Soru>
+<Cevap>20,000.00 formatında gönderilmelidir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_017_Prim</Soru>
+<Cevap>017 kodlu KAZA SONUCU VEFAT teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_017</Soru>
+<Cevap>017 kodlu KAZA SONUCU VEFAT teminatının bedelini belirtir. Bu teminat zorunludur. Eğer bedel tarifesi tanımlı değilse bedeli servise gönderilmelidir. Rakam olarak gönderilmelidir. Örnek: 15000</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_020_Prim</Soru>
+<Cevap>020 kodlu KAZA SONUCU TAM VE DAİMİ MALULİYET teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_020_Var</Soru>
+<Cevap>020 kodlu KAZA SONUCU TAM VE DAİMİ MALULİYET teminatının teklife dahil edilip edilmeyeceğini belirtir. E (evet) veya H (hayır) olarak gönderilmelidir. Gönderilmesse H kabul edilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_021_Prim</Soru>
+<Cevap>021 kodlu KAZA SONUCU TEDAVİ MASRAFLARI teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_021_Var</Soru>
+<Cevap>021 kodlu KAZA SONUCU TEDAVİ MASRAFLARI teminatının teklife dahil edilip edilmeyeceğini belirtir. E (evet) veya H (hayır) olarak gönderilmelidir. Gönderilmesse H kabul edilir.</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_026_Prim</Soru>
+<Cevap>026 kodlu KAZA SONUCU GÜNDELİK TAZMİNAT teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_026</Soru>
+<Cevap>026 kodlu KAZA SONUCU GÜNDELİK TAZMİNAT teminatının bedelini belirtir. Bu teminat opsiyoneldir. Rakam olarak gönderilmelidir. Örnek: 15000</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_045_Prim</Soru>
+<Cevap>045 kodlu DEPREM teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_045</Soru>
+<Cevap>045 kodlu DEPREM teminatının bedelini belirtir. Bu teminat zorunludur. Eğer bedel tarifesi tanımlı değilse bedeli servise gönderilmelidir. Rakam olarak gönderilmelidir. Örnek: 15000</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+<SoruCevap>
+<Soru>Teminat_014_Prim</Soru>
+<Cevap>014 kodlu İDARİ HARÇ teminatın primini belirtir. Yalnızca 'Web Serviste Kullanıcı Primi Gönderebilir' rolüne sahip kullanıcılarda çalışır. Bu değer gönderildiğinde teminat için tarife çalışmaz. Binlik ayraç kullanmadan, kuruş ayracı oalrak nokta kullanılarak gönderilmelidir. Örnek: 1234.56</Cevap>
+<Zorunlu>false</Zorunlu>
+</SoruCevap>
+</ArrayOfSoruCevap>
