@@ -39,41 +39,188 @@
               <q-tab-panel name="allTab" class="q-pl-none q-pr-none">
 
                   <q-expansion-item
+                    group="cities"
                     expand-separator
-                    label="Account settings"
+                    label="Almel Ticaret Ltd."
                     expand-icon="add"
                     expanded-icon="remove"
                     expand-icon-class="transition"
-                    class="q-pl-none q-pr-none q-mr-lg"
-                    >
-                    <q-card class="no-padding">
-                      <q-card-section>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quidem, eius reprehenderit eos corrupti
-                        commodi magni quaerat ex numquam, dolorum officiis modi facere maiores architecto suscipit iste
-                        eveniet doloribus ullam aliquid.
+                    header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                  >
+                    <q-card class="no-padding no-shadow">
+                      <q-card-section class="q-pl-xs q-pr-xs">
+                         <div class="text-caption text-grey-9" style="font-size: 12px">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                         <div class="text-caption text-grey-9" style="font-size: 12px">+90 533 887 25 73</div>
                       </q-card-section>
                     </q-card>
                   </q-expansion-item>
+                  <q-separator />
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Rese Repair Systems Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2  text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs" style="font-size: 12px">
+                      <div class="text-caption text-grey-9">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Şanko Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2  text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs" style="font-size: 12px">
+                      <div class="text-caption text-grey-9">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Tabur Garaj Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2  text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs" style="font-size: 12px">
+                      <div class="text-caption text-grey-9">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Cinno Ticaret Şti. Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs " style="font-size: 12px;">
+                      <div class="text-caption text-grey-9">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
+
 
               </q-tab-panel>
 
-              <q-tab-panel name="nicosiaTab">
-                <div class="text-h6">Lefkosa</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-tab-panel name="nicosiaTab"  class="q-pl-none q-pr-none">
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Almel Ticaret Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs">
+                      <div class="text-caption text-grey-9" style="font-size: 12px">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9" style="font-size: 12px">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Almel Ticaret Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs">
+                      <div class="text-caption text-grey-9" style="font-size: 12px">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9" style="font-size: 12px">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
               </q-tab-panel>
 
-              <q-tab-panel name="girneTab">
-                <div class="text-h6">Girne</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-tab-panel name="girneTab"  class="q-pl-none q-pr-none">
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Almel Ticaret Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs">
+                      <div class="text-caption text-grey-9" style="font-size: 12px">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9" style="font-size: 12px">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
               </q-tab-panel>
 
-              <q-tab-panel name="guzelyurtTab">
-                <div class="text-h6">Guzelyurt</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-tab-panel name="guzelyurtTab"  class="q-pl-none q-pr-none">
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Almel Ticaret Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs">
+                      <div class="text-caption text-grey-9" style="font-size: 12px">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9" style="font-size: 12px">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
               </q-tab-panel>
-              <q-tab-panel name="magusaTab">
-                <div class="text-h6">Magusa</div>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              <q-tab-panel name="magusaTab"  class="q-pl-none q-pr-none">
+                <q-expansion-item
+                  group="cities"
+                  expand-separator
+                  label="Almel Ticaret Ltd."
+                  expand-icon="add"
+                  expanded-icon="remove"
+                  expand-icon-class="transition"
+                  header-class="q-pl-xs q-pr-xs no-border text-subtitle2 text-bold text-grey-9"
+                >
+                  <q-card class="no-padding no-shadow">
+                    <q-card-section class="q-pl-xs q-pr-xs">
+                      <div class="text-caption text-grey-9" style="font-size: 12px">Organize Sanayi Bölgesi, 29. Sokak, Lefkoşa</div>
+                      <div class="text-caption text-grey-9" style="font-size: 12px">+90 533 887 25 73</div>
+                    </q-card-section>
+                  </q-card>
+                </q-expansion-item>
+                <q-separator />
               </q-tab-panel>
             </q-tab-panels>
           </q-card>

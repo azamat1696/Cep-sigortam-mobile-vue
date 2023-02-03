@@ -31,6 +31,13 @@ const routes: RouteRecordRaw[] = [
       { path: 'success',name:'optVerificationSuccessPage', component: () => import('pages/Auth/VerificationSuccess.vue') },
     ],
   },
+  {
+    path: '/kasko',
+    component: () => import('layouts/ServicesLayout.vue'),
+    children: [
+      { path: 'register', name: 'kaskoRegister', component: () => import('pages/Kasko/index.vue') },
+     ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

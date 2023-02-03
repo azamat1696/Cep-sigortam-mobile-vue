@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated reveal>
       <q-toolbar>
-        <q-toolbar-title class="text-subtitle1 text-bold">CEP SIGORTA</q-toolbar-title>
+        <q-toolbar-title class="text-subtitle1 text-bold cursor-pointer" @click="$router.push({name:'home'})" >CEP SIGORTA</q-toolbar-title>
         <q-avatar color="white" size="md">
           <q-img src="~assets/headphone.png"/>
         </q-avatar>

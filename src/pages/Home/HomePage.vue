@@ -30,7 +30,7 @@
         </q-item>
 
         <q-separator inset/>
-        <q-item clickable class="q-pa-lg">
+        <q-item clickable class="q-pa-lg" :to="{name:'kaskoRegister'}">
           <q-item-section avatar>
             <q-img src="~assets/umbrella.png" style="width: 24px;height: 24px;object-fit: contain" />
           </q-item-section>
