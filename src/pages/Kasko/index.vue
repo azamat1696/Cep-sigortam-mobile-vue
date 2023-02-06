@@ -97,13 +97,23 @@
             emit-value
             map-options
             use-input
+            input-debounce="0"
+            options-dense
             label="Ulke"
-            menu-anchor="bottom end"
             dense
             hide-bottom-space
             clearable
             @filter="filterCountries"
-          />
+            behavior="dialog"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
 
         </q-form>
 
@@ -157,32 +167,51 @@ import {ref} from 'vue'
 import {useMainStore} from "../../stores/main-store";
 import { storeToRefs } from "pinia"
 
-const { countries,countriesGetter } = storeToRefs(useMainStore())
+const { countries } = storeToRefs(useMainStore())
 const { countriesGet } = useMainStore()
 countriesGet()
 
 const genderOptions =['Erkek', 'Kadın']
-const countriesOptions =ref(JSON.parse(JSON.stringify(countriesGetter)))
+ let countriesOptions =ref(countries.value)
+const loading = ref(false)
+const filterCountries = (val, update) => {
 
-const filterCountries = (val, update, abort) => {
+  if (val === '')
+  {
+    update(() => {
+      countriesOptions.value =  countries.value
+    })
+    return
+  }
   update(() => {
     const needle = val.toLowerCase()
-    if (needle) {
-        countriesOptions.value = countries.value.filter(v => v.Aciklama.toLowerCase().indexOf(needle) > -1)
-    } else {
-        countriesOptions.value = []
-    }
+    countriesOptions.value = countries.value.filter(v => v.Aciklama.toLowerCase().indexOf(needle) > -1)
   })
+
+
+  // update(() => {
+  //   const needle = val.toLowerCase()
+  //   if (needle) {
+  //       countriesOptions.value = countries.value.filter(v => v.Aciklama.toLowerCase().indexOf(needle) > -1)
+  //   } else {
+  //       countriesOptions.value = []
+  //   }
+  // })
 }
 
 
 const  step = ref(1)
  const formFields = ref({
-  name: '',
-  right: true,
+   KullaniciAdi: '',
+   KullaniciSoyAdi: '',
+   MusteriTcKimlikNo: '',
+   MusteriDogumTarihi: '',
+   MusteriDogumYeri: '',
+   MusteriCinsiyet: '',
+   MusteriUyruk: '',
+    right: true,
   date: '',
-  MusteriCinsiyet:'',
-  Aciklama: ''
+   Aciklama: ''
 })
 
 </script>
@@ -191,5 +220,8 @@ const  step = ref(1)
 .q-field--outlined .q-field__control {
   border-radius: 8px !important;
 
+}
+.q-select__dialog {
+  max-height: calc(100vh - 500px) !important;
 }
 </style>
