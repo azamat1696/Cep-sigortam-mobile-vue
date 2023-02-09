@@ -57,18 +57,23 @@
           <q-input
             dense
             outlined
-            v-model="formFields.name"
+            v-model="formFields.MusteriTcKimlikNo"
             label="Kimlik No"
             hide-bottom-space
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Lutfen Kimlik No giriniz']"
           />
 
-          <q-input  v-model="formFields.date" outlined dense hide-bottom-space label="Doğum Tarihi">
+          <q-input
+            v-model="formFields.MusteriDogumTarihi"
+            outlined
+            dense
+            hide-bottom-space
+            label="Doğum Tarihi">
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer"  >
                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-          <q-date v-model="formFields.date" mask="DD-MM-YYYY">
+          <q-date v-model="formFields.MusteriDogumTarihi" mask="DD / MM /YYYY">
             <div class="row items-center justify-end">
               <q-btn v-close-popup label="Kapat" color="primary" flat />
             </div>
@@ -77,20 +82,75 @@
               </q-icon>
             </template>
           </q-input>
+          <div class="row no-wrap justify-between">
+           <div class="col-3 q-my-auto">
+             <label class="text-no-wrap  text-center ">Plaka No</label>
+           </div>
+            <div class=" col-9 row">
+              <div  class="col-4">
+                <q-input
+                  dense
+                  outlined
+                  v-model="formFields.AracPlaka1"
+                  hide-bottom-space
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || ' ']"
+                  class="q-mr-xs q-ml-xs"
+
+                />
+              </div>
+              <div class="col-4">
+                <q-input
+                  dense
+                  outlined
+                  v-model="formFields.AracPlaka2"
+                  hide-bottom-space
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || ' ']"
+                  class="q-ml-xs q-mr-xs"
+                  autogrow
+                 />
+              </div>
+              <div class="col-4">
+                <q-select
+                  outlined
+                  v-model="formFields.AracPlakaIlKodu"
+                  :options="aracPlakaIlKoduOptions"
+                  :option-label="option => option.label"
+                  option-value="value"
+                  dense
+                  options-dense
+                  hide-bottom-space
+                  class="q-ml-xs"
+                  behavior="menu"
+                />
+              </div>
+            </div>
+          </div>
+
           <q-input
             dense
             outlined
-            v-model="formFields.name"
+            v-model="formFields.MusteriDogumYeri"
             label="Doğum Yeri"
             hide-bottom-space
             lazy-rules
             :rules="[ val => val && val.length > 0 || 'Lutfen doğum yeri giriniz']"
           />
-          <q-select outlined v-model="formFields.MusteriCinsiyet" :options="genderOptions" label="Cinsiyet" dense hide-bottom-space />
-<!--          <q-checkbox v-model="formFields.right" label="TC Vatandasiyim" dense/>-->
           <q-select
             outlined
-            v-model="formFields.id"
+            v-model="formFields.MusteriCinsiyet"
+            :options="genderOptions"
+            :option-label="option => option.label"
+            option-value="value"
+            label="Cinsiyet"
+            dense
+            hide-bottom-space
+            behavior="menu"
+          />
+          <q-select
+            outlined
+            v-model="formFields.MusteriUyruk"
             :options="countriesOptions"
             :option-label="(item) => item.Aciklama"
             option-value="id"
@@ -104,7 +164,7 @@
             hide-bottom-space
             clearable
             @filter="filterCountries"
-            behavior="dialog"
+            behavior="menu"
           >
             <template v-slot:no-option>
               <q-item>
@@ -114,6 +174,71 @@
               </q-item>
             </template>
           </q-select>
+
+          <q-select
+            outlined
+            v-model="formFields.AracMarka"
+            :options="aracMarkaOptions"
+            :option-label="(item) => item.Marka_Adi"
+            option-value="id"
+            emit-value
+            map-options
+            use-input
+            input-debounce="0"
+            options-dense
+            label="Aracin Markasi"
+            dense
+            hide-bottom-space
+            clearable
+            @filter="filterAracMarka"
+            @update:model-value="onAracMarkaUpdated"
+            behavior="menu"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+          <q-select
+            outlined
+            v-model="formFields.AracTipi"
+            :options="aracTipiOptions"
+            :option-label="(item) => item.Tip_Adi"
+            option-value="id"
+            emit-value
+            map-options
+            use-input
+            input-debounce="0"
+            options-dense
+            label="Aracin Modeli"
+            dense
+            hide-bottom-space
+            clearable
+            @filter="filterAracMarka"
+            behavior="menu"
+          >
+            <template v-slot:no-option>
+              <q-item>
+                <q-item-section class="text-grey">
+                  No results
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+
+          <q-input
+            dense
+            outlined
+            v-model.number="formFields.AracModelYili"
+            type="number"
+            label="Model Yili"
+            hide-bottom-space
+            lazy-rules
+            :rules="[ val => val && val.length > 0 || 'Lutfen Model Yili giriniz']"
+          />
 
         </q-form>
 
@@ -134,7 +259,7 @@
         An ad group contains one or more ads which target a shared set of keywords.
 
         <q-stepper-navigation>
-          <q-btn @click="() => { done2 = true; step = 3 }" color="primary" label="Ilerle" no-caps class="full-width" />
+          <q-btn @click="() => { done2 = true; step = 3 }" color="primary"  label="İlerle" no-caps class="full-width" />
 <!--          <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />-->
         </q-stepper-navigation>
       </q-step>
@@ -161,20 +286,32 @@
   </q-layout>
 </template>
 
-<script setup>
+<script setup lang="ts">
 
 import {ref} from 'vue'
 import {useMainStore} from "../../stores/main-store";
 import { storeToRefs } from "pinia"
 
-const { countries } = storeToRefs(useMainStore())
-const { countriesGet } = useMainStore()
+const {countries: countries, aracMarka :aracMarka, aracTipi:aracTipi } = storeToRefs(useMainStore())
+const { countriesGet, aracMarkaGet,aracTipiGet } = useMainStore()
 countriesGet()
+aracMarkaGet()
 
-const genderOptions =['Erkek', 'Kadın']
+const genderOptions = [
+  {value: 'Erkek', label:'Erkek'},
+  {value: 'Kadın', label:'Kadın'}
+]
+const aracPlakaIlKoduOptions = [
+  {value:'KKTC',label:'KKTC'},
+  {value:'TC',label:'TC'},
+  {value:'DİĞER',label:'DİĞER'}
+]
+
  let countriesOptions =ref(countries.value)
-const loading = ref(false)
-const filterCountries = (val, update) => {
+ let aracMarkaOptions = ref(aracMarka.value)
+ let aracTipiOptions = ref(aracTipi.value)
+
+ const filterCountries = (val : any, update: any) => {
 
   if (val === '')
   {
@@ -188,31 +325,74 @@ const filterCountries = (val, update) => {
     countriesOptions.value = countries.value.filter(v => v.Aciklama.toLowerCase().indexOf(needle) > -1)
   })
 
-
-  // update(() => {
-  //   const needle = val.toLowerCase()
-  //   if (needle) {
-  //       countriesOptions.value = countries.value.filter(v => v.Aciklama.toLowerCase().indexOf(needle) > -1)
-  //   } else {
-  //       countriesOptions.value = []
-  //   }
-  // })
 }
+ const filterAracMarka = (val: any, update: any) => {
 
-
+  if (val  === ''){
+    update(() => {
+      aracMarkaOptions.value = aracMarka.value
+    })
+    return
+  }
+   update(() => {
+     const needle = val.toLowerCase()
+     aracMarkaOptions.value = aracMarka.value.filter(v => v.Marka_Adi.toLowerCase().indexOf(needle) > -1)
+   })
+ }
+ const onAracMarkaUpdated = (id: number ) => {
+  if (!id){
+    aracTipiOptions = ref([])
+    return
+  }
+   aracTipiGet(id)
+   aracTipiOptions = ref(aracTipi.value)
+ }
 const  step = ref(1)
  const formFields = ref({
    KullaniciAdi: '',
    KullaniciSoyAdi: '',
    MusteriTcKimlikNo: '',
-   MusteriDogumTarihi: '',
    MusteriDogumYeri: '',
    MusteriCinsiyet: '',
    MusteriUyruk: '',
-    right: true,
-  date: '',
+   MusteriDogumTarihi: '',
+   AracPlaka1: '',
+   AracPlaka2: '',
+   AracPlakaIlKodu: '', // select box
+   AracMarka: '', // select box
+   AracTipi: '', // select box
+   AracModelYili: '', // select box
+   AracTarz: '', // select box
+   _YakitTipi: '', // select box
+   Motor_cc: '',
+   AracBedeli: '',
+   ipotekli: '',
+   AracMotorNo: '',
+   AracSasiNo: '',
+   AracDireksiyonTarafi: '',// select box
+   _AracVitesBilgisi: '',// select box
+   MusteriIlceKodu: '',// select box
+   MusteriBucakKodu: '',// select box
+   MusteriBelediyeKodu: '',// select box
+   MusteriMahalleKodu: '',// select box
+   MusteriCSBMKodu: '',// select box
+   MusteriApartmanAdi: '',//
+   MusteriApartmanNo: '',// input
+   MusteriCepTelefonNo: '',// input
+   MusteriEPosta: '',// input
+   AcenteNo: '',// input
+   uyar: '',// 'accepted'
+   right: true,
+   date: '',
    Aciklama: ''
 })
+
+const onSubmit = () => {
+
+}
+const onReset = () => {
+
+}
 
 </script>
 
@@ -223,5 +403,14 @@ const  step = ref(1)
 }
 .q-select__dialog {
   max-height: calc(100vh - 500px) !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>
