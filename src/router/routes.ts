@@ -32,13 +32,20 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/kasko',
+    path: '/services',
     component: () => import('layouts/ServicesLayout.vue'),
     children: [
-      { path: 'register', name: 'kaskoRegister', component: () => import('pages/Kasko/index.vue') },
+      { path: 'kasko', name: 'kaskoRegister', component: () => import('pages/Kasko/KaskoPage.vue') },
+      { path: 'konut', name: 'KonutRegister', component: () => import('pages/Konut/KonutPage.vue') },
      ],
   },
-
+  {
+    path: '/success',
+    component: () => import('layouts/EmptyLayout.vue'),
+    children: [
+      { path: 'kasko', name: 'kaskoSuccess', component: () => import('pages/Kasko/KaskoSuccessPage.vue') },
+  ]
+  },
   // Always leave this as last one,
   // but you can also remove it
   {

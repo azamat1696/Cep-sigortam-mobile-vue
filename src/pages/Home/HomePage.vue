@@ -40,7 +40,7 @@
            </q-item-section>
         </q-item>
         <q-separator inset/>
-        <q-item clickable class="q-pa-lg">
+        <q-item clickable class="q-pa-lg" :to="{name:'KonutRegister'}">
           <q-item-section avatar>
             <q-img src="~assets/cottage.png" style="width: 24px;height: 24px;object-fit: contain" />
           </q-item-section>
@@ -71,9 +71,6 @@
           />
         </div>
 
-
-
-
       </q-list>
     </q-card>
 
@@ -102,14 +99,15 @@ import { defineComponent, ref } from 'vue';
   content:'';
   position:absolute;
   left:0; top:0;
-  width:100%; height:100%;
+  width:100%;
+  height:100%;
   display:inline-block;
   background: linear-gradient(90deg, rgba(23, 23, 23, 0.92) 6.07%, rgba(0, 0, 0, 0) 102.16%);
 }
 
 .pickgradient > img{
   display:block;
-  height:115px;
+  height:100%;
   width:100%;
 }
 .centeredUp {
