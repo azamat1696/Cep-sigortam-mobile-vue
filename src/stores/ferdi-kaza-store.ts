@@ -2,18 +2,17 @@ import { defineStore } from "pinia";
 import { api } from "boot/axios";
 import { Loading, Notify } from "quasar";
 
-export const useKaskoStore = defineStore("kasko", {
+export const useFerdiKazaStore = defineStore("ferdiKaza", {
     state: () => ({
         error: {},
     }),
     getters: {},
     actions: {
-        kaskoFormSubmit: async function (data: any) {
+        ferdiKazaFormSubmit: async function (data: any) {
             Loading.show({ message: "Başvuru Yapılıyor..." });
-
             try {
                 const res = await api
-                    .post("/kaskoCepForm", data)
+                    .post("/ferdiKazaCepForm", data)
                     .then((res) => res.data);
                 if (res.status === "success") {
                     Notify.create({
@@ -24,7 +23,9 @@ export const useKaskoStore = defineStore("kasko", {
                     return true;
                 }
             } catch (err) {
+                // @ts-ignore
                 if (err.response) {
+                    // @ts-ignore
                     const { data, status } = err.response;
                     if (status === 422) {
                         Notify.create({
@@ -46,6 +47,7 @@ export const useKaskoStore = defineStore("kasko", {
                 } else {
                     this.error = {};
                 }
+                // @ts-ignore
                 return err.response;
             } finally {
                 Loading.hide();

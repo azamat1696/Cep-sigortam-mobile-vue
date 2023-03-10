@@ -1,17 +1,15 @@
 <template>
-  <q-layout view="lHh Lpr lFf"  >
-  <q-page-container>
-    <router-view />
-  </q-page-container>
-  </q-layout>
+    <q-layout view="lHh Lpr lFf">
+        <q-page-container>
+            <router-view />
+        </q-page-container>
+    </q-layout>
 </template>
 
 <script>
 export default {
-  name: "AuthLayout"
-}
+    name: "AuthLayout",
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
