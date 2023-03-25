@@ -1,10 +1,19 @@
 <template>
-    <q-page class="row items-top justify-evenly">
+    <transition-group
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeIn"
+
+    >
+    <q-page
+        key="home-login"
+        class="row items-top justify-evenly"
+    >
         <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
             <div class="pickgradient">
                 <img src="~assets/home_page.png" />
                 <div class="centeredUp">Good Evening</div>
-                <div class="centeredDown">Hakan Yilmaz</div>
+                <div class="centeredDown">{{user}}</div>
             </div>
             <q-list>
                 <q-item clickable class="q-pa-lg" :to="{ name: 'showPolice' }">
@@ -152,18 +161,35 @@
             </q-list>
         </q-card>
     </q-page>
+    </transition-group>
 </template>
 <!--to="/auth/login"-->
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import { useAuthStore} from "stores/auth-store";
+import { storeToRefs} from "pinia";
 
 export default defineComponent({
     name: "IndexPage",
     setup() {
+        const { user } = storeToRefs(useAuthStore());
         const isLogin = ref(false);
         return {
             isLogin,
+            user
         };
+    },
+    methods: {
+        handleGoBack: function (side: string) {
+            console.log("side", side)
+            // @ts-ignore
+            this.$router.push({ name: 'home' })
+        },
+        handleGoForward: function (side: string) {
+            console.log("side", side)
+            // @ts-ignore
+            this.$router.push({ name: 'teklifAl' })
+        },
     },
 });
 </script>

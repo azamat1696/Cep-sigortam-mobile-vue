@@ -16,7 +16,7 @@
                 </div>
             </q-card-section>
             <q-card-section class="q-pt-xs">
-                <q-form class="q-pt-xs q-pb-md" @submit="onSubmit">
+                <q-form class="q-pt-xs q-pb-md" >
                     <div
                         class="text-subtitle1 q-pb-xl q-pl-md q-pr-md"
                         style="color: #5e5e5e"
@@ -38,103 +38,27 @@
                     </div>
                 </q-form>
             </q-card-section>
-            <q-card-section class="q-pt-xl"> </q-card-section>
+            <q-card-section class="text-center" v-show="show">
+                <q-btn color="primary" no-caps :to="{ name: 'loginPage' }"
+                >Giriş</q-btn
+                >
+            </q-card-section>
         </q-card>
     </div>
 </template>
 
-<script lang="ts">
-import {
-    defineComponent,
-    reactive,
-    ref,
-    onBeforeUpdate,
-    computed,
-    watch,
-    watchEffect,
-} from "vue";
-import { emit } from "cluster";
-import { Notify } from "quasar";
+<script setup lang="ts">
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+setTimeout(() => {
+    router.push({ name: "loginPage" });
+}, 5000);
 
-export default defineComponent({
-    name: "RenewPassword",
-    emits: ["update:modelValue"],
-    setup() {
-        const length = ref(4);
-        const fields = ref([]);
-        const fieldValues = ref([]);
-        const composite = computed(() => {
-            const nonNullField = fieldValues.value.filter((value) => value);
-            if (length.value !== nonNullField.length) {
-                return "";
-            }
-            return nonNullField.join("");
-        });
-        watch(composite, () => {
-            if (composite.value) {
-                //emit('update:modelValue',composite.value)
-            }
-        });
-        const updateFieldRef = (element, index) => {
-            if (element) {
-                fields.value[index] = element;
-            }
-        };
-        const focus = (index) => {
-            if (index >= 0) {
-                if (index < length.value) {
-                    fields.value[index].select();
-                } else {
-                    if (composite.value) {
-                        fields.value[index - 1].blur();
-                    }
-                }
-            }
-        };
-        const onUpdate = (value, index) => {
-            if (value) {
-                focus(index + 1);
-            }
-        };
-
-        // make sure to reset the refs before each update
-        onBeforeUpdate(() => {
-            fields.value = [];
-        });
-        const onKeyUp = (evnt, index) => {
-            const key = evnt.key;
-
-            if (["Tab", "Shift", "Meta", "Control", "Alt"].includes(key)) {
-                return;
-            }
-
-            if (["Delete"].includes(key)) {
-                return;
-            }
-
-            if (key === "ArrowLeft" || key === "Backspace") {
-                focus(index - 1);
-            } else if (key === "ArrowRight") {
-                focus(index + 1);
-            }
-        };
-
-        return {
-            test: ref(false),
-            formFields: reactive({}),
-            fieldValues,
-            length,
-            onKeyUp,
-            onUpdate,
-            updateFieldRef,
-        };
-    },
-    methods: {
-        onSubmit() {
-            console.log("on submit", this.fieldValues);
-        },
-    },
-});
+let show = ref(false);
+setTimeout(() => {
+    show.value = true;
+}, 3000);
 </script>
 
 <style scoped>

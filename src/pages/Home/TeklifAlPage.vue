@@ -1,11 +1,17 @@
 <template>
-    <q-layout view="lHh Lpr lFf">
+    <transition-group
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeIn"
+
+    >
+    <q-layout key="teklifal" view="lHh Lpr lFf">
         <q-header reveal elevated>
             <q-toolbar>
                 <q-avatar size="sm">
                     <q-icon
                         name="chevron_left"
-                        @click="$router.push({ name: 'homeLogin' })"
+                        @click="$router.push({ name: 'homeLogin'})"
                         size="md"
                         class="cursor-pointer"
                     />
@@ -86,11 +92,15 @@
             </q-list>
         </q-page-container>
     </q-layout>
+    </transition-group>
 </template>
 
 <script>
 export default {
     name: "TeklifAlPage",
+    setup() {
+        return {};
+    },
 };
 </script>
 

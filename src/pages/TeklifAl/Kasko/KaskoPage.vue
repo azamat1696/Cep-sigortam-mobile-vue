@@ -1,7 +1,9 @@
 <!--suppress ALL -->
 <template>
+
+
     <q-layout view="lHh Lpr lFf">
-        <q-header reveal elevated>
+        <q-header   elevated>
             <q-toolbar>
                 <q-avatar size="sm">
                     <q-icon
@@ -76,6 +78,12 @@
                                         (val && val.length > 0) ||
                                         'Lutfen Kimlik No giriniz',
                                 ]"
+                            />
+                            <q-checkbox
+                                v-model="formFields.TCVat"
+                                dense
+                                label="TC Vatandasiyim"
+                                class="text-subtitle2"
                             />
 
                             <q-input
@@ -297,7 +305,6 @@
                                     </q-item>
                                 </template>
                             </q-select>
-
                             <q-input
                                 dense
                                 outlined
@@ -312,6 +319,31 @@
                                         'Lutfen Model Yili giriniz',
                                 ]"
                             />
+                            <q-stepper-navigation>
+                                <!--            <q-btn @click="() => { done1 = true; step = 2 }" type="submit" color="primary" label="Ilerle" no-caps class="full-width" />-->
+                                <q-btn
+                                    type="submit"
+                                    color="primary"
+                                    label="İlerle"
+                                    no-caps
+                                    class="full-width"
+                                />
+                            </q-stepper-navigation>
+                        </q-form>
+                    </q-step>
+
+                    <q-step
+                        :name="2"
+                        prefix="2"
+                        title=""
+                        :done="step > 2"
+                        :header-nav="step > 2"
+                        style="min-height: 200px"
+                    >
+                        <q-form @submit="onNextStep" class="q-gutter-md">
+
+
+
                             <q-select
                                 outlined
                                 v-model="formFields.AracTarz"
@@ -371,28 +403,7 @@
                                 </template>
                             </q-select>
 
-                            <q-stepper-navigation>
-                                <!--            <q-btn @click="() => { done1 = true; step = 2 }" type="submit" color="primary" label="Ilerle" no-caps class="full-width" />-->
-                                <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    label="İlerle"
-                                    no-caps
-                                    class="full-width"
-                                />
-                            </q-stepper-navigation>
-                        </q-form>
-                    </q-step>
 
-                    <q-step
-                        :name="2"
-                        prefix="2"
-                        title=""
-                        :done="step > 2"
-                        :header-nav="step > 2"
-                        style="min-height: 200px"
-                    >
-                        <q-form @submit="onNextStep" class="q-gutter-md">
                             <q-input
                                 dense
                                 outlined
@@ -757,6 +768,7 @@
             </div>
         </q-page-container>
     </q-layout>
+
 </template>
 
 <script setup lang="ts">
@@ -1074,6 +1086,7 @@ const formFields = ref({
     KullaniciAdi: "Ali",
     KullaniciSoyAdi: "sahin",
     MusteriTcKimlikNo: "76876876786",
+    TCVat: false,
     MusteriDogumYeri: "Tkm",
     MusteriCinsiyet: "Erkek",
     MusteriUyruk: 2,
@@ -1105,6 +1118,7 @@ const formFields = ref({
     AcenteNo: "000111", // input
     _SbmCarColorCode: "", // select box
     uyar: "", // 'accepted'
+
 });
 // ************* Garanti ödeme test *************** /
 // const data ={

@@ -18,11 +18,10 @@
             <q-card-section class="q-pt-xs">
                 <q-form class="q-pt-md q-pb-md" @submit="onSubmit">
                     <div
-                        class="text-subtitle1 q-pb-lg q-pl-md q-pr-md"
+                        class="text-subtitle1 q-pb-lg q-pl-md q-pr-md text-center"
                         style="color: #5e5e5e"
                     >
-                        Üyeliğinizi başarılı bir şekilde tamamladınız Artık
-                        uygulamaya giriş yapıp kullanabilirsiniz.
+                        Lütfen telefonunuza gelen 4 haneli şifreyi giriniz.
                     </div>
                     <div class="flex flex-center q-pb-xl q-pt-lg q-pa-lg">
                         <div v-for="item in length" class="q-pa-sm">
@@ -35,8 +34,8 @@
                                 @update:model-value="onUpdate($event, item - 1)"
                                 :key="item"
                                 :ref="(el) => updateFieldRef(el, item - 1)"
-                                input-class="text-center text-primary text-h3 q-pt-md"
-                                style="width: 6ch"
+                                input-class="text-center text-primary text-h4 q-pa-none "
+                                style="width: 6ch;"
                                 maxlength="1"
                                 dense
                             />
@@ -51,7 +50,7 @@
                             class="full-width"
                             style="border-radius: 8px"
                             size="20px"
-                            :to="{ name: 'optVerificationSuccessPage' }"
+                            type="submit"
                         />
                     </div>
                 </q-form>
@@ -69,10 +68,13 @@ import {
     onBeforeUpdate,
     computed,
     watch,
-    watchEffect,
+
 } from "vue";
-import { emit } from "cluster";
-import { Notify } from "quasar";
+import {storeToRefs} from "pinia";
+import {useRouter} from "vue-router";
+import {useAuthStore} from "stores/auth-store";
+
+
 
 export default defineComponent({
     name: "RenewPassword",
@@ -88,6 +90,9 @@ export default defineComponent({
             }
             return nonNullField.join("");
         });
+        const {user,authToken} = storeToRefs(useAuthStore());
+        const router = useRouter();
+        const { verifySmsCode } = useAuthStore();
         watch(composite, () => {
             if (composite.value) {
                 //emit('update:modelValue',composite.value)
@@ -145,11 +150,29 @@ export default defineComponent({
             onKeyUp,
             onUpdate,
             updateFieldRef,
+            router,
+            verifySmsCode,
+            user
         };
     },
     methods: {
         onSubmit() {
-            console.log("on submit", this.fieldValues);
+
+            let formData = new FormData();
+            console.log(this.user)
+            formData.append("smsCode", this.fieldValues.join(''));
+            formData.append("phone", this.user.phone);
+            formData.append("password", this.user.password)
+            formData.append("id_card", this.user.id_card);
+            this.verifySmsCode(formData)
+                .then((res) => {
+                 if (res === true) {
+                     this.router.push({name: "homeLogin"});
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
     },
 });

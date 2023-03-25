@@ -1,19 +1,29 @@
 import { RouteRecordRaw } from "vue-router";
 
 const routes: RouteRecordRaw[] = [
+
     {
         path: "/",
         component: () => import("layouts/MainLayout.vue"),
         children: [
+
             {
+                meta : {requiresAuth : false},
                 path: "",
+                redirect: { name: "sliderPage" }
+            },
+            {
+                meta : {requiresAuth : false},
+                path: "/home",
                 name: "home",
                 component: () => import("pages/Home/HomePage.vue"),
             },
             {
-                path: "home-login",
+                meta : {requiresAuth : true},
+                path: "/home-login",
                 name: "homeLogin",
                 component: () => import("pages/Home/HomePageWithLogin.vue"),
+
             },
         ],
     },
@@ -22,21 +32,25 @@ const routes: RouteRecordRaw[] = [
         component: () => import("layouts/EmptyLayout.vue"),
         children: [
             {
+                meta : {requiresAuth : true},
                 path: "teklif-al",
                 name: "teklifAl",
                 component: () => import("pages/Home/TeklifAlPage.vue"),
             },
             {
+                meta : {requiresAuth : true},
                 path: "damage",
                 name: "showDamage",
                 component: () => import("pages/Home/ShowDamagePage.vue"),
             },
             {
+                meta : {requiresAuth : true},
                 path: "police",
                 name: "showPolice",
                 component: () => import("pages/Home/ShowPolicePage.vue"),
             },
             {
+                meta : {requiresAuth : true},
                 path: "profile",
                 name: "showProfile",
                 component: () => import("pages/Home/MyProfilePage.vue"),
@@ -110,6 +124,11 @@ const routes: RouteRecordRaw[] = [
         path: "/success",
         component: () => import("layouts/EmptyLayout.vue"),
         children: [
+            {
+                path: "/slider",
+                name: "sliderPage",
+                component: () => import("pages/Home/SliderHomePage.vue"),
+            },
             {
                 path: "kasko",
                 name: "kaskoSuccess",

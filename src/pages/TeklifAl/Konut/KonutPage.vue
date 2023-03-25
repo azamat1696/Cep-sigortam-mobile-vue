@@ -1,649 +1,651 @@
 <!--suppress ALL -->
 <template>
-    <q-layout view="lHh Lpr lFf">
-        <q-header reveal elevated>
-            <q-toolbar>
-                <q-avatar size="sm">
-                    <q-icon
-                        name="chevron_left"
-                        @click="$router.push({ name: 'home' })"
-                        size="md"
-                        class="cursor-pointer"
-                    />
-                </q-avatar>
-                <q-toolbar-title class="text-subtitle2 text-bold text-center"
+    <transition name="next" >
+        <q-layout view="lHh Lpr lFf">
+            <q-header   elevated>
+                <q-toolbar>
+                    <q-avatar size="sm">
+                        <q-icon
+                            name="chevron_left"
+                            @click="$router.push({ name: 'home' })"
+                            size="md"
+                            class="cursor-pointer"
+                        />
+                    </q-avatar>
+                    <q-toolbar-title class="text-subtitle2 text-bold text-center"
                     >Konut</q-toolbar-title
-                >
-            </q-toolbar>
-        </q-header>
-        <q-page-container>
-            <div>
-                <q-stepper
-                    v-model="step"
-                    header-nav
-                    ref="stepper"
-                    color="primary"
-                    active-icon="none"
-                    done-icon="none"
-                    animated
-                    class="no-shadow"
-                    header-class="no-border"
-                >
-                    <q-step
-                        :name="1"
-                        :prefix="1"
-                        title=""
-                        :done="step > 1"
-                        :header-nav="step > 1"
-                        class="q-pt-none"
                     >
-                        <q-form @submit="onNextStep" class="q-gutter-md">
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.KullaniciAdi"
-                                label="Adi "
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                </q-toolbar>
+            </q-header>
+            <q-page-container>
+                <div>
+                    <q-stepper
+                        v-model="step"
+                        header-nav
+                        ref="stepper"
+                        color="primary"
+                        active-icon="none"
+                        done-icon="none"
+                        animated
+                        class="no-shadow"
+                        header-class="no-border"
+                    >
+                        <q-step
+                            :name="1"
+                            :prefix="1"
+                            title=""
+                            :done="step > 1"
+                            :header-nav="step > 1"
+                            class="q-pt-none"
+                        >
+                            <q-form @submit="onNextStep" class="q-gutter-md">
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.KullaniciAdi"
+                                    label="Adi "
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen adinizi giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.KullaniciSoyAdi"
-                                label="SoyAdi"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.KullaniciSoyAdi"
+                                    label="SoyAdi"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen soyadinizi giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriTcKimlikNo"
-                                label="Kimlik No"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.MusteriTcKimlikNo"
+                                    label="Kimlik No"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen Kimlik No giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriDogumYeri"
-                                label="Doğum Yeri"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.MusteriDogumYeri"
+                                    label="Doğum Yeri"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen doğum yeri giriniz',
                                 ]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriCinsiyet"
-                                :options="genderOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                label="Cinsiyet"
-                                dense
-                                emit-value
-                                map-options
-                                hide-bottom-space
-                                behavior="menu"
-                            />
+                                />
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriCinsiyet"
+                                    :options="genderOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    label="Cinsiyet"
+                                    dense
+                                    emit-value
+                                    map-options
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
 
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriUyruk"
-                                :options="countriesOptions"
-                                :option-label="(item) => item.Aciklama"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                use-input
-                                input-debounce="0"
-                                options-dense
-                                label="Ulke"
-                                dense
-                                hide-bottom-space
-                                clearable
-                                @filter="filterCountries"
-                                behavior="menu"
-                            >
-                                <template v-slot:no-option>
-                                    <q-item>
-                                        <q-item-section class="text-grey">
-                                            No results
-                                        </q-item-section>
-                                    </q-item>
-                                </template>
-                            </q-select>
-                            <q-input
-                                v-model="formFields.MusteriDogumTarihi"
-                                outlined
-                                dense
-                                hide-bottom-space
-                                label="Doğum Tarihi"
-                            >
-                                <template v-slot:append>
-                                    <q-icon name="event" class="cursor-pointer">
-                                        <q-popup-proxy
-                                            cover
-                                            transition-show="scale"
-                                            transition-hide="scale"
-                                        >
-                                            <q-date
-                                                v-model="
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriUyruk"
+                                    :options="countriesOptions"
+                                    :option-label="(item) => item.Aciklama"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    use-input
+                                    input-debounce="0"
+                                    options-dense
+                                    label="Ulke"
+                                    dense
+                                    hide-bottom-space
+                                    clearable
+                                    @filter="filterCountries"
+                                    behavior="menu"
+                                >
+                                    <template v-slot:no-option>
+                                        <q-item>
+                                            <q-item-section class="text-grey">
+                                                No results
+                                            </q-item-section>
+                                        </q-item>
+                                    </template>
+                                </q-select>
+                                <q-input
+                                    v-model="formFields.MusteriDogumTarihi"
+                                    outlined
+                                    dense
+                                    hide-bottom-space
+                                    label="Doğum Tarihi"
+                                >
+                                    <template v-slot:append>
+                                        <q-icon name="event" class="cursor-pointer">
+                                            <q-popup-proxy
+                                                cover
+                                                transition-show="scale"
+                                                transition-hide="scale"
+                                            >
+                                                <q-date
+                                                    v-model="
                                                     formFields.MusteriDogumTarihi
                                                 "
-                                                mask="DD / MM /YYYY"
-                                            >
-                                                <div
-                                                    class="row items-center justify-end"
+                                                    mask="DD / MM /YYYY"
                                                 >
-                                                    <q-btn
-                                                        v-close-popup
-                                                        label="Kapat"
-                                                        color="primary"
-                                                        flat
-                                                    />
-                                                </div>
-                                            </q-date>
-                                        </q-popup-proxy>
-                                    </q-icon>
-                                </template>
-                            </q-input>
+                                                    <div
+                                                        class="row items-center justify-end"
+                                                    >
+                                                        <q-btn
+                                                            v-close-popup
+                                                            label="Kapat"
+                                                            color="primary"
+                                                            flat
+                                                        />
+                                                    </div>
+                                                </q-date>
+                                            </q-popup-proxy>
+                                        </q-icon>
+                                    </template>
+                                </q-input>
 
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriCepTelefonNo"
-                                type="text"
-                                label="Telefon Numarası"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.MusteriCepTelefonNo"
+                                    type="text"
+                                    label="Telefon Numarası"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen Şasi No giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriEPosta"
-                                type="text"
-                                label="E-Posta Adresi"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.MusteriEPosta"
+                                    type="text"
+                                    label="E-Posta Adresi"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 7) ||
                                         'Lutfen E-Posta Adresi giriniz',
                                 ]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriIlceKodu"
-                                :options="ilOptions"
-                                :option-label="(option) => option.Aciklama"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                label="İl seç"
-                                dense
-                                hide-bottom-space
-                                behavior="menu"
-                                clearable
-                                use-input
-                                @filter="filterIl"
-                                @update:model-value="getIlOnSelect"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriBucakKodu"
-                                :options="ilceSelectGetOptions"
-                                :option-label="(option) => option.ilce_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                label="İlçe seç"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                                use-input
-                                @filter="filterIlce"
-                                @update:model-value="getIlceOnSelect"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriBelediyeKodu"
-                                :options="belediyeSelectGetOptions"
-                                :option-label="(option) => option.Belediye_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                label="Belediye seç"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                                use-input
-                                @filter="filterBelediye"
-                                @update:model-value="getBelediyeOnSelect"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriMahalleKodu"
-                                :options="mahalleSelectOptions"
-                                :option-label="(option) => option.Mahalle_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                label="Mahalle seç"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                use-input
-                                @filter="filterMahalle"
-                                @update:model-value="getMahalleOnSelect"
-                                behavior="menu"
-                            />
-                            <q-stepper-navigation>
-                                 <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    label="İlerle"
-                                    no-caps
-                                    class="full-width"
                                 />
-                            </q-stepper-navigation>
-                        </q-form>
-                    </q-step>
-
-                    <q-step
-                        :name="2"
-                        prefix="2"
-                        title=""
-                        :done="step > 2"
-                        :header-nav="step > 2"
-                        style="min-height: 200px"
-                    >
-                        <q-form @submit="onNextStep" class="q-gutter-md">
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriCSBMKodu"
-                                :options="sokakSelectOptions"
-                                :option-label="(option) => option.Sokak_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                label="Sokak"
-                                dense
-                                clearable
-                                use-input
-                                @filter="filterSokak"
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriApartmanAdi"
-                                type="text"
-                                label="Apartman Adı"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen Şasi No giriniz',
-                                ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriApartmanNo"
-                                type="text"
-                                label="Apartman No"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen Şasi No giriniz',
-                                ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.SigortalanacakKonutunAdresi"
-                                type="text"
-                                label="Sigortalanacak Konutun Adresi"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen Şasi No giriniz',
-                                ]"
-                            />
-
-                            <q-select
-                                outlined
-                                v-model="formFields.SigortalSifati"
-                                :options="sigortalSifatiOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                label="Sigortalının Sıfatı "
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.Rehinli"
-                                type="text"
-                                label="Rehinli Alacaklı Var Mı?   Varsa Bilgileri"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen Şasi No giriniz',
-                                ]"
-                            />
-
-                            <q-select
-                                outlined
-                                v-model="formFields.KonutKullanim"
-                                :options="konutKullanimOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                label="Konut Kullanım Tarzı "
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-                            <q-stepper-navigation>
-                                <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    label="İlerle"
-                                    no-caps
-                                    class="full-width"
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriIlceKodu"
+                                    :options="ilOptions"
+                                    :option-label="(option) => option.Aciklama"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    label="İl seç"
+                                    dense
+                                    hide-bottom-space
+                                    behavior="menu"
+                                    clearable
+                                    use-input
+                                    @filter="filterIl"
+                                    @update:model-value="getIlOnSelect"
                                 />
-                             </q-stepper-navigation>
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriBucakKodu"
+                                    :options="ilceSelectGetOptions"
+                                    :option-label="(option) => option.ilce_Adi"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    label="İlçe seç"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                    use-input
+                                    @filter="filterIlce"
+                                    @update:model-value="getIlceOnSelect"
+                                />
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriBelediyeKodu"
+                                    :options="belediyeSelectGetOptions"
+                                    :option-label="(option) => option.Belediye_Adi"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    label="Belediye seç"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                    use-input
+                                    @filter="filterBelediye"
+                                    @update:model-value="getBelediyeOnSelect"
+                                />
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriMahalleKodu"
+                                    :options="mahalleSelectOptions"
+                                    :option-label="(option) => option.Mahalle_Adi"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    label="Mahalle seç"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    use-input
+                                    @filter="filterMahalle"
+                                    @update:model-value="getMahalleOnSelect"
+                                    behavior="menu"
+                                />
+                                <q-stepper-navigation>
+                                    <q-btn
+                                        type="submit"
+                                        color="primary"
+                                        label="İlerle"
+                                        no-caps
+                                        class="full-width"
+                                    />
+                                </q-stepper-navigation>
+                            </q-form>
+                        </q-step>
 
-                        </q-form>
-                    </q-step>
-                    <q-step
-                        :name="3"
-                        prefix="3"
-                        title=""
-                        :header-nav="step > 3"
-                        style="min-height: 200px"
-                    >
-                        <q-form @submit="onSubmitKonut" class="q-gutter-md">
-                            <q-select
-                                outlined
-                                v-model="formFields.BinaYapi"
-                                :options="binaYapiOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                label="Bina Yapı Tarzı"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.KonutTipi"
-                                :options="konutTipiOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                label="Konut Tipi"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.KatBilgisi"
-                                :options="katBilgisiOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                label="Kat Bilgisi"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.YasayanKisiSayisi"
-                                type="text"
-                                label="Konutta Yaşayan Kişi Sayısı"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                        <q-step
+                            :name="2"
+                            prefix="2"
+                            title=""
+                            :done="step > 2"
+                            :header-nav="step > 2"
+                            style="min-height: 200px"
+                        >
+                            <q-form @submit="onNextStep" class="q-gutter-md">
+                                <q-select
+                                    outlined
+                                    v-model="formFields.MusteriCSBMKodu"
+                                    :options="sokakSelectOptions"
+                                    :option-label="(option) => option.Sokak_Adi"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    label="Sokak"
+                                    dense
+                                    clearable
+                                    use-input
+                                    @filter="filterSokak"
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.MusteriApartmanAdi"
+                                    type="text"
+                                    label="Apartman Adı"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen Şasi No giriniz',
                                 ]"
-                            />
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.MusteriApartmanNo"
+                                    type="text"
+                                    label="Apartman No"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                        'Lutfen Şasi No giriniz',
+                                ]"
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.SigortalanacakKonutunAdresi"
+                                    type="text"
+                                    label="Sigortalanacak Konutun Adresi"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                        'Lutfen Şasi No giriniz',
+                                ]"
+                                />
 
-                            <q-select
-                                outlined
-                                v-model="formFields.HasarDurumu"
-                                :options="hasarDurumuOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                label="Hasar Durumu"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-                            <div class="row no-wrap justify-between">
-                                <div class="col-3 q-my-auto">
-                                    <label class="text-no-wrap text-center"
-                                    >Bina İnşa Yılı</label
-                                    >
-                                </div>
-                                <div class="col-9 row">
-                                    <div class="col-5">
-                                        <q-input
-                                            dense
-                                            outlined
-                                            v-model="formFields.insaYili"
-                                            hide-bottom-space
-                                            lazy-rules
-                                            :rules="[
+                                <q-select
+                                    outlined
+                                    v-model="formFields.SigortalSifati"
+                                    :options="sigortalSifatiOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    emit-value
+                                    map-options
+                                    label="Sigortalının Sıfatı "
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.Rehinli"
+                                    type="text"
+                                    label="Rehinli Alacaklı Var Mı?   Varsa Bilgileri"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                        'Lutfen Şasi No giriniz',
+                                ]"
+                                />
+
+                                <q-select
+                                    outlined
+                                    v-model="formFields.KonutKullanim"
+                                    :options="konutKullanimOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    emit-value
+                                    map-options
+                                    label="Konut Kullanım Tarzı "
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+                                <q-stepper-navigation>
+                                    <q-btn
+                                        type="submit"
+                                        color="primary"
+                                        label="İlerle"
+                                        no-caps
+                                        class="full-width"
+                                    />
+                                </q-stepper-navigation>
+
+                            </q-form>
+                        </q-step>
+                        <q-step
+                            :name="3"
+                            prefix="3"
+                            title=""
+                            :header-nav="step > 3"
+                            style="min-height: 200px"
+                        >
+                            <q-form @submit="onSubmitKonut" class="q-gutter-md">
+                                <q-select
+                                    outlined
+                                    v-model="formFields.BinaYapi"
+                                    :options="binaYapiOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    emit-value
+                                    map-options
+                                    label="Bina Yapı Tarzı"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+                                <q-select
+                                    outlined
+                                    v-model="formFields.KonutTipi"
+                                    :options="konutTipiOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    emit-value
+                                    map-options
+                                    label="Konut Tipi"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+                                <q-select
+                                    outlined
+                                    v-model="formFields.KatBilgisi"
+                                    :options="katBilgisiOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    emit-value
+                                    map-options
+                                    label="Kat Bilgisi"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.YasayanKisiSayisi"
+                                    type="text"
+                                    label="Konutta Yaşayan Kişi Sayısı"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                        'Lutfen Şasi No giriniz',
+                                ]"
+                                />
+
+                                <q-select
+                                    outlined
+                                    v-model="formFields.HasarDurumu"
+                                    :options="hasarDurumuOptions"
+                                    :option-label="(option) => option.label"
+                                    option-value="value"
+                                    emit-value
+                                    map-options
+                                    label="Hasar Durumu"
+                                    dense
+                                    clearable
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+                                <div class="row no-wrap justify-between">
+                                    <div class="col-3 q-my-auto">
+                                        <label class="text-no-wrap text-center"
+                                        >Bina İnşa Yılı</label
+                                        >
+                                    </div>
+                                    <div class="col-9 row">
+                                        <div class="col-5">
+                                            <q-input
+                                                dense
+                                                outlined
+                                                v-model="formFields.insaYili"
+                                                hide-bottom-space
+                                                lazy-rules
+                                                :rules="[
                                                 (val) =>
                                                     (val && val.length > 0) ||
                                                     '',
                                             ]"
-                                            class="q-mr-xs q-ml-xs"
-                                        />
-                                    </div>
-                                    <div class="col-2 q-my-auto">
-                                        <div class="text-center text-subtitle2">
-                                            <p>M <sup>2</sup></p>
+                                                class="q-mr-xs q-ml-xs"
+                                            />
+                                        </div>
+                                        <div class="col-2 q-my-auto">
+                                            <div class="text-center text-subtitle2">
+                                                <p>M <sup>2</sup></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <q-input
+                                                dense
+                                                outlined
+                                                v-model="formFields.M2"
+                                                hide-bottom-space
+                                                lazy-rules
+                                                :rules="[
+                                                (val) =>
+                                                    (val && val.length > 0) ||
+                                                    '',
+                                            ]"
+                                                class="q-ml-xs q-mr-xs"
+                                                autogrow
+                                            />
                                         </div>
                                     </div>
-                                    <div class="col-5">
-                                        <q-input
-                                            dense
-                                            outlined
-                                            v-model="formFields.M2"
-                                            hide-bottom-space
-                                            lazy-rules
-                                            :rules="[
-                                                (val) =>
-                                                    (val && val.length > 0) ||
-                                                    '',
-                                            ]"
-                                            class="q-ml-xs q-mr-xs"
-                                            autogrow
-                                        />
-                                    </div>
                                 </div>
-                            </div>
 
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.BinaBedeli"
-                                type="text"
-                                label="Yeni Bina Bedeli"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.BinaBedeli"
+                                    type="text"
+                                    label="Yeni Bina Bedeli"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen bina bedeli giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.EsyaBedeli"
-                                type="text"
-                                label="Yeni Eşya Bedeli"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.EsyaBedeli"
+                                    type="text"
+                                    label="Yeni Eşya Bedeli"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen  eşya bedeli giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.CamBedeli"
-                                type="text"
-                                label="Cam Bedeli"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.CamBedeli"
+                                    type="text"
+                                    label="Cam Bedeli"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen  cam bedeli giriniz',
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.KonuttaHasarYasandi"
-                                type="text"
-                                label="Son 5 Yılda Konutta Hasar Yaşandı mı?"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                                />
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.KonuttaHasarYasandi"
+                                    type="text"
+                                    label="Son 5 Yılda Konutta Hasar Yaşandı mı?"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         'Lutfen  cevab giriniz',
                                 ]"
-                            />
-
-                            <q-select
-                                outlined
-                                v-model="formFields.AcenteNo"
-                                :options="agentOptions"
-                                :option-label="(option) => option.Acente_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                label="Acentenizi Seçiniz"
-                                dense
-                                clearable
-                                use-input
-                                @filter="filterAgent"
-                                hide-bottom-space
-                                behavior="menu"
-                            />
-                            <q-stepper-navigation>
-                                <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    label="Teklif Al"
-                                    no-caps
-                                    class="full-width"
                                 />
-                                <!--          <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />-->
-                            </q-stepper-navigation>
 
-                            <div class="row">
-                                <div class="col-1">
-                                    <q-checkbox
-                                        v-model="formFields.uyar"
+                                <q-select
+                                    outlined
+                                    v-model="formFields.AcenteNo"
+                                    :options="agentOptions"
+                                    :option-label="(option) => option.Acente_Adi"
+                                    option-value="id"
+                                    emit-value
+                                    map-options
+                                    label="Acentenizi Seçiniz"
+                                    dense
+                                    clearable
+                                    use-input
+                                    @filter="filterAgent"
+                                    hide-bottom-space
+                                    behavior="menu"
+                                />
+                                <q-stepper-navigation>
+                                    <q-btn
+                                        type="submit"
                                         color="primary"
-                                        dense
+                                        label="Teklif Al"
+                                        no-caps
+                                        class="full-width"
                                     />
+                                    <!--          <q-btn flat @click="step = 1" color="primary" label="Back" class="q-ml-sm" />-->
+                                </q-stepper-navigation>
+
+                                <div class="row">
+                                    <div class="col-1">
+                                        <q-checkbox
+                                            v-model="formFields.uyar"
+                                            color="primary"
+                                            dense
+                                        />
+                                    </div>
+                                    <div
+                                        class="col-11 text-grey-8"
+                                        style="font-size: 11px"
+                                    >
+                                        <b>Uyarı:</b> Bir sigorta poliçesinin
+                                        düzenlenmesi amacı ile beyan edilen
+                                        bilgilerin eksiklik içermesi ve/veya yanlış
+                                        olması ve/veya yanıltıcı beyan içermesi
+                                        halinde, işbu sigorta poliçesi ile ilgili
+                                        şirketimizin her hangi bir sorumluluğu
+                                        bulunmayacak ve/veya poliçe geçersiz
+                                        kılınabilecektir.
+                                    </div>
+                                    <div class="col-12">
+                                        <q-separator spaced />
+                                    </div>
+                                    <div class="col-12">
+                                        Önemli Not: Sigorta bedeli hesaplanırken
+                                        arsa hariç binanın yeni inşa değeri,eşyanın
+                                        da yeni (satın alma) değeri esas alınır.
+                                    </div>
                                 </div>
-                                <div
-                                    class="col-11 text-grey-8"
-                                    style="font-size: 11px"
-                                >
-                                    <b>Uyarı:</b> Bir sigorta poliçesinin
-                                    düzenlenmesi amacı ile beyan edilen
-                                    bilgilerin eksiklik içermesi ve/veya yanlış
-                                    olması ve/veya yanıltıcı beyan içermesi
-                                    halinde, işbu sigorta poliçesi ile ilgili
-                                    şirketimizin her hangi bir sorumluluğu
-                                    bulunmayacak ve/veya poliçe geçersiz
-                                    kılınabilecektir.
-                                </div>
-                                <div class="col-12">
-                                    <q-separator spaced />
-                                </div>
-                                <div class="col-12">
-                                    Önemli Not: Sigorta bedeli hesaplanırken
-                                    arsa hariç binanın yeni inşa değeri,eşyanın
-                                    da yeni (satın alma) değeri esas alınır.
-                                </div>
-                            </div>
-                        </q-form>
-                    </q-step>
-                </q-stepper>
-            </div>
-        </q-page-container>
-    </q-layout>
+                            </q-form>
+                        </q-step>
+                    </q-stepper>
+                </div>
+            </q-page-container>
+        </q-layout>
+    </transition>
 </template>
 
 <script setup lang="ts">
@@ -945,4 +947,5 @@ input[type="number"] {
 .q-stepper--horizontal .q-stepper__step-inner {
     padding-top: 0px !important;
 }
+
 </style>

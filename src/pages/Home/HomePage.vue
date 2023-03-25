@@ -1,5 +1,13 @@
 <template>
-    <q-page class="row items-top justify-evenly">
+    <transition-group
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeIn"
+    >
+    <q-page
+        key="home"
+        class="row items-top justify-evenly"
+    >
         <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
             <div class="pickgradient">
                 <img src="~assets/home_page.png" />
@@ -116,26 +124,45 @@
                         class="full-width"
                         style="border-radius: 8px"
                         size="20px"
-                        :to="{ name: 'homeLogin' }"
+                        :to="{ name: 'loginPage' }"
                     />
                 </div>
             </q-list>
         </q-card>
+        <q-page-sticky class="q-pa-md">
+            <q-btn color="primary" @click="urgentHandleBtn()"  round  label="Acil"  no-caps />
+        </q-page-sticky>
     </q-page>
+    </transition-group>
 </template>
 <!--to="/auth/login"-->
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { ref } from "vue";
+import UrgentDialog from "components/Dialog/UrgentDialog.vue";
+const isLogin = ref(false);
 
-export default defineComponent({
-    name: "IndexPage",
+
+export default {
+    name: "HomePage",
     setup() {
-        const isLogin = ref(false);
         return {
             isLogin,
         };
     },
-});
+    methods: {
+        urgentHandleBtn() {
+            this.$q.dialog({
+                component: UrgentDialog,
+                parent: this,
+            });
+        },
+
+    },
+};
+
+
+
+
 </script>
 <style>
 .pickgradient {

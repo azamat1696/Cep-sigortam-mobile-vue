@@ -10,23 +10,25 @@
                 </div>
             </q-card-section>
             <q-card-section class="q-pt-xs">
-                <q-form>
+                <q-form @submit="onSubmit">
                     <q-input
-                        v-model="formFields.identificationNumber"
+                        v-model="formFields.id_card"
                         outlined
                         color="#EBEBEB"
-                        label="KKTC Kimlik No"
+                        label="Kimlik No"
                         clearable
                         class="q-pt-sm q-pb-sm"
+                        lazy-rules
+                        :rules="[val => val.length === 11 || 'Kimlik No 11 haneli olmalıdır']"
                     />
                     <q-checkbox
-                        v-model="formFields.citizenOfTC"
+                        v-model="formFields.TCVat"
                         dense
                         label="TC Vatandasiyim"
                         class="q-pt-sm q-pb-sm text-subtitle2"
                     />
                     <q-input
-                        v-model="formFields.phoneNo"
+                        v-model="formFields.phone"
                         outlined
                         color="#EBEBEB"
                         label="Cep No"
@@ -35,6 +37,7 @@
                     />
                     <q-input
                         v-model="formFields.password"
+                        type="password"
                         outlined
                         color="#EBEBEB"
                         label="Şifre"
@@ -46,6 +49,7 @@
                         text-color="white"
                         label="Giriş"
                         no-caps
+                        type="submit"
                         class="full-width q-mt-md"
                         style="border-radius: 8px"
                         size="20px"
@@ -89,29 +93,37 @@
     </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, reactive, ref } from "vue";
+<script lang="ts" setup>
+import {  ref } from "vue";
+import { storeToRefs} from "pinia";
+import { useAuthStore } from "stores/auth-store";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const { authToken,user } = storeToRefs(useAuthStore());
+const { login } = useAuthStore();
+const formFields = ref({
+    id_card: "23232323191",
+    TCVat: false,
+    phone: "5488321431",
+    password: "121212",
+    rememberMe: false,
+})
 
-export default defineComponent({
-    name: "LoginPae",
-    setup() {
-        return {
-            test: ref(false),
-            formFields: reactive({
-                identificationNumber: "",
-                citizenOfTC: false,
-                phoneNo: "",
-                password: "",
-                rememberMe: false,
-            }),
-        };
-    },
-    methods: {
-        onSubmit() {
-            console.log("on submit");
-        },
-    },
-});
+const onSubmit = () => {
+    let formData = new FormData();
+    for(let [key,val] of Object.entries(formFields.value)) {
+        formData.append(key,val);
+    }
+    login(formData).then((res) => {
+        if (res !== undefined){
+            user.value = formFields.value
+            router.push({ name: 'optVerificationPage' });
+        }
+        console.log('user',user.value);
+    }).catch((err) => {
+        console.log('err',err);
+    });
+}
 </script>
 
 <style scoped>
@@ -126,5 +138,8 @@ export default defineComponent({
     font-size: 14px;
     color: #5e5e5e;
     line-height: 16px;
+}
+.q-field--outlined .q-field__control {
+    border-radius: 8px !important;
 }
 </style>

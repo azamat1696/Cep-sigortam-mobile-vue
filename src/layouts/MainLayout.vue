@@ -1,38 +1,45 @@
 <template>
     <q-layout view="lHh Lpr lFf">
         <q-header elevated reveal>
-            <q-toolbar>
-                <q-toolbar-title
-                    class="text-subtitle1 text-bold cursor-pointer"
-                    @click="$router.push({ name: 'home' })"
-                    >CEP SIGORTA</q-toolbar-title
-                >
-                <q-avatar color="white" size="md">
-                    <q-img src="~assets/headphone.png" />
-                </q-avatar>
-                <q-btn
-                    v-if="!isLogin"
-                    flat
-                    icon="menu"
-                    round
-                    size="lg"
-                    @click="toggleLeftDrawer"
-                />
-                <q-btn
-                    v-if="isLogin"
-                    class="q-ml-md"
-                    color="grey-11"
-                    dense
-                    round
-                    size="md"
-                    text-color="black"
-                    unelevated
-                    @click="toggleLeftDrawer"
-                >
-                    <span class="text-subtitle2">HY</span>
-                </q-btn>
+            <q-toolbar class="flex justify-between">
+              <div>
+                  <q-avatar size="xl">
+                      <q-img src="/nesuygulamaikon.svg" height="50px" width="50px" />
+                  </q-avatar>
+              </div>
+<!--                <q-toolbar-title-->
+<!--                    class="text-subtitle1 text-bold cursor-pointer"-->
+<!--                    @click="$router.push({ name: 'home' })"-->
+<!--                    >CEP SIGORTAM</q-toolbar-title>-->
+         <div>
+             <q-avatar color="white" size="md" @click="handleUrgentDialog">
+                 <q-img src="~assets/headphone.png" />
+             </q-avatar>
+             <q-btn
+                 v-if="!isLogin"
+                 flat
+                 icon="menu"
+                 round
+                 size="lg"
+                 @click="toggleLeftDrawer"
+             />
+             <q-btn
+                 v-if="isLogin"
+                 class="q-ml-md"
+                 color="grey-11"
+                 dense
+                 round
+                 size="md"
+                 text-color="black"
+                 unelevated
+                 @click="toggleLeftDrawer"
+             >
+                 <span class="text-subtitle2">HY</span>
+             </q-btn>
+         </div>
             </q-toolbar>
         </q-header>
+
         <q-drawer
             v-model="leftDrawerOpen"
             behavior="mobile"
@@ -69,18 +76,23 @@
                         <q-item-section avatar>
                             <span class="text-subtitle2">Dil Seçimi</span>
                         </q-item-section>
-                        <q-item-section avatar class="q-pl-sm">
-                            <q-btn class="text-subtitle2" rounded size="sm"
+                        <q-item-section avatar class="q-pl-sm" @click="changeLang('tr')">
+                            <q-btn
+                                class="text-subtitle2"
+                                rounded
+                                :color="locale === 'tr' ? 'primary' : ''"
+                                :text-color="locale === 'tr' ? 'white' : '  '"
+                                size="sm"
                                 >TR</q-btn
                             >
                         </q-item-section>
-                        <q-item-section avatar class="q-pr-none">
+                        <q-item-section avatar class="q-pr-none" @click="changeLang('en')">
                             <q-btn
                                 class="text-subtitle2"
-                                color="primary"
+                                :color="locale === 'en' ? 'primary' : ''"
                                 rounded
                                 size="sm"
-                                text-color="white"
+                                :text-color="locale === 'en' ? 'white' : '  '"
                                 >EN</q-btn
                             >
                         </q-item-section>
@@ -89,8 +101,12 @@
                         <q-item-section avatar class="items-end q-pr-sm">
                             <q-icon name="highlight_off"></q-icon>
                         </q-item-section>
-                        <q-item-section avatar>
-                            <span class="text-subtitle2">Çıkış Yap</span>
+                        <q-item-section avatar @click="logout" v-if="authToken">
+                            <span class="text-subtitle2"> Çıkış Yap</span>
+                        </q-item-section>
+
+                            <q-item-section avatar :to="{name: 'loginPage'}"   v-else>
+                                <span class="text-subtitle2">Giriş yap</span>
                         </q-item-section>
                     </q-item>
                     <div class="absolute-bottom">
@@ -133,29 +149,61 @@
         </q-drawer>
 
         <q-page-container>
-            <router-view />
+
+                <router-view v-slot="{Component}">
+                    <component key="component" :is="Component" />
+                </router-view>
+
         </q-page-container>
     </q-layout>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import ContactUsDialog from "components/Dialog/ContactUsDialog.vue";
+import {useI18n} from "vue-i18n";
+import {useAuthStore} from "stores/auth-store";
+import {storeToRefs} from "pinia";
 
 export default defineComponent({
     name: "MainLayout",
 
     setup() {
+        const {logout} = useAuthStore();
+        const { user,authToken } = storeToRefs(useAuthStore())
+        const { locale } = useI18n({ useScope: 'global' })
+
         const leftDrawerOpen = ref(false);
         const isLogin = ref(false);
         return {
             isLogin,
             leftDrawerOpen,
+            user,
+            authToken,
+            logout,
             toggleLeftDrawer() {
                 leftDrawerOpen.value = !leftDrawerOpen.value;
                 isLogin.value = !isLogin.value;
+
             },
+            locale
         };
     },
+    methods: {
+        handleUrgentDialog() {
+            this.$q.dialog({
+              component: ContactUsDialog,
+            });
+        },
+        changeLang(lang: string) {
+             this.locale = lang
+
+        },
+
+
+    },
+
+
 });
 </script>
 <style>
@@ -163,4 +211,14 @@ body.cordova .my-selector {
     padding-top: constant(safe-area-inset-top);
     padding-top: env(safe-area-inset-top);
 }
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
 </style>

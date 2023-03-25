@@ -16,6 +16,7 @@ export const useMainStore = defineStore("main", {
         renk: [],
         belediyeSelect: [],
         sokakSelect: [],
+
     }),
     getters: {
         countriesGetter: (state) => state.countries,
