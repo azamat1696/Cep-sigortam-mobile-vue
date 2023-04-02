@@ -4,7 +4,7 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeIn"
     >
-    <div key="ferdikazasuccess" class="fullscreen flex flex-center no-padding">
+    <div key="trafikSuccess" class="fullscreen flex flex-center no-padding">
         <q-card
             class="no-shadow transparent"
             style="height: auto; min-width: 370px; margin-top: 130px"

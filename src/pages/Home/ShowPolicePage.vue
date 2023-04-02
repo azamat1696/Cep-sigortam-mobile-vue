@@ -16,20 +16,22 @@
             </q-toolbar>
         </q-header>
         <q-page-container>
-            <div v-for="item in 5" class="q-pa-md">
+
+            <div v-for="(item,i) in policy" class="q-pa-md" :key="i">
                 <div class="text-subtitle2 q-pb-md">
-                    {{ item }}. Adet Aktif Poliçeniz Bulunmaktadır
+                    {{ i+1 }}. Adet Aktif Poliçeniz Bulunmaktadır
                 </div>
                 <q-list bordered dense style="border-radius: 8px">
                     <q-expansion-item
                         class="text-grey-8"
                         expand-separator
-                        label="Trafik Sigortası - 0000000 / 05.05.2022"
+                        :label=" item.Brans+'- 0000000 / 05.05.2022'"
                     >
                         <q-card>
                             <q-card-section
                                 class="flex justify-between items-start"
                             >
+
                                 <span style="font-size: 11px"
                                     >Sigortalı Numarası: 00000000</span
                                 ><span style="font-size: 11px"
@@ -72,13 +74,13 @@
     </q-layout>
 </template>
 
-<script>
-export default {
-    name: "ShowDamagePage",
-    setup() {
-        return {};
-    },
-};
+<script lang="ts" setup>
+ import {useAuthStore} from "stores/auth-store";
+ import {storeToRefs} from "pinia";
+ const authStore = useAuthStore();
+ const {policy,user} = storeToRefs(authStore);
+ const {getAllPolicy} = authStore
+    getAllPolicy();
 </script>
 
 <style scoped>

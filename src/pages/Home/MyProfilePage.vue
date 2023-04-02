@@ -19,16 +19,16 @@
             <div class="q-pt-xs">
                 <q-card class="no-shadow q-pa-sm">
                     <q-card-section style="padding-bottom: 10px">
-                        <div class="text-body2 text-grey-9">Hakan Yılmaz</div>
+                        <div class="text-body2 text-grey-9">{{user.name+' '+user.surname}}</div>
                     </q-card-section>
                     <q-card-section>
                         <div class="flex justify-between items-start">
                             <div>
                                 <div class="text-caption text-grey-8">
-                                    K.K.T.C. Kimlik No
+                                     Kimlik No
                                 </div>
                                 <div class="text-caption text-grey-8 q-pt-xs">
-                                    000********00
+                                    {{user.id_card}}
                                 </div>
                             </div>
                             <div>
@@ -36,7 +36,7 @@
                                     Sigortalı Numarası
                                 </div>
                                 <div class="text-caption text-grey-8 q-pt-xs">
-                                    00000000
+                                   *********
                                 </div>
                             </div>
                         </div>
@@ -73,13 +73,13 @@
                                 src="~assets/phone_in_talk.png"
                                 width="24px"
                             />
-                            <span class="q-pl-sm">055500000000</span>
+                            <span class="q-pl-sm">{{user.phone}}</span>
                         </div>
                     </q-card-section>
                     <q-card-section>
                         <div class="text-caption text-grey-8">
                             <q-img src="~assets/mail.png" width="24px" />
-                            <span class="q-pl-sm">hakanyilmaz@gmail.com</span>
+                            <span class="q-pl-sm">{{user.email}}</span>
                         </div>
                     </q-card-section>
                     <q-card-section>
@@ -94,8 +94,7 @@
                                 />
                             </div>
                             <span class="q-pl-sm" style="font-size: 12px"
-                                >Şehit Mehmet Kemal Sok. No: 114 D: 12
-                                Küçükkaymaklı / Lefkoşa</span
+                                >{{user?.address}}</span
                             >
                         </div>
                     </q-card-section>
@@ -112,48 +111,74 @@
                 <q-card-section
                     class="text-caption text-grey-8 flex justify-between q-pt-sm"
                 >
-                    <q-checkbox v-model="Email" label="E-Posta" dense />
-                    <q-checkbox v-model="Phone" label="Telefon" dense />
-                    <q-checkbox v-model="Message" label="SMS" dense />
+                    <q-checkbox v-model="email_fav" label="E-Posta" dense @update:model-value="onCheckboxChange" />
+                    <q-checkbox v-model="phone_fav" label="Telefon" dense  @update:model-value="onCheckboxChange" />
+                    <q-checkbox v-model="sms_fav" label="SMS" dense @update:model-value="onCheckboxChange"  />
                 </q-card-section>
             </q-card>
-            <div class="q-pt-xs">
-                <q-card class="no-shadow q-pa-xs">
-                    <q-card-section class="q-pb-sm q-pt-sm">
-                        <div class="flex justify-between items-start">
-                            <div class="text-body2 text-grey-10 q-mt-sm">
-                                İzinlerim
-                            </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section
-                        class="text-caption text-grey-8 flex justify-between q-pt-xs q-pb-sm"
-                    >
-                        <q-checkbox
-                            v-model="RememberMe"
-                            label="E-Posta"
-                            dense
-                        />
-                    </q-card-section>
-                </q-card>
-            </div>
+<!--            <div class="q-pt-xs">-->
+<!--                <q-card class="no-shadow q-pa-xs">-->
+<!--                    <q-card-section class="q-pb-sm q-pt-sm">-->
+<!--                        <div class="flex justify-between items-start">-->
+<!--                            <div class="text-body2 text-grey-10 q-mt-sm">-->
+<!--                                İzinlerim-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </q-card-section>-->
+<!--                    <q-card-section-->
+<!--                        class="text-caption text-grey-8 flex justify-between q-pt-xs q-pb-sm"-->
+<!--                    >-->
+<!--                        <q-checkbox-->
+<!--                            v-model="email_fav"-->
+<!--                            label="E-Posta"-->
+<!--                            dense-->
+<!--                        />-->
+<!--                    </q-card-section>-->
+<!--                </q-card>-->
+<!--            </div>-->
         </q-page-container>
     </q-layout>
 </template>
 
-<script>
-import { ref } from "vue";
-export default {
-    name: "MyProfilePage",
-    setup() {
-        return {
-            Email: ref(false),
-            Phone: ref(false),
-            Message: ref(false),
-            RememberMe: ref(false),
-        };
-    },
+<script lang="ts" setup>
+import { reactive, toRefs } from "vue";
+ import {useAuthStore} from "stores/auth-store";
+ import {storeToRefs} from "pinia";
+
+ const authStore = useAuthStore();
+ const {user} = storeToRefs(authStore);
+ const {updateProfile} = authStore
+console.log('>>>>>>>>>>>>>',user.value)
+ const formField = reactive({
+     // @ts-ignore
+     sms_fav: user.value?.sms_fav === 1,
+     // @ts-ignore
+     phone_fav: user.value?.phone_fav === 1,
+     // @ts-ignore
+     email_fav: user.value?.email_fav === 1,
+
+  });
+  const { sms_fav, phone_fav, email_fav } = toRefs(formField);
+const onCheckboxChange = (value:any) => {
+    let formData = new FormData();
+    for(const [key, value] of Object.entries(formField)){
+        // @ts-ignore
+        formData.append(key, value ? 1 : 0);
+    }
+      updateProfile(formData).then((res) => {
+         if (res){
+             // @ts-ignore
+                user.value.sms_fav = formField.sms_fav ? 1 : 0;
+             // @ts-ignore
+                user.value.phone_fav = formField.phone_fav ? 1 : 0;
+             // @ts-ignore
+                user.value.email_fav = formField.email_fav ? 1 : 0;
+
+             localStorage.setItem('user', JSON.stringify(user.value));
+         }
+    });
 };
+
 </script>
 
 <style scoped></style>

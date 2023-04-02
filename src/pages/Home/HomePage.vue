@@ -136,32 +136,41 @@
     </transition-group>
 </template>
 <!--to="/auth/login"-->
-<script lang="ts">
-import { ref } from "vue";
+<script lang="ts" setup>
+import {onMounted, ref} from "vue";
+import {useMainStore} from "stores/main-store";
 import UrgentDialog from "components/Dialog/UrgentDialog.vue";
-const isLogin = ref(false);
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
+const mainStore = useMainStore();
+const {
+    countriesGet: countriesGet,
+    ilGet: ilGet,
+    ilceSelectGet: ilceSelectGet,
+    belediyeSelectGet: belediyeSelectGet,
+    mahalleSelectGet: mahalleSelectGet,
+    sokakSelectGet: sokakSelectGet,
+    agentGet: agentGet,
+    getJobs: getJobs
+} = mainStore;
 
+onMounted( () => {
+    getJobs();
+    countriesGet();
+    ilGet();
+    ilceSelectGet();
+    belediyeSelectGet();
+    mahalleSelectGet();
+    sokakSelectGet();
+    agentGet();
 
-export default {
-    name: "HomePage",
-    setup() {
-        return {
-            isLogin,
-        };
-    },
-    methods: {
-        urgentHandleBtn() {
-            this.$q.dialog({
-                component: UrgentDialog,
-                parent: this,
-            });
-        },
-
-    },
-};
-
-
-
+});
+ const   urgentHandleBtn = () =>{
+   $q.dialog({
+        component: UrgentDialog,
+        parent: this,
+    });
+}
 
 </script>
 <style>

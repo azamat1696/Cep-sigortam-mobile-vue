@@ -21,7 +21,7 @@
                         class="text-subtitle1 q-pb-xl q-pl-md q-pr-md"
                         style="color: #5e5e5e"
                     >
-                        Başvurumuz alınmış olup size en yakın sürede geri dönüş
+                        Başvurunuz alınmış olup size en yakın sürede geri dönüş
                         sağlanacaktır Near East Sigorta'yı tercih ettiğiniz için
                         teşekkürler.
                     </div>

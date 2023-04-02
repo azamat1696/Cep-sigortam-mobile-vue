@@ -3,7 +3,6 @@
         appear
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeIn"
-
     >
     <q-page
         key="home-login"
@@ -13,7 +12,7 @@
             <div class="pickgradient">
                 <img src="~assets/home_page.png" />
                 <div class="centeredUp">Good Evening</div>
-                <div class="centeredDown">{{user}}</div>
+                <div class="centeredDown">{{user.name +' '+user.surname}}</div>
             </div>
             <q-list>
                 <q-item clickable class="q-pa-lg" :to="{ name: 'showPolice' }">
@@ -34,7 +33,7 @@
                             <q-chip
                                 style="background-color: #eaf5fe; width: 60px"
                                 size="sm"
-                                >1 Poliçe</q-chip
+                                >{{ policy.length }} Poliçe</q-chip
                             ></q-item-label
                         >
                     </q-item-section>
@@ -67,7 +66,7 @@
                             <q-chip
                                 style="background-color: #eaf5fe; width: 55px"
                                 size="sm"
-                                >3 Hasar</q-chip
+                                >{{hasarPolicy?.length}} Hasar</q-chip
                             ></q-item-label
                         >
                     </q-item-section>
@@ -84,7 +83,7 @@
                 <q-separator />
 
                 <q-separator />
-                <q-item clickable class="q-pa-lg">
+                <q-item clickable class="q-pa-lg" :to="{name: 'TrafikSigortaCreate'}">
                     <q-item-section avatar>
                         <img
                             src="~assets/car.png"
@@ -102,7 +101,7 @@
                     </q-item-section>
                 </q-item>
                 <q-separator />
-                <q-item clickable class="q-pa-lg">
+                <q-item clickable class="q-pa-lg" :to="{name: 'FerdiKazaCreate'}">
                     <q-item-section avatar>
                         <img
                             src="~assets/car_crash.png"
@@ -164,34 +163,19 @@
     </transition-group>
 </template>
 <!--to="/auth/login"-->
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import {onMounted, ref} from "vue";
 import { useAuthStore} from "stores/auth-store";
 import { storeToRefs} from "pinia";
+const authStore = useAuthStore();
+const { user,policy,hasarPolicy} = storeToRefs(authStore);
+const { getAllPolicy,getHasarPolicy } = authStore
 
-export default defineComponent({
-    name: "IndexPage",
-    setup() {
-        const { user } = storeToRefs(useAuthStore());
-        const isLogin = ref(false);
-        return {
-            isLogin,
-            user
-        };
-    },
-    methods: {
-        handleGoBack: function (side: string) {
-            console.log("side", side)
-            // @ts-ignore
-            this.$router.push({ name: 'home' })
-        },
-        handleGoForward: function (side: string) {
-            console.log("side", side)
-            // @ts-ignore
-            this.$router.push({ name: 'teklifAl' })
-        },
-    },
+onMounted(() => {
+    getAllPolicy();
+    getHasarPolicy();
 });
+
 </script>
 <style>
 .pickgradient {

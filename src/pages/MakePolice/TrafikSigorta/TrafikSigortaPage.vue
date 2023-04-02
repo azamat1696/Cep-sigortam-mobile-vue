@@ -1,20 +1,23 @@
 <!--suppress ALL -->
 <template>
-
-
-    <q-layout view="lHh Lpr lFf">
-        <q-header   elevated>
+    <transition-group
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeIn"
+    >
+    <q-layout key="trafik" view="lHh Lpr lFf">
+        <q-header reveal elevated>
             <q-toolbar>
                 <q-avatar size="sm">
                     <q-icon
                         name="chevron_left"
-                        @click="authToken ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
+                        @click="$router.push({ name: 'homeLogin' })"
                         size="md"
                         class="cursor-pointer"
                     />
                 </q-avatar>
                 <q-toolbar-title class="text-subtitle2 text-bold text-center"
-                    >Kasko</q-toolbar-title
+                    >Trafik</q-toolbar-title
                 >
             </q-toolbar>
         </q-header>
@@ -44,7 +47,7 @@
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciAdi"
-                                label="Adı "
+                                label="Adi "
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -57,7 +60,7 @@
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciSoyAdi"
-                                label="Soyadı"
+                                label="SoyAdi"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -78,13 +81,6 @@
                                         (val && val.length > 0) ||
                                         'Lutfen Kimlik No giriniz',
                                 ]"
-                            />
-
-                            <q-checkbox
-                                v-model="formFields.TCVat"
-                                dense
-                                label="TC Vatandaşıyım"
-                                class="text-subtitle2"
                             />
 
                             <q-input
@@ -129,7 +125,7 @@
                                     >
                                 </div>
                                 <div class="col-9 row">
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <q-input
                                             dense
                                             outlined
@@ -149,7 +145,7 @@
                                             class="q-mr-xs q-ml-xs"
                                         />
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-4">
                                         <q-input
                                             dense
                                             outlined
@@ -165,27 +161,24 @@
                                             autogrow
                                         />
                                     </div>
-<!--                                    <div class="col-4">-->
-<!--                                        <q-select-->
-<!--                                            outlined-->
-<!--                                            v-model="formFields.AracPlakaIlKodu"-->
-<!--                                            :options="aracPlakaIlKoduOptions"-->
-<!--                                            :option-label="-->
-<!--                                                (option) => option.label-->
-<!--                                            "-->
-<!--                                            option-value="value"-->
-<!--                                            emit-value-->
-<!--                                            map-options-->
-<!--                                            dense-->
-<!--                                            options-dense-->
-<!--                                            hide-bottom-space-->
-<!--                                            class="q-ml-xs"-->
-<!--                                            behavior="menu"-->
-<!--                                            lazy-rules-->
-<!--                                            :rules="[val => val !== null && val !== ''-->
-<!--                                            || '']"-->
-<!--                                        />-->
-<!--                                    </div>-->
+                                    <div class="col-4">
+                                        <q-select
+                                            outlined
+                                            v-model="formFields.AracPlakaIlKodu"
+                                            :options="aracPlakaIlKoduOptions"
+                                            :option-label="
+                                                (option) => option.label
+                                            "
+                                            option-value="value"
+                                            emit-value
+                                            map-options
+                                            dense
+                                            options-dense
+                                            hide-bottom-space
+                                            class="q-ml-xs"
+                                            behavior="menu"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                             <q-input
@@ -229,7 +222,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Ülke"
+                                label="Ulke"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -258,7 +251,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Aracın Markası"
+                                label="Aracin Markasi"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -267,7 +260,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen araç markası seçiniz!',]"
+                                || 'Lütfen marka seçiniz!',]"
                             >
                                 <template v-slot:no-option>
                                     <q-item>
@@ -288,7 +281,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Aracın Modeli"
+                                label="Aracin Modeli"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -296,7 +289,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen araç modeli seçiniz!',]"
+                                || 'Lütfen model seçiniz!',]"
                             >
                                 <template v-slot:no-option>
                                     <q-item>
@@ -306,45 +299,21 @@
                                     </q-item>
                                 </template>
                             </q-select>
+
                             <q-input
                                 dense
                                 outlined
                                 v-model="formFields.AracModelYili"
                                 type="number"
-                                label="Model Yılı"
+                                label="Model Yili"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen model yılı giriniz',
+                                        'Lutfen Model Yili giriniz',
                                 ]"
                             />
-                            <q-stepper-navigation>
-                                <!--            <q-btn @click="() => { done1 = true; step = 2 }" type="submit" color="primary" label="Ilerle" no-caps class="full-width" />-->
-                                <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    label="İlerle"
-                                    no-caps
-                                    class="full-width"
-                                />
-                            </q-stepper-navigation>
-                        </q-form>
-                    </q-step>
-
-                    <q-step
-                        :name="2"
-                        prefix="2"
-                        title=""
-                        :done="step > 2"
-                        :header-nav="step > 2"
-                        style="min-height: 200px"
-                    >
-                        <q-form @submit="onNextStep" class="q-gutter-md">
-
-
-
                             <q-select
                                 outlined
                                 v-model="formFields.AracTarz"
@@ -393,7 +362,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen araç marka seçiniz!',]"
+                                || 'Lütfen yakıt tiipi seçiniz!',]"
                             >
                                 <template v-slot:no-option>
                                     <q-item>
@@ -404,7 +373,28 @@
                                 </template>
                             </q-select>
 
+                            <q-stepper-navigation>
+                                <!--            <q-btn @click="() => { done1 = true; step = 2 }" type="submit" color="primary" label="Ilerle" no-caps class="full-width" />-->
+                                <q-btn
+                                    type="submit"
+                                    color="primary"
+                                    label="İlerle"
+                                    no-caps
+                                    class="full-width"
+                                />
+                            </q-stepper-navigation>
+                        </q-form>
+                    </q-step>
 
+                    <q-step
+                        :name="2"
+                        prefix="2"
+                        title=""
+                        :done="step > 2"
+                        :header-nav="step > 2"
+                        style="min-height: 200px"
+                    >
+                        <q-form @submit="onNextStep" class="q-gutter-md">
                             <q-input
                                 dense
                                 outlined
@@ -419,20 +409,20 @@
                                         'Lutfen Motor cc Gücü giriniz',
                                 ]"
                             />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.AracBedeli"
-                                type="number"
-                                label="Araç Bedeli"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen Araç Bedeli giriniz',
-                                ]"
-                            />
+<!--                            <q-input-->
+<!--                                dense-->
+<!--                                outlined-->
+<!--                                v-model="formFields.AracBedeli"-->
+<!--                                type="number"-->
+<!--                                label="Araç Bedeli"-->
+<!--                                hide-bottom-space-->
+<!--                                lazy-rules-->
+<!--                                :rules="[-->
+<!--                                    (val) =>-->
+<!--                                        (val && val.length > 0) ||-->
+<!--                                        'Lutfen Araç Bedeli giriniz',-->
+<!--                                ]"-->
+<!--                            />-->
                             <q-input
                                 dense
                                 outlined
@@ -527,7 +517,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen vites türü seçiniz!',]"
+                                || 'Lütfen vites seçiniz!',]"
                             />
                             <q-stepper-navigation>
                                 <q-btn
@@ -608,6 +598,7 @@
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
                                 || 'Lütfen belediye seçiniz!',]"
+
                             />
                             <q-select
                                 outlined
@@ -653,13 +644,13 @@
                                 outlined
                                 v-model="formFields.MusteriApartmanAdi"
                                 type="text"
-                                label="Bina No"
+                                label="Apartman Adı"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen bina no giriniz',
+                                        'Lutfen Şasi No giriniz',
                                 ]"
                             />
                             <q-input
@@ -667,16 +658,15 @@
                                 outlined
                                 v-model="formFields.MusteriApartmanNo"
                                 type="text"
-                                label="Daire No"
+                                label="Apartman No"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen daire no giriniz',
+                                        'Lutfen Şasi No giriniz',
                                 ]"
                             />
-
                             <q-input
                                 dense
                                 outlined
@@ -761,16 +751,16 @@
                     </q-step>
                 </q-stepper>
 
-<!--                    <form action="https://sanalposprov.garanti.com.tr/servlet/gt3dengine">-->
-<!--                       <div id="formel"></div>-->
-<!--                      <button type="submit" color="primary"  class="full-width"> Ödeme Yap</button>-->
-<!--                    </form>-->
+                <!--    <form action="https://sanalposprov.garanti.com.tr/servlet/gt3dengine">-->
+                <!--       <div id="formel"></div>-->
+                <!--      <button type="submit" color="primary"  class="full-width"> Ödeme Yap</button>-->
+                <!--    </form>-->
 
-<!--                  <button @click="onSubmitPay">test</button>-->
+                <!--  <button @click="onSubmitPay">test</button>-->
             </div>
         </q-page-container>
     </q-layout>
-
+    </transition-group>
 </template>
 
 <script setup lang="ts">
@@ -780,17 +770,15 @@ import { useMainStore } from "../../../stores/main-store";
 import { api } from "boot/axios";
 import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
-import { useKaskoStore } from "stores/kosko-store";
-import {useAuthStore} from "stores/auth-store";
-
+import { useTrafikSigortaStore } from "stores/trafik-store";
 const router = useRouter();
 const store = useMainStore();
-const kaskoStore = useKaskoStore();
-const authStore = useAuthStore();
+const trafikSigortaStore = useTrafikSigortaStore();
 const {
     countries: countries,
     aracMarka: aracMarka,
     aracTipi: aracTipi,
+    aracTarz: aracTarz,
     aracModelSelect,
     renk,
     il: il,
@@ -800,7 +788,6 @@ const {
     sokakSelect,
     agent,
 } = storeToRefs(useMainStore());
-const {user,authToken} = storeToRefs(authStore);
 const {
     countriesGet: countriesGet,
     aracMarkaGet: aracMarkaGet,
@@ -825,7 +812,7 @@ belediyeSelectGet();
 mahalleSelectGet();
 sokakSelectGet();
 agentGet();
-aracTipiGet();
+aracTipiGet()
 const genderOptions = [
     { value: "Erkek", label: "Erkek" },
     { value: "Kadın", label: "Kadın" },
@@ -854,7 +841,7 @@ const aracDireksiyonOptions = [
 let countriesOptions = ref(countries.value);
 let aracMarkaOptions = ref(aracMarka.value);
 let aracTipiOptions = ref(aracTipi.value);
- let aracModelOptions = ref();
+let aracModelOptions = ref();
 let filteredArachModel = aracModelSelect.value;
 let renkOptions = ref(renk.value);
 const ilOptions = ref(il.value);
@@ -875,6 +862,7 @@ const filterCountries = (val: any, update: any) => {
     update(() => {
         const needle = val.toLowerCase();
         countriesOptions.value = countries.value.filter(
+            // @ts-ignore
             (v) => v.Aciklama.toLowerCase().indexOf(needle) > -1
         );
     });
@@ -896,13 +884,13 @@ const filterAracMarka = (val: any, update: any) => {
 };
 const filterAracModel = (val: any, update: any) => {
     // @ts-ignore
-    // formFields.AracModel = "";
-    // if (val === "") {
-    //     update(() => {
-    //         aracModelOptions.value = filteredArachModel;
-    //     });
-    //     return;
-    // }
+    formFields.AracModel = "";
+    if (val === "") {
+        update(() => {
+            aracModelOptions.value = filteredArachModel;
+        });
+        return;
+    }
     update(() => {
         const needle = val.toLowerCase();
         aracModelOptions.value = filteredArachModel.filter(
@@ -936,20 +924,17 @@ const filterRenk = (val: any, update: any) => {
     update(() => {
         const needle = val.toLowerCase();
         renkOptions.value = renk.value.filter(
+            // @ts-ignore
             (v) => v.adi.toLowerCase().indexOf(needle) > -1
         );
     });
 };
 const filterIl = (val: any, update: any) => {
-    if (val === "") {
-        update(() => {
-            ilOptions.value = il.value;
-        });
-        return;
-    }
+
     update(() => {
         const needle = val.toLowerCase();
         ilOptions.value = il.value.filter(
+            // @ts-ignore
             (v) => v.Aciklama.toLowerCase().indexOf(needle) > -1
         );
     });
@@ -964,6 +949,8 @@ const filterIlce = (val: string, update: any) => {
     update(() => {
         const needle = val.toLowerCase();
         ilceSelectGetOptions.value = ilce.value.filter(
+            // @ts-ignore
+
             (v) => v.ilce_Adi.toLowerCase().indexOf(needle) > -1
         );
     });
@@ -979,6 +966,7 @@ const filterBelediye = (val: string, update: any) => {
         const needle = val.toLowerCase();
         belediyeSelectGetOptions.value = belediyeSelect.value.filter(
             // @ts-ignore
+
             (v) => v.Belediye_Adi.toLowerCase().indexOf(needle) > -1
         );
     });
@@ -1033,7 +1021,6 @@ const filterAgent = (val: string, update: any) => {
 const aracMarkaUpdated = (id?: number) => {
     // @ts-ignore
     const marka = aracMarka.value.find((item) => item.id === id);
-    // @ts-ignore
     let filteredModels = aracModelSelect.value.filter(
         // @ts-ignore
         (item) => item.Marka_Kod === marka?.Marka_Kod
@@ -1050,6 +1037,7 @@ const getIlOnSelect = (data: object) => {
 const getIlceOnSelect = (data: object) => {
     belediyeSelectGetOptions.value = belediyeSelect.value.filter(
         // @ts-ignore
+
         (item) => item.ilce_Kodu === data?.id
     );
 };
@@ -1065,7 +1053,9 @@ const getMahalleOnSelect = (data: object) => {
         (item) => item.mahallenin_Kodu === data?.id
     );
 };
-
+const onNextStep = () => {
+    step.value++;
+};
 
 // ************* Form Submit *************** /
 const onSubmitKasko = async () => {
@@ -1078,9 +1068,9 @@ const onSubmitKasko = async () => {
     //   console.log(pair[0] + ', ' + pair[1]);
     // }
 
-    await kaskoStore.kaskoFormSubmit(formData).then((res) => {
+    await trafikSigortaStore.trafikSigortaFormSubmit(formData).then((res) => {
         if (res === true) {
-            router.push({ name: "kaskoSuccess" });
+            router.push({ name: "trafikSuccess" });
         }
     });
 };
@@ -1090,7 +1080,6 @@ const formFields = ref({
     KullaniciAdi: "Ali",
     KullaniciSoyAdi: "sahin",
     MusteriTcKimlikNo: "76876876786",
-    TCVat: false,
     MusteriDogumYeri: "Tkm",
     MusteriCinsiyet: "Erkek",
     MusteriUyruk: 2,
@@ -1099,12 +1088,11 @@ const formFields = ref({
     AracPlaka2: "786",
     AracPlakaIlKodu: "", // select box
     AracMarka: 3, // select box
-    AracTipi: "", // select box
     AracModelYili: "2000", // select box
     AracTarz: "", // select box
     _YakitTipi: "", // select box
     Motor_cc: "54",
-    AracBedeli: "87897979",
+    // AracBedeli: "87897979",
     ipotekli: "ipotekli değil",
     AracMotorNo: "232323232",
     AracSasiNo: "232323232323",
@@ -1122,34 +1110,10 @@ const formFields = ref({
     AcenteNo: "000111", // input
     _SbmCarColorCode: "", // select box
     uyar: "", // 'accepted'
-
+    TCVat: false
 });
-
-const onNextStep = () => {
-    step.value++;
-};
 // ************* Garanti ödeme test *************** /
 // const data ={
-// mode: "PROD",
-// apiversion: "v0.01",
-// cardcvv2: "892",
-// cardexpiredatemonth: "10",
-// cardexpiredateyear: 25,
-// cardnumber: 5356663176575870,
-// customeripaddress: "94.79.123.82",
-// errorurl: "http://sevener.neareasttechnology.net/pay-transaction/fail",
-// orderid: "20230306BE41",
-// secure3dhash: "9CAE8174B69DBDC22DA247DD86BFC0C15FD85300",
-// secure3dsecuritylevel: "3D_FULL",
-// successurl: "http://sevener.neareasttechnology.net/pay-transaction/success",
-// terminalid: "10089933",
-// terminalmerchantid: "152978",
-// terminalprovuserid: "PROVAUT",
-// terminaluserid: "10089933",
-// txnamount: 240000,
-// txncurrencycode: "949",
-// txninstallmentcount: "",
-// txntype: "sales",
 //
 // }
 // const onSubmitPay = () => {

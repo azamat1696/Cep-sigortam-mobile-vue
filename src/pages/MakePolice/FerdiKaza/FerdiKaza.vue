@@ -5,13 +5,13 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeIn"
     >
-        <q-layout key="ferdiKazaTeklif" view="lHh Lpr lFf">
+        <q-layout key="ferdiKazaOlustur" view="lHh Lpr lFf">
             <q-header   elevated>
                 <q-toolbar>
                     <q-avatar size="sm">
                         <q-icon
                             name="chevron_left"
-                            @click="authToken && authToken !== undefined ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
+                            @click="$router.push({ name: 'homeLogin' })"
                             size="md"
                             class="cursor-pointer"
                         />
@@ -46,13 +46,13 @@
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciAdi"
-                                label="Adı "
+                                label="Adi "
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen adınızı giriniz',
+                                        'Lutfen adinizi giriniz',
                                 ]"
                             />
                             <q-input
@@ -65,7 +65,7 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen soyadınızı giriniz',
+                                        'Lutfen soyadinizi giriniz',
                                 ]"
                             />
                             <q-input
@@ -81,12 +81,7 @@
                                         'Lutfen Kimlik No giriniz',
                                 ]"
                             />
-                            <q-checkbox
-                                v-model="formFields.TCVat"
-                                dense
-                                label="TC Vatandaşıyım"
-                                class="text-subtitle2"
-                            />
+
                             <q-input
                                 v-model="formFields.MusteriDogumTarihi"
                                 outlined
@@ -164,7 +159,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Ülke"
+                                label="Ulke"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -189,12 +184,11 @@
                                 type="text"
                                 label="Telefon Numarası"
                                 hide-bottom-space
-                                prefix="+90"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen telefon no giriniz',
+                                        'Lutfen Şasi No giriniz',
                                 ]"
                             />
                             <q-input
@@ -208,7 +202,7 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 7) ||
-                                        'Lutfen e-posta adresi giriniz',
+                                        'Lutfen E-Posta Adresi giriniz',
                                 ]"
                             />
                             <q-select
@@ -334,46 +328,51 @@
                                 :rules="[val => val !== null && val !== ''
                                 || 'Lütfen sokak seçiniz!',]"
                             />
-
+                            <div class="row">
+                                <div class="col-6">
                                     <q-select
                                         outlined
-                                        v-model="formFields.DovicSelect"
-                                        :options="currencyOptions"
-                                        :option-label="(option) => option.label"
-                                        option-value="value"
+                                        v-model="formFields.MusteriCSBMKodu"
+                                        :options="sokakSelectOptions"
+                                        :option-label="(option) => option.Sokak_Adi"
+                                        option-value="id"
                                         emit-value
                                         map-options
-                                        label="Döviz seç"
+                                        label="Sokak"
                                         dense
                                         clearable
                                         use-input
+                                        @filter="filterSokak"
                                         hide-bottom-space
                                         behavior="menu"
                                         lazy-rules
                                         :rules="[val => val !== null && val !== ''
-                                || 'Lütfen döviz seçiniz!',]"
-                                        @update:model-value="getDovizOnSelect"
+                                || 'Lütfen sokak seçiniz!',]"
                                     />
-
+                                </div>
+                                <div class="col-6">
                                     <q-select
                                         outlined
-                                        v-model="formFields.TeminatLimiti"
-                                        :options="currencyOptionsValue"
-                                        :option-label="(option) => option.label"
-                                        option-value="value"
+                                        v-model="formFields.MusteriCSBMKodu"
+                                        :options="sokakSelectOptions"
+                                        :option-label="(option) => option.Sokak_Adi"
+                                        option-value="id"
                                         emit-value
                                         map-options
-                                        label="Ölüm ve Sürekli Sakatlık Limiti"
+                                        label="Sokak"
                                         dense
                                         clearable
                                         use-input
+                                        @filter="filterSokak"
                                         hide-bottom-space
                                         behavior="menu"
                                         lazy-rules
                                         :rules="[val => val !== null && val !== ''
-                                || 'Lütfen rakam seçiniz!',]"
+                                || 'Lütfen sokak seçiniz!',]"
                                     />
+                                </div>
 
+                            </div>
                             <q-input
                                 dense
                                 outlined
@@ -393,7 +392,7 @@
                                 outlined
                                 v-model="formFields.Lehtar"
                                 type="text"
-                                label="Lehtar*"
+                                label="Lehtar"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -406,8 +405,8 @@
                                 outlined
                                 v-model="formFields.Meslegi"
                                 :options="jobOptions"
-                                :option-label="(option) => option.MeslekSinifi"
-                                option-value="id"
+                                :option-label="(option) => option.label"
+                                option-value="value"
                                 emit-value
                                 map-options
                                 label="Mesleği"
@@ -420,6 +419,7 @@
                                 :rules="[val => val !== null && val !== ''
                                 || 'Lütfen rakam seçiniz!',]"
                             />
+
 
 
                             <q-select
@@ -493,17 +493,15 @@
 </template>
 
 <script setup lang="ts">
-import {onMounted, reactive, ref, watch} from "vue";
+import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../../../stores/main-store";
-import { useAuthStore} from "stores/auth-store";
 import { api } from "boot/axios";
 import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import {useFerdiKazaStore} from "stores/ferdi-kaza-store";
 const router = useRouter();
 const store = useMainStore();
-const authStore = useAuthStore();
 const ferdiKazaStore = useFerdiKazaStore();
 const {
     countries: countries,
@@ -513,9 +511,7 @@ const {
     mahalleSelect,
     sokakSelect,
     agent,
-    jobs: jobs,
-} = storeToRefs(store);
-const {user,authToken} = storeToRefs(authStore)
+} = storeToRefs(useMainStore());
 const {
     countriesGet: countriesGet,
     ilGet: ilGet,
@@ -524,20 +520,15 @@ const {
     mahalleSelectGet: mahalleSelectGet,
     sokakSelectGet: sokakSelectGet,
     agentGet: agentGet,
-    getJobs: getJobs
-} = store;
+} = useMainStore();
 
-onMounted( () => {
-      getJobs();
-      countriesGet();
-      ilGet();
-      ilceSelectGet();
-      belediyeSelectGet();
-      mahalleSelectGet();
-      sokakSelectGet();
-      agentGet();
-
-});
+countriesGet();
+ilGet();
+ilceSelectGet();
+belediyeSelectGet();
+mahalleSelectGet();
+sokakSelectGet();
+agentGet();
 const genderOptions = [
     { value: "Erkek", label: "Erkek" },
     { value: "Kadın", label: "Kadın" },
@@ -562,18 +553,17 @@ const usdCurrencyOptions = [
     { value: "70", label: "70.000" },
     { value: "100", label: "100.000" },
 ]
+
 // ************* Options for the form *************** /
-let jobOptions =  ref(jobs.value);
 let countriesOptions = ref(countries.value);
 let aracModelOptions = ref();
 const ilOptions = ref(il.value);
-let ilceSelectGetOptions = ref([]);
+let ilceSelectGetOptions = ref();
 const belediyeSelectGetOptions = ref();
 const mahalleSelectOptions = ref(mahalleSelect.value);
 const sokakSelectOptions = ref();
 const agentOptions = ref(agent.value);
-let currencyOptionsValue = ref();
-
+const jobOptions = ref();
 // ************* Fiters for the form  select *************** /
 const filterCountries = (val: any, update: any) => {
     if (val === "") {
@@ -612,6 +602,7 @@ const filterIlce = (val: string, update: any) => {
         const needle = val.toLowerCase();
         ilceSelectGetOptions.value = ilce.value.filter(
             // @ts-ignore
+
             (v) => v.ilce_Adi.toLowerCase().indexOf(needle) > -1
         );
     });
@@ -680,13 +671,11 @@ const filterAgent = (val: string, update: any) => {
 
 // ************* Select box on update for the form *************** /
 
-const getIlOnSelect = (id: number) => {
-    console.log(id)
+const getIlOnSelect = (data: object) => {
     ilceSelectGetOptions.value = ilce.value.filter(
         // @ts-ignore
-        (item) => +item.il_Kodu === +id
+        (item) => item.il_Kodu === data?.id
     );
-    console.log(ilceSelectGetOptions.value)
 };
 const getIlceOnSelect = (data: object) => {
     belediyeSelectGetOptions.value = belediyeSelect.value.filter(
@@ -707,18 +696,6 @@ const getMahalleOnSelect = (data: object) => {
         (item) => item.mahallenin_Kodu === data?.id
     );
 };
-const getDovizOnSelect = (data: object) => {
-    // @ts-ignore
-    if (data === 'TL' && data !== null) {
-        // @ts-ignore
-     currencyOptionsValue.value = tlCurrencyOptions;
-     // @ts-ignore
-    }else if (data === 'USD' || data === 'EUR' || data === 'GBP') {
-        console.log(data)
-        // @ts-ignore
-        currencyOptionsValue.value = usdCurrencyOptions;
-    }
-}
 const onNextStep = () => {
     step.value++;
 };
@@ -755,16 +732,14 @@ const formFields = ref({
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
     MusteriCSBMKodu: "", // select box
-    MusteriCepTelefonNo: "5488321621", // input
+    MusteriCepTelefonNo: "05488321621", // input
     MusteriEPosta: "azamat1696@gmail.com", // input
     AcenteNo: "", // input
     uyar: "", // 'accepted'
     TeminatLimiti: "", // select box
     Lehtar: "", // select box
     Meslegi: "", // select box
-    DovicSelect:"",
     TCVat: false
-
 });
 
 </script>

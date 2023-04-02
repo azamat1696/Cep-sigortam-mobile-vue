@@ -45,7 +45,7 @@
                         <q-btn
                             color="primary"
                             text-color="white"
-                            label="Giriş"
+                            label="Onay Kodu Al"
                             no-caps
                             class="full-width"
                             style="border-radius: 8px"
@@ -59,7 +59,7 @@
                             <q-btn
                                 color="primary"
                                 text-color="grey-8"
-                                label="Tekrar gönder"
+                                label="Giriş"
                                 no-caps
                                 dense
                                 flat
@@ -67,7 +67,7 @@
                                 padding="none"
                                 align="right"
                                 size="18px"
-                                @click="onForgotPassword"
+                                :to="{ name: 'loginPage' }"
                             />
                         </div>
                     </div>
@@ -109,9 +109,10 @@ export default defineComponent({
             }
             return nonNullField.join("");
         });
-        const {user,permenantUser} = storeToRefs(useAuthStore());
+        const authStore = useAuthStore();
+        const {user,permenantUser} = storeToRefs(authStore);
         const router = useRouter();
-        const { verifySmsCode,getUserInfo,resendSmsCode } = useAuthStore();
+        const { passwordResetSms,getUserInfo,resendSmsCode } = authStore;
         watch(composite, () => {
             if (composite.value) {
                 //emit('update:modelValue',composite.value)
@@ -173,7 +174,7 @@ export default defineComponent({
             onUpdate,
             updateFieldRef,
             router,
-            verifySmsCode,
+            passwordResetSms,
             resendSmsCode,
             getUserInfo,
             user,
@@ -186,21 +187,12 @@ export default defineComponent({
             let formData = new FormData();
 
             formData.append("smsCode", this.fieldValues.join(''));
+            this.permenantUser.smsCode = this.fieldValues.join('');
              formData.append("id_card", this.permenantUser?.id_card);
             formData.append("phone", this.permenantUser.phone);
-            formData.append("password", this.permenantUser?.password)
 
-            this.verifySmsCode(formData)
-                .then((res) => {
-                 if (res === true) {
+            this.passwordResetSms(formData)
 
-                     this.router.push({name: "homeLogin"});
-
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
         },
         onForgotPassword() {
             let formData = new FormData();

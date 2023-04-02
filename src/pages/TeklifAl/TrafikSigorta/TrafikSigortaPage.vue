@@ -6,7 +6,7 @@
                 <q-avatar size="sm">
                     <q-icon
                         name="chevron_left"
-                        @click="$router.push({ name: 'home' })"
+                        @click="authToken ? $router.push({ name: 'homeLogin' }) : $router.push({ name: 'home' })"
                         size="md"
                         class="cursor-pointer"
                     />
@@ -42,26 +42,26 @@
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciAdi"
-                                label="Adi "
+                                label="Adı"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen adinizi giriniz',
+                                        'Lutfen adınızı giriniz',
                                 ]"
                             />
                             <q-input
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciSoyAdi"
-                                label="SoyAdi"
+                                label="Soyadı"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen soyadinizi giriniz',
+                                        'Lutfen soyadınızı giriniz',
                                 ]"
                             />
                             <q-input
@@ -74,8 +74,14 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Kimlik No giriniz',
+                                        'Lutfen kimlik no giriniz',
                                 ]"
+                            />
+                            <q-checkbox
+                                v-model="formFields.TCVat"
+                                dense
+                                label="TC Vatandaşıyım"
+                                class=" text-subtitle2"
                             />
 
                             <q-input
@@ -120,18 +126,13 @@
                                     >
                                 </div>
                                 <div class="col-9 row">
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <q-input
                                             dense
                                             outlined
                                             v-model="formFields.AracPlaka1"
                                             hide-bottom-space
-                                            lazy-rules
-                                            @input="
-                                                (v) => {
-                                                    console.log(v);
-                                                }
-                                            "
+                                            lazy-rulesd
                                             :rules="[
                                                 (val) =>
                                                     (val && val.length > 0) ||
@@ -140,7 +141,7 @@
                                             class="q-mr-xs q-ml-xs"
                                         />
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <q-input
                                             dense
                                             outlined
@@ -156,24 +157,24 @@
                                             autogrow
                                         />
                                     </div>
-                                    <div class="col-4">
-                                        <q-select
-                                            outlined
-                                            v-model="formFields.AracPlakaIlKodu"
-                                            :options="aracPlakaIlKoduOptions"
-                                            :option-label="
-                                                (option) => option.label
-                                            "
-                                            option-value="value"
-                                            emit-value
-                                            map-options
-                                            dense
-                                            options-dense
-                                            hide-bottom-space
-                                            class="q-ml-xs"
-                                            behavior="menu"
-                                        />
-                                    </div>
+<!--                                    <div class="col-4">-->
+<!--                                        <q-select-->
+<!--                                            outlined-->
+<!--                                            v-model="formFields.AracPlakaIlKodu"-->
+<!--                                            :options="aracPlakaIlKoduOptions"-->
+<!--                                            :option-label="-->
+<!--                                                (option) => option.label-->
+<!--                                            "-->
+<!--                                            option-value="value"-->
+<!--                                            emit-value-->
+<!--                                            map-options-->
+<!--                                            dense-->
+<!--                                            options-dense-->
+<!--                                            hide-bottom-space-->
+<!--                                            class="q-ml-xs"-->
+<!--                                            behavior="menu"-->
+<!--                                        />-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                             <q-input
@@ -217,7 +218,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Ulke"
+                                label="Ülke"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -246,7 +247,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Aracin Markasi"
+                                label="Aracın Markası"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -276,7 +277,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Aracin Modeli"
+                                label="Aracın Modeli"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -300,13 +301,13 @@
                                 outlined
                                 v-model="formFields.AracModelYili"
                                 type="number"
-                                label="Model Yili"
+                                label="Model Yılı"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Model Yili giriniz',
+                                        'Lutfen model yılı giriniz',
                                 ]"
                             />
                             <q-select
@@ -401,7 +402,7 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Motor cc Gücü giriniz',
+                                        'Lutfen motor cc gücü giriniz',
                                 ]"
                             />
 <!--                            <q-input-->
@@ -429,7 +430,7 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Banka veya şube  giriniz',
+                                        'Lutfen banka veya şube  giriniz',
                                 ]"
                             />
                             <q-input
@@ -443,7 +444,7 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Motor No  giriniz',
+                                        'Lutfen motor no  giriniz',
                                 ]"
                             />
                             <q-input
@@ -457,7 +458,7 @@
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Şasi No giriniz',
+                                        'Lutfen şasi no giriniz',
                                 ]"
                             />
                             <q-select
@@ -639,13 +640,13 @@
                                 outlined
                                 v-model="formFields.MusteriApartmanAdi"
                                 type="text"
-                                label="Apartman Adı"
+                                label="Bina No"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Şasi No giriniz',
+                                        'Lutfen bina no giriniz',
                                 ]"
                             />
                             <q-input
@@ -653,7 +654,7 @@
                                 outlined
                                 v-model="formFields.MusteriApartmanNo"
                                 type="text"
-                                label="Apartman No"
+                                label="Daire No"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -765,9 +766,11 @@ import { api } from "boot/axios";
 import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import { useTrafikSigortaStore } from "stores/trafik-store";
+import {useAuthStore} from "stores/auth-store";
 const router = useRouter();
 const store = useMainStore();
 const trafikSigortaStore = useTrafikSigortaStore();
+const authStore = useAuthStore();
 const {
     countries: countries,
     aracMarka: aracMarka,
@@ -782,6 +785,7 @@ const {
     sokakSelect,
     agent,
 } = storeToRefs(useMainStore());
+const {authToken} = storeToRefs(authStore);
 const {
     countriesGet: countriesGet,
     aracMarkaGet: aracMarkaGet,
@@ -1104,6 +1108,7 @@ const formFields = ref({
     AcenteNo: "000111", // input
     _SbmCarColorCode: "", // select box
     uyar: "", // 'accepted'
+    TCVat: false
 });
 // ************* Garanti ödeme test *************** /
 // const data ={

@@ -16,7 +16,7 @@
                  <q-img src="~assets/headphone.png" />
              </q-avatar>
              <q-btn
-                 v-if="!isLogin"
+                 v-if="!authToken"
                  flat
                  icon="menu"
                  round
@@ -24,7 +24,7 @@
                  @click="toggleLeftDrawer"
              />
              <q-btn
-                 v-if="isLogin"
+                 v-else
                  class="q-ml-md"
                  color="grey-11"
                  dense
@@ -34,7 +34,7 @@
                  unelevated
                  @click="toggleLeftDrawer"
              >
-                 <span class="text-subtitle2">HY</span>
+                 <span class="text-subtitle2">{{user?.name?.charAt(0) +''+user?.surname?.charAt(0)}}</span>
              </q-btn>
          </div>
             </q-toolbar>
@@ -60,7 +60,7 @@
                         <q-item-section avatar class="items-end q-pr-sm">
                             <q-icon name="person" />
                         </q-item-section>
-                        <q-item-section avatar>
+                        <q-item-section avatar >
                             <span class="text-subtitle2">Profilim</span>
                         </q-item-section>
                         <q-item-section avatar> </q-item-section>

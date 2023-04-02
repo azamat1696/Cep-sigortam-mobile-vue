@@ -82,10 +82,21 @@ const routes: RouteRecordRaw[] = [
                 component: () => import("pages/Auth/RenewPasswordPage.vue"),
             },
             {
+                path: "forgot-password",
+                name: "forgotPasswordPage",
+                component: () => import("pages/Auth/ForgotPassword.vue"),
+            },
+            {
                 path: "opt-verification",
                 name: "optVerificationPage",
                 component: () =>
                     import("pages/Auth/OptPasswordVerification.vue"),
+            },
+            {
+                path: "opt-password-verification",
+                name: "optPasswordResetVerificationPage",
+                component: () =>
+                    import("pages/Auth/OptPasswordResetVerification.vue"),
             },
             {
                 path: "success",
@@ -117,7 +128,19 @@ const routes: RouteRecordRaw[] = [
                 path: "ferdi-kaza",
                 name: "FerdiKazaRegister",
                 component: () => import("pages/TeklifAl/FerdiKaza/FerdiKaza.vue"),
-            }
+            },
+            {
+                meta: {requiresAuth: true},
+                path: "create-ferdi-kaza",
+                name: "FerdiKazaCreate",
+                component: () => import("pages/MakePolice/FerdiKaza/FerdiKaza.vue"),
+            },
+            {
+                meta: {requiresAuth: true},
+                path: "trafik-create",
+                name: "TrafikSigortaCreate",
+                component: () => import("pages/MakePolice/TrafikSigorta/TrafikSigortaPage.vue"),
+            },
         ],
     },
     {

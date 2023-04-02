@@ -6,45 +6,41 @@
         >
             <q-card-section class="q-pb-xs">
                 <div class="text-primary text-uppercase text-left cep-sigortam">
-                    şifre Yenile
+                    Bilgilerinizi Giriniz
                 </div>
             </q-card-section>
             <q-card-section class="q-pt-xs">
                 <q-form @submit="onSubmit">
                     <q-input
-                        v-model="formFields.password"
+                        v-model="formFields.id_card"
                         outlined
                         color="#EBEBEB"
-                        label="Yeni Şifre"
+                        label="Kimlik No"
                         clearable
-                        class="q-pt-sm q-pb-sm"
+                        class="q-pt-sm q-pb-md"
                         lazy-rules
-                        type="password"
-                        :rules="[val => val.length > 0 || 'Şifre 6 haneli olmalıdır']"
+                        :rules="[val => val.length > 0 || 'Lütfen bilgilerinizi giriniz']"
                     />
                     <q-input
-                        type="password"
-                        v-model="formFields.password_again"
+                        v-model="formFields.phone"
                         outlined
                         color="#EBEBEB"
-                        label="Yeni Şifre Tekrar"
+                        label="Cep No"
                         clearable
                         class="q-pt-sm q-pb-sm"
                         lazy-rules
-                        :rules="[
-                            val => val.length > 0 || 'Şifre 6 haneli olmalıdır',
-                            val => val === formFields.password || 'Şifreler eşleşmiyor',
-                            ]"
+                        :rules="[val => val.length > 0 || 'Lütfen bilgilerinizi giriniz']"
                     />
                     <q-btn
+                        type="submit"
                         color="primary"
                         text-color="white"
-                        label="Şifremi Yenile"
+                        label="Onay Kodu"
                         no-caps
                         class="full-width q-mt-md"
                         style="border-radius: 8px"
                         size="20px"
-                        type="submit"
+
                     />
                     <div class="flex justify-between q-pt-md">
                         <div
@@ -61,46 +57,37 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent, reactive, ref } from "vue";
 import {useAuthStore} from "stores/auth-store";
 import {storeToRefs} from "pinia";
+
+
 export default defineComponent({
-    name: "RenewPassword",
+    name: "ForgotPassword",
     setup() {
         const authStore = useAuthStore();
-        const { permenantUser } = storeToRefs(authStore);
-        const { passwordReset } = authStore
+        const {user,permenantUser} = storeToRefs(authStore);
+        const {updatePassword} = authStore
         return {
             test: ref(false),
             formFields: reactive({
-                password_again: "",
-                password: "",
-                errorMessage: "",
+                id_card: "2830404084",
+                phone: "5428872827",
             }),
-            permanentUser: permenantUser,
-            passwordReset,
-
+            updatePassword,
+            permenantUser
         };
     },
     methods: {
-        onSubmit() {
-              let formData = new FormData();
-                  formData.append("password", this.formFields.password);
-                  formData.append("phone", this.permanentUser.phone);
-                  formData.append("id_card", this.permanentUser.id_card);
-                  formData.append("smsCode", this.permanentUser.smsCode);
-              this.passwordReset(formData);
-
-        },
-        validateForm() {
-
-            if (this.formFields.password !== this.formFields.password_again) {
-                this.formFields.password_again = "";
-                return false;
+        onSubmit: function () {
+            let formData = new FormData();
+            for (const [key, value] of Object.entries(this.formFields)) {
+                formData.append(key, value)
             }
-            this.formFields.errorMessage = "";
-            return true;
+            this.permenantUser = this.formFields
+            this.updatePassword(formData)
+
         },
     },
 });

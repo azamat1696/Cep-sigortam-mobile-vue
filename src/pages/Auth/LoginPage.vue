@@ -19,7 +19,7 @@
                         clearable
                         class="q-pt-sm q-pb-sm"
                         lazy-rules
-                        :rules="[val => val.length === 11 || 'Kimlik No 11 haneli olmalıdır']"
+                        :rules="[val => val.length > 0 || 'Kimlik No 11 haneli olmalıdır']"
                     />
                     <q-checkbox
                         v-model="formFields.TCVat"
@@ -63,9 +63,9 @@
                     <div class="flex justify-between q-pt-sm">
                         <div
                             class="custom-text cursor-pointer"
-                            @click="$router.push({ name: 'renewPasswordPage' })"
+                            @click="$router.push({ name: 'forgotPasswordPage' })"
                         >
-                            Sifremi Unuttum
+                            Şifremi Unuttum
                         </div>
 
                         <div
@@ -99,12 +99,12 @@ import { storeToRefs} from "pinia";
 import { useAuthStore } from "stores/auth-store";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const { authToken,user } = storeToRefs(useAuthStore());
+const { authToken,user,permenantUser } = storeToRefs(useAuthStore());
 const { login } = useAuthStore();
 const formFields = ref({
-    id_card: "23232323191",
+    id_card: "2830404084",
     TCVat: false,
-    phone: "5488321431",
+    phone: "5428872827",
     password: "121212",
     rememberMe: false,
 })
@@ -112,14 +112,23 @@ const formFields = ref({
 const onSubmit = () => {
     let formData = new FormData();
     for(let [key,val] of Object.entries(formFields.value)) {
-        formData.append(key,val);
+        if (key === 'TCVat' && val === true)
+        {
+            formData.append(key,1);
+        }else if (key === 'TCVat' && val === false)
+        {
+            formData.append(key,0);
+
+        }
+        else{
+            formData.append(key,val);
+        }
     }
     login(formData).then((res) => {
-        if (res !== undefined){
-            user.value = formFields.value
-            router.push({ name: 'optVerificationPage' });
-        }
-        console.log('user',user.value);
+
+            permenantUser.value = formFields.value;
+
+        console.log('user',permenantUser.value);
     }).catch((err) => {
         console.log('err',err);
     });

@@ -23,7 +23,7 @@
         </q-header>
         <q-page-container>
             <q-list>
-                <q-item clickable class="q-pa-lg">
+                <q-item clickable class="q-pa-lg" :to="{name: 'TrafikSigortaRegister'}">
                     <q-item-section avatar>
                         <img
                             src="~assets/car.png"
@@ -39,7 +39,7 @@
                     </q-item-section>
                 </q-item>
                 <q-separator inset />
-                <q-item clickable class="q-pa-lg">
+                <q-item clickable class="q-pa-lg" :to="{ name: 'kaskoRegister' }">
                     <q-item-section avatar>
                         <q-img
                             src="~assets/umbrella.png"
@@ -56,7 +56,7 @@
                     </q-item-section>
                 </q-item>
                 <q-separator inset />
-                <q-item clickable class="q-pa-lg">
+                <q-item clickable class="q-pa-lg" :to="{name:'KonutRegister'}">
                     <q-item-section avatar>
                         <q-img
                             src="~assets/cottage.png"
@@ -74,7 +74,7 @@
                 </q-item>
 
                 <q-separator inset />
-                <q-item clickable class="q-pa-lg">
+                <q-item clickable class="q-pa-lg" :to="{name:'FerdiKazaRegister'}">
                     <q-item-section avatar>
                         <img
                             src="~assets/car_crash.png"
@@ -95,13 +95,34 @@
     </transition-group>
 </template>
 
-<script>
-export default {
-    name: "TeklifAlPage",
-    setup() {
-        return {};
-    },
-};
+<script lang="ts" setup>
+import {onMounted} from "vue";
+import {useMainStore} from "stores/main-store";
+import { useQuasar } from 'quasar'
+const $q = useQuasar()
+const mainStore = useMainStore();
+const {
+    countriesGet: countriesGet,
+    ilGet: ilGet,
+    ilceSelectGet: ilceSelectGet,
+    belediyeSelectGet: belediyeSelectGet,
+    mahalleSelectGet: mahalleSelectGet,
+    sokakSelectGet: sokakSelectGet,
+    agentGet: agentGet,
+    getJobs: getJobs
+} = mainStore;
+
+onMounted( () => {
+    getJobs();
+    countriesGet();
+    ilGet();
+    ilceSelectGet();
+    belediyeSelectGet();
+    mahalleSelectGet();
+    sokakSelectGet();
+    agentGet();
+
+});
 </script>
 
 <style scoped></style>
