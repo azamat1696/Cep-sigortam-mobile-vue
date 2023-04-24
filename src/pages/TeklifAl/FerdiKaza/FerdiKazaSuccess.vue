@@ -1,5 +1,10 @@
 <template>
-    <div class="fullscreen flex flex-center no-padding">
+    <transition-group
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeIn"
+    >
+    <div key="ferdikazasuccess" class="fullscreen flex flex-center no-padding">
         <q-card
             class="no-shadow transparent"
             style="height: auto; min-width: 370px; margin-top: 130px"
@@ -21,33 +26,36 @@
                         class="text-subtitle1 q-pb-xl q-pl-md q-pr-md"
                         style="color: #5e5e5e"
                     >
-                        Başvurumuz alınmış olup size en yakın sürede geri dönüş
-                        sağlanacaktır Near East Sigorta'yı tercih ettiğiniz için
-                        teşekkürler.
+                        {{$t('motor_offer_success')}}
                     </div>
                 </div>
             </q-card-section>
-            <q-card-section class="text-center" v-show="show">
-                <q-btn color="primary" no-caps :to="{ name: 'home' }"
-                    >Anasayfa</q-btn
+            <q-card-section class="text-center" >
+                <q-btn color="primary" no-caps :to="{ name: `${authToken ? 'homeLogin':'home'}` }"
+                    >{{$t('home_page')}}</q-btn
                 >
             </q-card-section>
         </q-card>
     </div>
+    </transition-group>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-setTimeout(() => {
-    router.push({ name: "home" });
-}, 5000);
-
-let show = ref(false);
-setTimeout(() => {
-    show.value = true;
-}, 6000);
+import {useAuthStore} from "stores/auth-store";
+import {storeToRefs} from "pinia";
+const authStore = useAuthStore();
+const { user,authToken } = storeToRefs(authStore);
+// setTimeout(() => {
+//     authToken.value ? router.push({ name: "homeLogin" }) : router.push({ name: "home" });
+// }, 5000);
+//
+// let show = ref(false);
+// setTimeout(() => {
+//     show.value = true;
+// }, 6000);
 </script>
 
 <style scoped></style>

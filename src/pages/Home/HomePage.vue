@@ -1,10 +1,18 @@
 <template>
-    <q-page class="row items-top justify-evenly">
+    <transition-group
+        appear
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeIn"
+    >
+    <q-page
+        key="home"
+        class="row items-top justify-evenly"
+    >
         <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
             <div class="pickgradient">
                 <img src="~assets/home_page.png" />
-                <div class="centeredUp">Good Evening</div>
-                <div class="centeredDown">Welcome to Cep Sigorta</div>
+                <div class="centeredUp">{{locale === 'tr'?greetingsLang.tr:greetingsLang.en}}</div>
+                <div class="centeredDown no-wrap">Cep Sigortam'a {{$t('welcome_to')}} </div>
             </div>
             <q-list>
                 <q-item clickable>
@@ -13,13 +21,10 @@
                             class="text-subtitle1 text-body2"
                             style="color: #5e5e5e"
                         >
-                            Cep Sigortam ile Kuzey Kıbrıs’ta aracınız için
-                            Trafik ve Ferdi Kaza Sigortaları için anında online
-                            ödeme yaparak poliçenizi oluşturabilirsiniz.
+                           {{$t('home_text')}}
                             <br />
                             <br />
-                            Kasko, Konut, Trafik ve Ferdi Kaza Sigortaları için
-                            Teklif Alabilirsiniz.
+                            {{$t('home_text2')}}
                         </div>
                     </q-item-section>
                 </q-item>
@@ -41,7 +46,7 @@
                         />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>Trafik Sigortası</q-item-label>
+                        <q-item-label>{{$t('motor_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
 
@@ -63,7 +68,7 @@
                     </q-item-section>
 
                     <q-item-section>
-                        <q-item-label>Kasko Sigortası</q-item-label>
+                        <q-item-label>{{$t('home_insurance_kasko')}}</q-item-label>
                     </q-item-section>
                 </q-item>
                 <q-separator inset />
@@ -84,7 +89,7 @@
                     </q-item-section>
 
                     <q-item-section>
-                        <q-item-label>Konut Sigortası</q-item-label>
+                        <q-item-label>{{$t('home_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
                 <q-separator inset />
@@ -104,38 +109,65 @@
                         />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>Ferdi Kaza Sigortası</q-item-label>
+                        <q-item-label>{{$t('personel_accident_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
                 <div class="q-pa-md">
                     <q-btn
                         color="primary"
                         text-color="white"
-                        label="Giriş"
+                        :label="$t('login')"
                         no-caps
                         class="full-width"
                         style="border-radius: 8px"
                         size="20px"
-                        :to="{ name: 'homeLogin' }"
+                        :to="{ name: 'loginPage' }"
                     />
                 </div>
             </q-list>
         </q-card>
     </q-page>
+    </transition-group>
 </template>
 <!--to="/auth/login"-->
-<script lang="ts">
-import { defineComponent, ref } from "vue";
+<script lang="ts" setup>
+import {onMounted} from "vue";
+import {useMainStore} from "stores/main-store";
+import {useAuthStore} from "stores/auth-store";
+import {storeToRefs} from "pinia";
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
 
-export default defineComponent({
-    name: "IndexPage",
-    setup() {
-        const isLogin = ref(false);
-        return {
-            isLogin,
-        };
-    },
+const authStore = useAuthStore();
+const {greetingsLang} = storeToRefs(authStore);
+
+const mainStore = useMainStore();
+const {
+    countriesGet: countriesGet,
+    ilGet: ilGet,
+    ilceSelectGet: ilceSelectGet,
+    belediyeSelectGet: belediyeSelectGet,
+    mahalleSelectGet: mahalleSelectGet,
+    sokakSelectGet: sokakSelectGet,
+    agentGet: agentGet,
+    getJobs: getJobs
+} = mainStore;
+
+onMounted( () => {
+    getJobs();
+    countriesGet();
+    ilGet();
+    ilceSelectGet();
+    belediyeSelectGet();
+    mahalleSelectGet();
+    sokakSelectGet();
+    agentGet();
+
 });
+
+
+
+
 </script>
 <style>
 .pickgradient {

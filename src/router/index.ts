@@ -5,7 +5,7 @@ import {
     createWebHashHistory,
     createWebHistory,
 } from "vue-router";
-
+import {LocalStorage} from "quasar";
 import routes from "./routes";
 
 /*
@@ -34,5 +34,20 @@ export default route(function (/* { store, ssrContext } */) {
         history: createHistory(process.env.VUE_ROUTER_BASE),
     });
 
-    return Router;
+    Router.beforeEach((to,from,next) => {
+        if (to.matched.some(record => record.meta.requiresAuth))
+        {
+            if (!(LocalStorage.getItem('authToken') !== null && LocalStorage.getItem('authToken') !== undefined))
+            {
+                next({path : '/auth/login'})
+            }
+            next()
+            return
+        }
+        next()
+        return
+    });
+
+    return Router
+
 });

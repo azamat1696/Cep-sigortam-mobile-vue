@@ -16,6 +16,9 @@ export const useMainStore = defineStore("main", {
         renk: [],
         belediyeSelect: [],
         sokakSelect: [],
+        jobs: [],
+
+
     }),
     getters: {
         countriesGetter: (state) => state.countries,
@@ -33,6 +36,7 @@ export const useMainStore = defineStore("main", {
                 .get("/ulke")
                 .then((res) => res.data)
                 .then((res) => (this.countries = res));
+            console.log(this.countries);
         },
         async ilceSelectGet() {
             await api
@@ -65,10 +69,14 @@ export const useMainStore = defineStore("main", {
                 .then((res) => (this.aracMarka = res));
         },
         async aracModelSelectGet() {
+
             await api
                 .get("/aracModelSelect")
                 .then((res) => res.data)
-                .then((res) => (this.aracModelSelect = res));
+                .then((res) => {
+                    this.aracModelSelect = res
+
+        });
         },
         async ilGet() {
             await api
@@ -93,6 +101,13 @@ export const useMainStore = defineStore("main", {
                 .get("/aractipi")
                 .then((res) => res.data)
                 .then((res) => (this.aracTipi = res));
+        },
+        async getJobs() {
+            await api
+                .get("/meslekler")
+                .then((res) => res.data)
+                .then((res) => (this.jobs = res));
+
         }
     },
 });

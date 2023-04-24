@@ -18,11 +18,10 @@
             <q-card-section class="q-pt-xs">
                 <q-form class="q-pt-md q-pb-md" @submit="onSubmit">
                     <div
-                        class="text-subtitle1 q-pb-lg q-pl-md q-pr-md"
+                        class="text-subtitle1 q-pb-lg q-pl-md q-pr-md text-center"
                         style="color: #5e5e5e"
                     >
-                        Üyeliğinizi başarılı bir şekilde tamamladınız Artık
-                        uygulamaya giriş yapıp kullanabilirsiniz.
+                        {{ $t("enter_4_digit_code") }}
                     </div>
                     <div class="flex flex-center q-pb-xl q-pt-lg q-pa-lg">
                         <div v-for="item in length" class="q-pa-sm">
@@ -35,8 +34,8 @@
                                 @update:model-value="onUpdate($event, item - 1)"
                                 :key="item"
                                 :ref="(el) => updateFieldRef(el, item - 1)"
-                                input-class="text-center text-primary text-h3 q-pt-md"
-                                style="width: 6ch"
+                                input-class="text-center text-primary text-h4 q-pa-none "
+                                style="width: 6ch;"
                                 maxlength="1"
                                 dense
                             />
@@ -46,13 +45,31 @@
                         <q-btn
                             color="primary"
                             text-color="white"
-                            label="Giriş"
+                            :label="$t('verify')"
                             no-caps
                             class="full-width"
                             style="border-radius: 8px"
                             size="20px"
-                            :to="{ name: 'optVerificationSuccessPage' }"
+                            type="submit"
                         />
+                    </div>
+                    <div class="row q-pt-md">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <q-btn
+                                color="primary"
+                                text-color="grey-8"
+                                :label="$t('re_send_code')"
+                                no-caps
+                                dense
+                                flat
+                                class="full-width"
+                                padding="none"
+                                align="right"
+                                size="18px"
+                                @click="onForgotPassword"
+                            />
+                        </div>
                     </div>
                 </q-form>
             </q-card-section>
@@ -69,10 +86,14 @@ import {
     onBeforeUpdate,
     computed,
     watch,
-    watchEffect,
+
 } from "vue";
-import { emit } from "cluster";
-import { Notify } from "quasar";
+import {storeToRefs} from "pinia";
+import {useRouter} from "vue-router";
+import {useAuthStore} from "stores/auth-store";
+import {Loading, Notify} from "quasar";
+
+
 
 export default defineComponent({
     name: "RenewPassword",
@@ -88,6 +109,9 @@ export default defineComponent({
             }
             return nonNullField.join("");
         });
+        const {user,permenantUser} = storeToRefs(useAuthStore());
+        const router = useRouter();
+        const { verifySmsCode,getUserInfo,resendSmsCode } = useAuthStore();
         watch(composite, () => {
             if (composite.value) {
                 //emit('update:modelValue',composite.value)
@@ -98,10 +122,12 @@ export default defineComponent({
                 fields.value[index] = element;
             }
         };
-        const focus = (index) => {
+        const focus = (index:number) => {
+            console.log(index)
             if (index >= 0) {
                 if (index < length.value) {
-                    fields.value[index].select();
+                    fields?.value[index].select();
+
                 } else {
                     if (composite.value) {
                         fields.value[index - 1].blur();
@@ -109,9 +135,10 @@ export default defineComponent({
                 }
             }
         };
-        const onUpdate = (value, index) => {
+        const onUpdate = (value:number, index:number) => {
+
             if (value) {
-                focus(index + 1);
+                focus(+index + 1);
             }
         };
 
@@ -145,13 +172,77 @@ export default defineComponent({
             onKeyUp,
             onUpdate,
             updateFieldRef,
+            router,
+            verifySmsCode,
+            resendSmsCode,
+            getUserInfo,
+            user,
+            permenantUser
         };
     },
     methods: {
         onSubmit() {
-            console.log("on submit", this.fieldValues);
+
+            let formData = new FormData();
+
+            formData.append("smsCode", this.fieldValues.join(''));
+             formData.append("id_card", this.permenantUser?.id_card);
+            formData.append("phone", this.permenantUser.phone);
+            formData.append("password", this.permenantUser?.password)
+
+            this.verifySmsCode(formData)
+                .then((res) => {
+                 if (res === true) {
+
+                     this.router.push({name: "homeLogin"});
+
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
         },
+        onForgotPassword() {
+            let formData = new FormData();
+            formData.append("phone", this.permenantUser?.phone);
+
+             this.resendSmsCode(formData).then((res) => {
+
+                 if (res === true) {
+                      Notify.create({
+                         message: "Şifre yenileme kodu gönderildi",
+                         color: "positive",
+                         position: "top",
+                         timeout: 2000,
+                        });
+                      return
+                 }
+                    Notify.create({
+                        message: "Şifre yenileme kodu gönderilemedi kod süresi geçmemiştir",
+                        color: "negative",
+                        position: "top",
+                        timeout: 2000,
+                    });
+             }).catch((err) => {
+                 Loading.hide();
+                 Notify.create({
+                     message: "Şifre süresi daha geçmedi.",
+                     color: "negative",
+                     type: "negative",
+                     position: "top",
+                     timeout: 2000,
+                 });
+                 console.log(err)
+             });
+        },
+
+
     },
+    // mounted() {
+    //     setInterval(() => {
+    //         console.log('test')
+    //     }, 1000);
+    // }
 });
 </script>
 

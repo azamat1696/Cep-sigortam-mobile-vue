@@ -11,7 +11,7 @@
                     />
                 </q-avatar>
                 <q-toolbar-title class="text-subtitle2 text-bold text-center"
-                    >Profilim</q-toolbar-title
+                    >{{$t('my_profile')}}</q-toolbar-title
                 >
             </q-toolbar>
         </q-header>
@@ -19,25 +19,25 @@
             <div class="q-pt-xs">
                 <q-card class="no-shadow q-pa-sm">
                     <q-card-section style="padding-bottom: 10px">
-                        <div class="text-body2 text-grey-9">Hakan Yılmaz</div>
+                        <div class="text-body2 text-grey-9">{{user.name+' '+user.surname}}</div>
                     </q-card-section>
                     <q-card-section>
                         <div class="flex justify-between items-start">
                             <div>
                                 <div class="text-caption text-grey-8">
-                                    K.K.T.C. Kimlik No
+                                     {{$t('identity_no')}}
                                 </div>
                                 <div class="text-caption text-grey-8 q-pt-xs">
-                                    000********00
+                                    {{user.id_card}}
                                 </div>
                             </div>
                             <div>
-                                <div class="text-caption text-grey-8">
-                                    Sigortalı Numarası
-                                </div>
-                                <div class="text-caption text-grey-8 q-pt-xs">
-                                    00000000
-                                </div>
+<!--                                <div class="text-caption text-grey-8">-->
+<!--                                    {{ $t('insured_no') }}-->
+<!--                                </div>-->
+<!--                                <div class="text-caption text-grey-8 q-pt-xs">-->
+<!--                                   *********-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </q-card-section>
@@ -49,13 +49,13 @@
                     <q-card-section style="padding-bottom: 10px">
                         <div class="flex justify-between items-start">
                             <div class="text-body2 text-grey-10 q-mt-sm">
-                                İletişim Bilgilerim
+                                {{$t('contact_info')}}
                             </div>
                             <div class="text-body2 text-grey-10">
                                 <q-btn
                                     color="primary"
                                     dense
-                                    label="Düzenle"
+                                    :label="$t('update')"
                                     no-caps
                                     rounded
                                     style="
@@ -63,23 +63,30 @@
                                         padding-right: 38px;
                                     "
                                     unelevated
-                                />
+                                    @click="showEditProfileDialog"
+                               />
+
                             </div>
                         </div>
                     </q-card-section>
+
                     <q-card-section>
                         <div class="text-caption text-grey-8">
                             <q-img
                                 src="~assets/phone_in_talk.png"
                                 width="24px"
                             />
-                            <span class="q-pl-sm">055500000000</span>
+                            <span class="q-pl-sm">{{user.phone}}</span>
+                            <q-tooltip v-model="formField.showingTooltip"  max-width="300px" anchor="center middle" self="center middle">
+
+                                {{$t('contact_info_selection2')}}
+                            </q-tooltip>
                         </div>
                     </q-card-section>
                     <q-card-section>
                         <div class="text-caption text-grey-8">
                             <q-img src="~assets/mail.png" width="24px" />
-                            <span class="q-pl-sm">hakanyilmaz@gmail.com</span>
+                            <span class="q-pl-sm">{{user.email}}</span>
                         </div>
                     </q-card-section>
                     <q-card-section>
@@ -94,66 +101,114 @@
                                 />
                             </div>
                             <span class="q-pl-sm" style="font-size: 12px"
-                                >Şehit Mehmet Kemal Sok. No: 114 D: 12
-                                Küçükkaymaklı / Lefkoşa</span
+                                >{{user?.address}}</span
                             >
                         </div>
                     </q-card-section>
                 </q-card>
             </div>
+            <q-separator />
             <q-card class="no-shadow q-pa-xs">
                 <q-card-section style="padding-bottom: 10px">
                     <div class="flex justify-between items-start">
                         <div class="text-body2 text-grey-10 q-mt-sm">
-                            İletişim Tercihlerim
+                            {{$t('contact_preferences')}}
+                        <q-icon size="xs" name="info"  @click="showEditProfileDialog2"/>
+
                         </div>
+                        <q-tooltip v-model="formField.showingTooltip2" anchor="center middle" self="center middle">
+                            {{$t('contact_info_selection')}}
+                        </q-tooltip>
                     </div>
                 </q-card-section>
+
                 <q-card-section
                     class="text-caption text-grey-8 flex justify-between q-pt-sm"
                 >
-                    <q-checkbox v-model="Email" label="E-Posta" dense />
-                    <q-checkbox v-model="Phone" label="Telefon" dense />
-                    <q-checkbox v-model="Message" label="SMS" dense />
+                    <q-checkbox v-model="email_fav" :label="$t('email')" dense @update:model-value="onCheckboxChange" />
+                    <q-checkbox v-model="phone_fav" :label="$t('phone')" dense  @update:model-value="onCheckboxChange" />
+                    <q-checkbox v-model="sms_fav" :label="$t('message')" dense @update:model-value="onCheckboxChange"  />
                 </q-card-section>
             </q-card>
-            <div class="q-pt-xs">
-                <q-card class="no-shadow q-pa-xs">
-                    <q-card-section class="q-pb-sm q-pt-sm">
-                        <div class="flex justify-between items-start">
-                            <div class="text-body2 text-grey-10 q-mt-sm">
-                                İzinlerim
-                            </div>
-                        </div>
-                    </q-card-section>
-                    <q-card-section
-                        class="text-caption text-grey-8 flex justify-between q-pt-xs q-pb-sm"
-                    >
-                        <q-checkbox
-                            v-model="RememberMe"
-                            label="E-Posta"
-                            dense
-                        />
-                    </q-card-section>
-                </q-card>
-            </div>
+<!--            <div class="q-pt-xs">-->
+<!--                <q-card class="no-shadow q-pa-xs">-->
+<!--                    <q-card-section class="q-pb-sm q-pt-sm">-->
+<!--                        <div class="flex justify-between items-start">-->
+<!--                            <div class="text-body2 text-grey-10 q-mt-sm">-->
+<!--                                İzinlerim-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </q-card-section>-->
+<!--                    <q-card-section-->
+<!--                        class="text-caption text-grey-8 flex justify-between q-pt-xs q-pb-sm"-->
+<!--                    >-->
+<!--                        <q-checkbox-->
+<!--                            v-model="email_fav"-->
+<!--                            label="E-Posta"-->
+<!--                            dense-->
+<!--                        />-->
+<!--                    </q-card-section>-->
+<!--                </q-card>-->
+<!--            </div>-->
         </q-page-container>
     </q-layout>
 </template>
 
-<script>
-import { ref } from "vue";
-export default {
-    name: "MyProfilePage",
-    setup() {
-        return {
-            Email: ref(false),
-            Phone: ref(false),
-            Message: ref(false),
-            RememberMe: ref(false),
-        };
-    },
+<script lang="ts" setup>
+import { reactive, toRefs } from "vue";
+ import {useAuthStore} from "stores/auth-store";
+ import {storeToRefs} from "pinia";
+
+ const authStore = useAuthStore();
+ const {user} = storeToRefs(authStore);
+ const {updateProfile} = authStore
+ const formField = reactive({
+     // @ts-ignore
+     sms_fav: user.value?.sms_fav === 1,
+     // @ts-ignore
+     phone_fav: user.value?.phone_fav === 1,
+     // @ts-ignore
+     email_fav: user.value?.email_fav === 1,
+     showingTooltip:  false,
+     showingTooltip2:  false,
+  });
+
+
+const { sms_fav, phone_fav, email_fav } = toRefs(formField);
+const showEditProfileDialog = () => {
+    if (formField.showingTooltip) {
+        formField.showingTooltip = false;
+    } else {
+        formField.showingTooltip = true;
+    }
 };
+const showEditProfileDialog2 = () => {
+    if (formField.showingTooltip2) {
+        formField.showingTooltip2 = false;
+    } else {
+        formField.showingTooltip2 = true;
+    }
+};
+const onCheckboxChange = (value:any) => {
+    let formData = new FormData();
+    for(const [key, value] of Object.entries(formField)){
+        // @ts-ignore
+        formData.append(key, value ? 1 : 0);
+    }
+      updateProfile(formData).then((res) => {
+         if (res){
+             // @ts-ignore
+                user.value.sms_fav = formField.sms_fav ? 1 : 0;
+             // @ts-ignore
+                user.value.phone_fav = formField.phone_fav ? 1 : 0;
+             // @ts-ignore
+                user.value.email_fav = formField.email_fav ? 1 : 0;
+
+             localStorage.setItem('user', JSON.stringify(user.value));
+         }
+    });
+};
+
 </script>
 
 <style scoped></style>

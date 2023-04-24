@@ -15,8 +15,9 @@ declare module "@vue/runtime-core" {
 // for each client)
 const api = axios.create({
     headers: {
-        "Content-Type": "application/json",
+        //"Content-Type": "application/json",
         "Access-Control-Allow-Origin": "origin-list", // Required for CORS support to work
+        "Content-Type": "application/x-www-form-urlencoded,multipart/form-data",
     },
     baseURL: process.env.API_URL || "https://test.neareastsigorta.com/api",
 });

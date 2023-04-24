@@ -19,7 +19,8 @@ module.exports = configure(function (/* ctx */) {
         // app boot file (/src/boot)
         // --> boot files are part of "main.js"
         // https://v2.quasar.dev/quasar-cli-vite/boot-files
-        boot: ["i18n", "axios"],
+        //"global-components"
+        boot: ["i18n", "axios", "customRouteInstance"],
 
         // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css
         css: ["app.scss"],
@@ -94,7 +95,17 @@ module.exports = configure(function (/* ctx */) {
 
         // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
         framework: {
-            config: {},
+            config: {
+                capacitor: {
+                    iosStatusBarPadding: true, // add the dynamic top padding on iOS mobile devices
+                    // Quasar handles app exit on mobile phone back button.
+                    backButtonExit: true,
+
+                    // On the other hand, the following completely
+                    // disables Quasar's back button management.
+                    backButton: true
+                }
+            },
 
             // iconSet: 'material-icons', // Quasar icon set
             // lang: 'en', // Quasar language pack
@@ -107,12 +118,12 @@ module.exports = configure(function (/* ctx */) {
             // directives: [],
 
             // Quasar plugins
-            plugins: ["Notify", "Loading"],
+            plugins: ["Notify", "Loading","Dialog", "AppFullscreen"],
         },
 
         // animations: 'all', // --- includes all animations
         // https://v2.quasar.dev/options/animations
-        animations: [],
+        animations: 'all',
 
         // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#sourcefiles
         // sourceFiles: {
