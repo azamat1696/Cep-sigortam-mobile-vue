@@ -1,12 +1,12 @@
 <template>
-    <div class="fullscreen flex flex-center no-padding">
+    <div class=" full-width flex flex-center no-padding">
         <q-card
             class="no-shadow transparent"
             style="  min-width: 370px; margin-top: 0px"
         >
             <q-card-section class="q-pb-xs">
                 <div class="text-primary text-uppercase text-left cep-sigortam">
-                    Hesap Oluştur
+                    {{ $t("register_title") }}
                 </div>
             </q-card-section>
             <q-card-section class="q-pt-xs">
@@ -15,15 +15,18 @@
                         v-model="formFields.id_card"
                         outlined
                         color="#EBEBEB"
-                        label="Kimlik No"
+                        :label="$t('identity_no')"
                         clearable
                         dense
+                        mask="#### #### ###"
+                        unmasked-value
                         class="q-pt-sm q-pb-sm"
+                        @update:model-value="onIdCardChange"
                         lazy-rules
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen id_card giriniz',
+                                        $t('required'),
 
                                 ]"
 
@@ -32,23 +35,26 @@
                     <q-checkbox
                         v-model="formFields.TCVat"
                         dense
-                        label="TC Vatandasiyim"
-                        class="q-pt-sm q-pb-sm text-subtitle2"
+                        :label="$t('tc_citizen')"
+                        class="q-pt-md q-pb-sm text-subtitle2"
+                        :disable="checkIdCardNumber"
                     />
                     <q-input
                         outlined
                         v-model="formFields.phone"
                         type="text"
-                        label="Cep No"
+                        :label="$t('phone_no')"
                         class="q-pt-sm q-pb-sm"
                         hide-bottom-space
                         dense
+                        mask="### ### ## ##"
+                        unmasked-value
                         lazy-rules
                         prefix="+90"
                         :rules="[
                                     (val) =>
                                         (val && val.length === 10) ||
-                                        'Lutfen phone giriniz',
+                                        $t('required'),
                                 ]"
                     />
 
@@ -56,7 +62,7 @@
                         outlined
                         v-model="formFields.name"
                         type="text"
-                        label="Adı"
+                        :label="$t('name')"
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
                         dense
@@ -64,7 +70,7 @@
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen name giriniz',
+                                        $t('required'),
                                 ]"
                     />
 
@@ -72,7 +78,7 @@
                         outlined
                         v-model="formFields.surname"
                         type="text"
-                        label="Soyadı"
+                        :label="$t('surname')"
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
                         dense
@@ -80,7 +86,7 @@
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen name giriniz',
+                                        $t('required'),
                                 ]"
                     />
 
@@ -89,7 +95,7 @@
                         type="password"
                         outlined
                         color="#EBEBEB"
-                        label="Şifre"
+                        :label="$t('password')"
                         clearable
                         class="q-pt-sm q-pb-sm"
                         hide-bottom-space
@@ -98,7 +104,7 @@
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen password giriniz',
+                                        $t('required'),
                                 ]"
                     />
                     <q-input
@@ -106,16 +112,16 @@
                         type="password"
                         outlined
                         color="#EBEBEB"
-                        label="Şifre Tekrar Giriniz"
+                        :label="$t('password_confirmation')"
                         clearable
                         class="q-pt-sm q-pb-sm"
                         hide-bottom-space
                         dense
-                         lazy-rules
+                        lazy-rules
                         :rules="[
                                     (val) =>
                                           formFields.password === formFields.password_confirmation   ||
-                                           'Lütfen şifre doğru giriniz giriniz',
+                                           $t('required'),
                                 ]"
                     />
 
@@ -123,7 +129,7 @@
                         outlined
                         v-model="formFields.email"
                         type="email"
-                        label="E-posta Adresi"
+                        :label="$t('email')"
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
                         dense
@@ -131,7 +137,7 @@
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen name giriniz',
+                                        $t('required'),
                                 ]"
                     />
 
@@ -139,7 +145,7 @@
                         outlined
                         v-model="formFields.birthplace"
                         type="text"
-                        label="Doğum Yeri"
+                        :label="$t('birthplace')"
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
                         dense
@@ -147,7 +153,7 @@
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen name giriniz',
+                                        $t('required'),
                                 ]"
                     />
 
@@ -157,7 +163,7 @@
                         :options="genderOptions"
                         :option-label="(option) => option.label"
                         option-value="value"
-                        label="Cinsiyet"
+                        :label="$t('gender')"
                         dense
                         class="q-pt-sm q-pb-sm"
                         emit-value
@@ -166,7 +172,7 @@
                         behavior="menu"
                         lazy-rules
                         :rules="[val => val !== null && val !== ''
-                                || 'Lütfen cinsiyet seçiniz!',]"
+                                || $t('required'),]"
                     />
 
                     <q-input
@@ -175,7 +181,8 @@
                         dense
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
-                        label="Doğum Tarihi"
+                        :label="$t('birth_date')"
+
                     >
                         <template v-slot:append>
                             <q-icon name="event" class="cursor-pointer">
@@ -185,10 +192,10 @@
                                     transition-hide="scale"
                                 >
                                     <q-date
-                                        v-model="
-                                                    formFields.birth_date
-                                                "
-                                        mask="YYYY-MM-DD"
+                                        v-model="formFields.birth_date"
+                                         mask="DD/MM/YYYY"
+                                        :locale="dateLocale"
+
 
                                     >
                                         <div
@@ -196,7 +203,7 @@
                                         >
                                             <q-btn
                                                 v-close-popup
-                                                label="Kapat"
+                                                :label="$t('close')"
                                                 color="primary"
                                                 flat
                                             />
@@ -210,7 +217,7 @@
                         outlined
                         v-model="formFields.address"
                         type="text"
-                        label="Adres"
+                        :label="$t('address')"
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
                         dense
@@ -218,21 +225,21 @@
                         :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen name giriniz',
+                                        $t('required'),
                                 ]"
                     />
 
                     <q-checkbox
                         v-model="formFields.email_fav"
                         dense
-                        label="E-Posta"
+                        :label="$t('email')"
                         class="q-pt-sm q-pb-sm q-pr-sm text-subtitle2"
                     />
 
                     <q-checkbox
                         v-model="formFields.phone_fav"
                         dense
-                        label="Telefon"
+                        :label="$t('phone')"
                         class="q-pt-sm q-pb-sm text-subtitle2"
                     />
 
@@ -240,13 +247,13 @@
                     <q-checkbox
                         v-model="formFields.sms_fav"
                         dense
-                        label="SMS"
+                        :label="$t('sms')"
                         class="q-pt-sm q-pb-sm q-pl-sm  text-subtitle2"
                     />
                     <q-btn
                         color="primary"
                         text-color="white"
-                        label="Üye ol"
+                        :label="$t('register')"
                         no-caps
                         dense
                         class="full-width q-mt-md"
@@ -256,10 +263,10 @@
                     />
                     <div class="flex justify-between q-pt-md">
                         <div
-                            class="custom-text cursor-pointer"
+                            class="custom-text text-subtitle1 text-bold cursor-pointer"
                             @click="$router.push({ name: 'loginPage' })"
                         >
-                            Üye Girişi
+                            {{ $t('login') }}
                         </div>
                     </div>
                 </q-form>
@@ -267,62 +274,135 @@
             <q-card-section class="q-pt-xl"> </q-card-section>
         </q-card>
     </div>
-</template>
+ </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import {onMounted, ref,watch} from "vue";
 import  { storeToRefs } from "pinia";
 import {useAuthStore} from "stores/auth-store";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+import { date } from "quasar";
+const {locale} = useI18n();
  const {
-    user
+    user,
+    authToken
 } = storeToRefs(useAuthStore());
 const {
     register,
 } = useAuthStore();
 const router = useRouter();
 const store = useAuthStore();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
 
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
 const genderOptions = [
-    { value: "Erkek", label: "Erkek" },
-    { value: "Kadın", label: "Kadın" },
+    { value: "E", label: "Erkek" },
+    { value: "K", label: "Kadın" },
 ];
 const test = ref(false)
 
 const  formFields = ref({
-    id_card: "23232323121",
-    TCVat: true,
-    phone: "2434234234",
-    surname: "yadygerov",
-    name: "azamat",
-    password: "121212",
-    password_confirmation: "121212",
-    email: "ssdsd@gm.com",
-    birthplace: "dsds",
+    id_card: "",
+    TCVat: false,
+    phone: "",
+    surname: "",
+    name: "",
+    password: "",
+    password_confirmation: "",
+    email: "",
+    birthplace: "",
     gender: "",
     birth_date: "",
-    address: "dsdsdsdsd",
+    address: "",
     email_fav: false,
     phone_fav: false,
     sms_fav: false,
 
 })
+const checkIdCardNumber = ref(true);
+ const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+     } else {
+        formFields.value.TCVat = false;
+     }
+};
 const onSubmit =  async () =>  {
 
     let formData = new FormData();
-    for (let [key, value] of Object.entries(formFields.value)) {
-        formData.append(key, value);
-    }
-      register(formData).then((res) => {
 
+     for (let [key, value] of Object.entries(formFields.value)) {
+
+         if (key === 'TCVat' || key === 'email_fav' || key === 'phone_fav' || key === 'sms_fav' ) {
+               formData.append(key, !value ? 0 : 1);
+        }   else {
+             if (key === 'birth_date') {
+                 let v = value.split('/');
+                    let date = v[2] + '-' + v[1] + '-' + v[0];
+                     formData.append(key, date);
+             }else {
+                 formData.append(key, value);
+             }
+
+        }
+
+    }
+
+      register(formData).then((res) => {
           if (res  !== undefined){
               router.push({ name: "optVerificationSuccessPage" });
           }
 
     })
 
-
 }
+
+onMounted(() => {
+    if (authToken.value) {
+        router.push({ name: 'homeLogin' });
+    }
+})
 </script>
 
 <style scoped>

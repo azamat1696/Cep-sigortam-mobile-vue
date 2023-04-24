@@ -11,7 +11,7 @@
                     />
                 </q-avatar>
                 <q-toolbar-title class="text-subtitle2 text-bold text-center"
-                    >Profilim</q-toolbar-title
+                    >{{$t('my_profile')}}</q-toolbar-title
                 >
             </q-toolbar>
         </q-header>
@@ -25,19 +25,19 @@
                         <div class="flex justify-between items-start">
                             <div>
                                 <div class="text-caption text-grey-8">
-                                     Kimlik No
+                                     {{$t('identity_no')}}
                                 </div>
                                 <div class="text-caption text-grey-8 q-pt-xs">
                                     {{user.id_card}}
                                 </div>
                             </div>
                             <div>
-                                <div class="text-caption text-grey-8">
-                                    Sigortalı Numarası
-                                </div>
-                                <div class="text-caption text-grey-8 q-pt-xs">
-                                   *********
-                                </div>
+<!--                                <div class="text-caption text-grey-8">-->
+<!--                                    {{ $t('insured_no') }}-->
+<!--                                </div>-->
+<!--                                <div class="text-caption text-grey-8 q-pt-xs">-->
+<!--                                   *********-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </q-card-section>
@@ -49,13 +49,13 @@
                     <q-card-section style="padding-bottom: 10px">
                         <div class="flex justify-between items-start">
                             <div class="text-body2 text-grey-10 q-mt-sm">
-                                İletişim Bilgilerim
+                                {{$t('contact_info')}}
                             </div>
                             <div class="text-body2 text-grey-10">
                                 <q-btn
                                     color="primary"
                                     dense
-                                    label="Düzenle"
+                                    :label="$t('update')"
                                     no-caps
                                     rounded
                                     style="
@@ -63,10 +63,13 @@
                                         padding-right: 38px;
                                     "
                                     unelevated
-                                />
+                                    @click="showEditProfileDialog"
+                               />
+
                             </div>
                         </div>
                     </q-card-section>
+
                     <q-card-section>
                         <div class="text-caption text-grey-8">
                             <q-img
@@ -74,6 +77,10 @@
                                 width="24px"
                             />
                             <span class="q-pl-sm">{{user.phone}}</span>
+                            <q-tooltip v-model="formField.showingTooltip"  max-width="300px" anchor="center middle" self="center middle">
+
+                                {{$t('contact_info_selection2')}}
+                            </q-tooltip>
                         </div>
                     </q-card-section>
                     <q-card-section>
@@ -100,20 +107,27 @@
                     </q-card-section>
                 </q-card>
             </div>
+            <q-separator />
             <q-card class="no-shadow q-pa-xs">
                 <q-card-section style="padding-bottom: 10px">
                     <div class="flex justify-between items-start">
                         <div class="text-body2 text-grey-10 q-mt-sm">
-                            İletişim Tercihlerim
+                            {{$t('contact_preferences')}}
+                        <q-icon size="xs" name="info"  @click="showEditProfileDialog2"/>
+
                         </div>
+                        <q-tooltip v-model="formField.showingTooltip2" anchor="center middle" self="center middle">
+                            {{$t('contact_info_selection')}}
+                        </q-tooltip>
                     </div>
                 </q-card-section>
+
                 <q-card-section
                     class="text-caption text-grey-8 flex justify-between q-pt-sm"
                 >
-                    <q-checkbox v-model="email_fav" label="E-Posta" dense @update:model-value="onCheckboxChange" />
-                    <q-checkbox v-model="phone_fav" label="Telefon" dense  @update:model-value="onCheckboxChange" />
-                    <q-checkbox v-model="sms_fav" label="SMS" dense @update:model-value="onCheckboxChange"  />
+                    <q-checkbox v-model="email_fav" :label="$t('email')" dense @update:model-value="onCheckboxChange" />
+                    <q-checkbox v-model="phone_fav" :label="$t('phone')" dense  @update:model-value="onCheckboxChange" />
+                    <q-checkbox v-model="sms_fav" :label="$t('message')" dense @update:model-value="onCheckboxChange"  />
                 </q-card-section>
             </q-card>
 <!--            <div class="q-pt-xs">-->
@@ -148,7 +162,6 @@ import { reactive, toRefs } from "vue";
  const authStore = useAuthStore();
  const {user} = storeToRefs(authStore);
  const {updateProfile} = authStore
-console.log('>>>>>>>>>>>>>',user.value)
  const formField = reactive({
      // @ts-ignore
      sms_fav: user.value?.sms_fav === 1,
@@ -156,9 +169,26 @@ console.log('>>>>>>>>>>>>>',user.value)
      phone_fav: user.value?.phone_fav === 1,
      // @ts-ignore
      email_fav: user.value?.email_fav === 1,
-
+     showingTooltip:  false,
+     showingTooltip2:  false,
   });
-  const { sms_fav, phone_fav, email_fav } = toRefs(formField);
+
+
+const { sms_fav, phone_fav, email_fav } = toRefs(formField);
+const showEditProfileDialog = () => {
+    if (formField.showingTooltip) {
+        formField.showingTooltip = false;
+    } else {
+        formField.showingTooltip = true;
+    }
+};
+const showEditProfileDialog2 = () => {
+    if (formField.showingTooltip2) {
+        formField.showingTooltip2 = false;
+    } else {
+        formField.showingTooltip2 = true;
+    }
+};
 const onCheckboxChange = (value:any) => {
     let formData = new FormData();
     for(const [key, value] of Object.entries(formField)){

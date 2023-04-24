@@ -18,6 +18,7 @@ export const useMainStore = defineStore("main", {
         sokakSelect: [],
         jobs: [],
 
+
     }),
     getters: {
         countriesGetter: (state) => state.countries,
@@ -35,6 +36,7 @@ export const useMainStore = defineStore("main", {
                 .get("/ulke")
                 .then((res) => res.data)
                 .then((res) => (this.countries = res));
+            console.log(this.countries);
         },
         async ilceSelectGet() {
             await api

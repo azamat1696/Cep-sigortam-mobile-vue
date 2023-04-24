@@ -21,7 +21,7 @@
                         class="text-subtitle1 q-pb-lg q-pl-md q-pr-md text-center"
                         style="color: #5e5e5e"
                     >
-                        Lütfen telefonunuza gelen 4 haneli şifreyi giriniz.
+                        {{ $t("enter_4_digit_code") }}
                     </div>
                     <div class="flex flex-center q-pb-xl q-pt-lg q-pa-lg">
                         <div v-for="item in length" class="q-pa-sm">
@@ -45,7 +45,7 @@
                         <q-btn
                             color="primary"
                             text-color="white"
-                            label="Giriş"
+                            :label="$t('verify')"
                             no-caps
                             class="full-width"
                             style="border-radius: 8px"
@@ -59,7 +59,7 @@
                             <q-btn
                                 color="primary"
                                 text-color="grey-8"
-                                label="Tekrar gönder"
+                                :label="$t('re_send_code')"
                                 no-caps
                                 dense
                                 flat
@@ -235,7 +235,14 @@ export default defineComponent({
                  console.log(err)
              });
         },
+
+
     },
+    // mounted() {
+    //     setInterval(() => {
+    //         console.log('test')
+    //     }, 1000);
+    // }
 });
 </script>
 

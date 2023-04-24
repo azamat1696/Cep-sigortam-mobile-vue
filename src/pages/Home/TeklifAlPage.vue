@@ -17,7 +17,7 @@
                     />
                 </q-avatar>
                 <q-toolbar-title class="text-subtitle2 text-bold text-center"
-                    >Teklif Al</q-toolbar-title
+                    >{{$t('get_a_quote')}}</q-toolbar-title
                 >
             </q-toolbar>
         </q-header>
@@ -35,7 +35,7 @@
                         />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>Trafik Sigortası</q-item-label>
+                        <q-item-label>{{$t('motor_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
                 <q-separator inset />
@@ -52,7 +52,7 @@
                     </q-item-section>
 
                     <q-item-section>
-                        <q-item-label>Kasko Sigortası</q-item-label>
+                        <q-item-label>{{$t('home_insurance_kasko')}}</q-item-label>
                     </q-item-section>
                 </q-item>
                 <q-separator inset />
@@ -69,7 +69,7 @@
                     </q-item-section>
 
                     <q-item-section>
-                        <q-item-label>Konut Sigortası</q-item-label>
+                        <q-item-label>{{$t('home_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
 
@@ -86,7 +86,7 @@
                         />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>Ferdi Kaza Sigortası</q-item-label>
+                        <q-item-label>{{$t('personel_accident_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
             </q-list>

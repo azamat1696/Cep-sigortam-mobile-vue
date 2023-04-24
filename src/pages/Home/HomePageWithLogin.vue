@@ -11,8 +11,8 @@
         <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
             <div class="pickgradient">
                 <img src="~assets/home_page.png" />
-                <div class="centeredUp">Good Evening</div>
-                <div class="centeredDown">{{user.name +' '+user.surname}}</div>
+                <div class="centeredUp">{{locale === 'tr'? greetingsLang.tr:greetingsLang.en}}</div>
+                <div class="centeredDown">{{user.name +' '+user.surname}} </div>
             </div>
             <q-list>
                 <q-item clickable class="q-pa-lg" :to="{ name: 'showPolice' }">
@@ -29,11 +29,11 @@
 
                     <q-item-section no-wrap>
                         <q-item-label
-                            >Poliçelerim
+                            >{{$t('commercial_papers')}}
                             <q-chip
                                 style="background-color: #eaf5fe; width: 60px"
                                 size="sm"
-                                >{{ policy.length }} Poliçe</q-chip
+                                >{{ policy.length }} {{$t('commercial_paper')}}</q-chip
                             ></q-item-label
                         >
                     </q-item-section>
@@ -62,11 +62,11 @@
 
                     <q-item-section no-wrap>
                         <q-item-label
-                            >Hasar Durum Görüntüle
+                            >{{$t('show_damage')}}
                             <q-chip
                                 style="background-color: #eaf5fe; width: 55px"
                                 size="sm"
-                                >{{hasarPolicy?.length}} Hasar</q-chip
+                                >{{hasarPolicy?.length}} {{$t('damage')}}</q-chip
                             ></q-item-label
                         >
                     </q-item-section>
@@ -96,7 +96,7 @@
                     </q-item-section>
                     <q-item-section>
                         <q-item-label
-                            >Trafik Sigortası Poliçe Oluştur</q-item-label
+                            >{{$t('motor_insurance_commercial_paper_create')}}</q-item-label
                         >
                     </q-item-section>
                 </q-item>
@@ -114,7 +114,7 @@
                     </q-item-section>
                     <q-item-section>
                         <q-item-label
-                            >Ferdi Kaza Sigortası Poliçe Oluştur</q-item-label
+                            >{{$t('personel_accident_insurance_commercial_paper_create')}}</q-item-label
                         >
                     </q-item-section>
                 </q-item>
@@ -122,7 +122,7 @@
                     <q-btn
                         color="primary"
                         text-color="white"
-                        label="Teklif Al"
+                        :label="$t('get_a_quote')"
                         no-caps
                         class="full-width"
                         style="border-radius: 8px"
@@ -146,7 +146,7 @@
                         />
                     </q-item-section>
                     <q-item-section no-wrap>
-                        <q-item-label>Anlaşmalı Araç Servisleri</q-item-label>
+                        <q-item-label>{{$t('agreed_motor_services')}}</q-item-label>
                     </q-item-section>
 
                     <q-item-section>
@@ -167,13 +167,34 @@
 import {onMounted, ref} from "vue";
 import { useAuthStore} from "stores/auth-store";
 import { storeToRefs} from "pinia";
+import {useMainStore} from "stores/main-store";
+import { useI18n } from "vue-i18n";
+const { locale } = useI18n();
 const authStore = useAuthStore();
-const { user,policy,hasarPolicy} = storeToRefs(authStore);
+const { user,policy,hasarPolicy,greetingsLang} = storeToRefs(authStore);
 const { getAllPolicy,getHasarPolicy } = authStore
+const {
+    countriesGet: countriesGet,
+    ilGet: ilGet,
+    ilceSelectGet: ilceSelectGet,
+    belediyeSelectGet: belediyeSelectGet,
+    mahalleSelectGet: mahalleSelectGet,
+    sokakSelectGet: sokakSelectGet,
+    agentGet: agentGet,
+    getJobs: getJobs,
+} = useMainStore();
 
 onMounted(() => {
     getAllPolicy();
     getHasarPolicy();
+    getJobs();
+    countriesGet();
+    ilGet();
+    ilceSelectGet();
+    belediyeSelectGet();
+    mahalleSelectGet();
+    sokakSelectGet();
+    agentGet();
 });
 
 </script>

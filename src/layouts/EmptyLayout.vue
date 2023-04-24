@@ -1,21 +1,20 @@
 <template>
-
-     <router-view />
-
+    <q-layout view="lHh Lpr lFf">
+        <DrawerComponent />
+        <q-page-container>
+             <router-view />
+        </q-page-container>
+    </q-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-export default defineComponent({
-    name: "EmptyLayout",
 
-    setup() {
-        const isLogin = ref(false);
-        return {
-            isLogin,
-        };
-    },
-});
+import {defineComponent} from "vue";
+import DrawerComponent from "components/DrawerComponent.vue";
+
+export default defineComponent({
+    components: {DrawerComponent}
+})
 </script>
 <style>
 /* Transitions */

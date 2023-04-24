@@ -18,18 +18,16 @@
             <q-card-section class="q-pt-xs">
                 <div class="q-pt-xs q-pb-md">
                     <div
-                        class="text-subtitle1 q-pb-xl q-pl-md q-pr-md"
+                        class="text-subtitle1 q-pb-xl q-pl-md q-pr-md text-center"
                         style="color: #5e5e5e"
                     >
-                        Başvurunuz alınmış olup size en yakın sürede geri dönüş
-                        sağlanacaktır Near East Sigorta'yı tercih ettiğiniz için
-                        teşekkürler.
+                        {{$t('motor_offer_success')}}
                     </div>
                 </div>
             </q-card-section>
-            <q-card-section class="text-center" v-show="show">
-                <q-btn color="primary" no-caps :to="{ name: 'home' }"
-                    >Anasayfa</q-btn
+            <q-card-section class="text-center">
+                <q-btn color="primary" no-caps :to="{ name: `${authToken ? 'homeLogin':'home'}` }"
+                    >{{$t('home_page')}}</q-btn
                 >
             </q-card-section>
         </q-card>
@@ -40,14 +38,21 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-setTimeout(() => {
-    router.push({ name: "home" });
-}, 5000);
-
-let show = ref(false);
-setTimeout(() => {
-    show.value = true;
-}, 6000);
+import {useAuthStore} from "stores/auth-store";
+import {storeToRefs} from "pinia";
+const authStore = useAuthStore();
+const { user,authToken } = storeToRefs(authStore);
+// setTimeout(() => {
+//     authToken.value ? router.push({ name: "homeLogin" }) : router.push({ name: "home" });
+// }, 5000);
+// setTimeout(() => {
+//     router.push({ name: "home" });
+// }, 5000);
+//
+// let show = ref(false);
+// setTimeout(() => {
+//     show.value = true;
+// }, 6000);
 </script>
 
 <style scoped></style>

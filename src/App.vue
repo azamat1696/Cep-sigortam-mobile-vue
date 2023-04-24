@@ -9,13 +9,15 @@ import { useAuthStore } from "stores/auth-store";
 export default defineComponent({
     name: "App",
     setup() {
-         const { initAuth } = useAuthStore();
+         const { initAuth,getCurrentGreetings } = useAuthStore();
         return {
-          initAuth
+          initAuth,
+          getCurrentGreetings
         };
     },
     mounted() {
         this.initAuth();
+        this.getCurrentGreetings()
     }
 });
 </script>

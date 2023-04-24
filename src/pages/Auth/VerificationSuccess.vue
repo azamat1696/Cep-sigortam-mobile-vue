@@ -18,17 +18,16 @@
             <q-card-section class="q-pt-xs">
                 <q-form class="q-pt-xs q-pb-md" >
                     <div
-                        class="text-subtitle1 q-pb-xl q-pl-md q-pr-md"
+                        class="text-subtitle1 q-pb-xl q-pl-md q-pr-md no-wrap text-center"
                         style="color: #5e5e5e"
                     >
-                        Üyeliğinizi başarılı bir şekilde tamamladınız Artık
-                        uygulamaya giriş yapıp kullanabilirsiniz.
+                        {{$t('register_success')}}
                     </div>
                     <div class="q-pt-xl q-mt-xl">
                         <q-btn
                             color="primary"
                             text-color="white"
-                            label="Giriş"
+                            :label="$t('login')"
                             no-caps
                             class="full-width"
                             style="border-radius: 8px"
@@ -38,11 +37,7 @@
                     </div>
                 </q-form>
             </q-card-section>
-            <q-card-section class="text-center" v-show="show">
-                <q-btn color="primary" no-caps :to="{ name: 'loginPage' }"
-                >Giriş</q-btn
-                >
-            </q-card-section>
+
         </q-card>
     </div>
 </template>
@@ -51,14 +46,10 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-setTimeout(() => {
-    router.push({ name: "loginPage" });
-}, 5000);
+// setTimeout(() => {
+//     router.push({ name: "loginPage" });
+// }, 5000);
 
-let show = ref(false);
-setTimeout(() => {
-    show.value = true;
-}, 3000);
 </script>
 
 <style scoped>

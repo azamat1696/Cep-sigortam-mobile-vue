@@ -6,21 +6,10 @@
         leave-active-class="animated fadeIn"
     >
         <q-layout key="ferdiKazaTeklif" view="lHh Lpr lFf">
-            <q-header   elevated>
-                <q-toolbar>
-                    <q-avatar size="sm">
-                        <q-icon
-                            name="chevron_left"
-                            @click="authToken && authToken !== undefined ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
-                            size="md"
-                            class="cursor-pointer"
-                        />
-                    </q-avatar>
-                    <q-toolbar-title class="text-subtitle2 text-bold text-center"
-                    >Ferdi Kaza</q-toolbar-title
-                    >
-                </q-toolbar>
-            </q-header>
+            <HeaderComponent>
+                {{$t('personel_accident')}}
+            </HeaderComponent>
+
             <q-page-container>
                 <q-stepper
                     v-model="step"
@@ -46,45 +35,45 @@
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciAdi"
-                                label="Adı "
+                                :label="$t('name')"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen adınızı giriniz',
+                                        $t('required'),
                                 ]"
                             />
                             <q-input
                                 dense
                                 outlined
                                 v-model="formFields.KullaniciSoyAdi"
-                                label="SoyAdi"
+                                :label="$t('surname')"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen soyadınızı giriniz',
+                                        $t('required'),
                                 ]"
                             />
                             <q-input
                                 dense
                                 outlined
                                 v-model="formFields.MusteriTcKimlikNo"
-                                label="Kimlik No"
+                                :label="$t('identity_no')"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen Kimlik No giriniz',
+                                        $t('required'),
                                 ]"
                             />
                             <q-checkbox
                                 v-model="formFields.TCVat"
                                 dense
-                                label="TC Vatandaşıyım"
+                                :label="$t('tc_citizen')"
                                 class="text-subtitle2"
                             />
                             <q-input
@@ -92,7 +81,7 @@
                                 outlined
                                 dense
                                 hide-bottom-space
-                                label="Doğum Tarihi"
+                                :label="$t('birth_date')"
                             >
                                 <template v-slot:append>
                                     <q-icon name="event" class="cursor-pointer">
@@ -112,7 +101,7 @@
                                                 >
                                                     <q-btn
                                                         v-close-popup
-                                                        label="Kapat"
+                                                        :label="$t('close')"
                                                         color="primary"
                                                         flat
                                                     />
@@ -127,13 +116,13 @@
                                 dense
                                 outlined
                                 v-model="formFields.MusteriDogumYeri"
-                                label="Doğum Yeri"
+                                :label="$t('birthplace')"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen doğum yeri giriniz',
+                                        $t('required'),
                                 ]"
                             />
                             <q-select
@@ -142,7 +131,7 @@
                                 :options="genderOptions"
                                 :option-label="(option) => option.label"
                                 option-value="value"
-                                label="Cinsiyet"
+                                :label="$t('gender')"
                                 dense
                                 emit-value
                                 map-options
@@ -150,7 +139,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen cinsiyet seçiniz!',]"
+                                || $t('required'),]"
                             />
 
                             <q-select
@@ -164,7 +153,7 @@
                                 use-input
                                 input-debounce="0"
                                 options-dense
-                                label="Ülke"
+                                :label="$t('country')"
                                 dense
                                 hide-bottom-space
                                 clearable
@@ -172,7 +161,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen ülke seçiniz!',]"
+                                || $t('required'),]"
                             >
                                 <template v-slot:no-option>
                                     <q-item>
@@ -187,14 +176,14 @@
                                 outlined
                                 v-model="formFields.MusteriCepTelefonNo"
                                 type="text"
-                                label="Telefon Numarası"
+                                :label="$t('phone_no')"
                                 hide-bottom-space
                                 prefix="+90"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        'Lutfen telefon no giriniz',
+                                        $t('required'),
                                 ]"
                             />
                             <q-input
@@ -202,13 +191,13 @@
                                 outlined
                                 v-model="formFields.MusteriEPosta"
                                 type="text"
-                                label="E-Posta Adresi"
+                                :label="$t('email_address')"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 7) ||
-                                        'Lutfen e-posta adresi giriniz',
+                                        $t('required'),
                                 ]"
                             />
                             <q-select
@@ -219,7 +208,7 @@
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="İl seç"
+                                :label="$t('province_select')"
                                 dense
                                 hide-bottom-space
                                 behavior="menu"
@@ -229,17 +218,17 @@
                                 @update:model-value="getIlOnSelect"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen il seçiniz!',]"
+                                || $t('required'),]"
                             />
                             <q-select
                                 outlined
                                 v-model="formFields.MusteriBucakKodu"
-                                :options="ilceSelectGetOptions"
+                                :options="ilceOptions"
                                 :option-label="(option) => option.ilce_Adi"
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="İlçe seç"
+                                :label="$t('district_select')"
                                 dense
                                 clearable
                                 hide-bottom-space
@@ -249,13 +238,13 @@
                                 @update:model-value="getIlceOnSelect"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen ilçe seçiniz!',]"
+                                || $t('required'),]"
                             />
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
                                     color="primary"
-                                    label="İlerle"
+                                    :label="$t('forward')"
                                     no-caps
                                     class="full-width"
                                 />
@@ -267,7 +256,7 @@
 
                     <q-step
                         :name="2"
-                        prefix="3"
+                        prefix="2"
                         title=""
                         :header-nav="step > 2"
                         style="min-height: 200px"
@@ -277,12 +266,12 @@
                             <q-select
                                 outlined
                                 v-model="formFields.MusteriBelediyeKodu"
-                                :options="belediyeSelectGetOptions"
+                                :options="belediyeOptions"
                                 :option-label="(option) => option.Belediye_Adi"
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="Belediye seç"
+                                :label="$t('council_select')"
                                 dense
                                 clearable
                                 hide-bottom-space
@@ -292,18 +281,18 @@
                                 @update:model-value="getBelediyeOnSelect"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen belediye seçiniz!',]"
+                                || $t('required'),]"
 
                             />
                             <q-select
                                 outlined
                                 v-model="formFields.MusteriMahalleKodu"
-                                :options="mahalleSelectOptions"
+                                :options="mahalleOptions"
                                 :option-label="(option) => option.Mahalle_Adi"
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="Mahalle seç"
+                                :label="$t('municipality_select')"
                                 dense
                                 clearable
                                 hide-bottom-space
@@ -313,17 +302,17 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen mahalle seçiniz!',]"
+                                || $t('required'),]"
                             />
                             <q-select
                                 outlined
                                 v-model="formFields.MusteriCSBMKodu"
-                                :options="sokakSelectOptions"
+                                :options="sokakOptions"
                                 :option-label="(option) => option.Sokak_Adi"
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="Sokak"
+                                :label="$t('street_select')"
                                 dense
                                 clearable
                                 use-input
@@ -332,7 +321,7 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen sokak seçiniz!',]"
+                                || $t('required'),]"
                             />
 
                                     <q-select
@@ -343,7 +332,7 @@
                                         option-value="value"
                                         emit-value
                                         map-options
-                                        label="Döviz seç"
+                                        :label="$t('currency_select')"
                                         dense
                                         clearable
                                         use-input
@@ -351,7 +340,7 @@
                                         behavior="menu"
                                         lazy-rules
                                         :rules="[val => val !== null && val !== ''
-                                || 'Lütfen döviz seçiniz!',]"
+                                        || $t('required'),]"
                                         @update:model-value="getDovizOnSelect"
                                     />
 
@@ -363,7 +352,7 @@
                                         option-value="value"
                                         emit-value
                                         map-options
-                                        label="Ölüm ve Sürekli Sakatlık Limiti"
+                                        :label="$t('death_and_permanent_disability')"
                                         dense
                                         clearable
                                         use-input
@@ -371,36 +360,16 @@
                                         behavior="menu"
                                         lazy-rules
                                         :rules="[val => val !== null && val !== ''
-                                || 'Lütfen rakam seçiniz!',]"
+                                        || $t('required'),]"
                                     />
 
                             <q-input
                                 dense
                                 outlined
-                                v-model="formFields.TeminatLimiti"
-                                type="number"
-                                label="Teminat Limiti"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen temimat limiti giriniz',
-                                ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
                                 v-model="formFields.Lehtar"
                                 type="text"
-                                label="Lehtar*"
+                                :label="$t('lehtar')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        'Lutfen lehtar giriniz',
-                                ]"
                             />
                             <q-select
                                 outlined
@@ -410,7 +379,7 @@
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="Mesleği"
+                                :label="$t('job_select')"
                                 dense
                                 clearable
                                 use-input
@@ -418,19 +387,19 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen rakam seçiniz!',]"
+                                || $t('required'),]"
                             />
 
 
                             <q-select
                                 outlined
-                                v-model="formFields.AcenteNo"
+                                v-model="formFields.AcenteId"
                                 :options="agentOptions"
                                 :option-label="(option) => option.Acente_Adi"
                                 option-value="id"
                                 emit-value
                                 map-options
-                                label="Acentenizi Seçiniz"
+                                :label="$t('agent_select')"
                                 dense
                                 clearable
                                 use-input
@@ -439,14 +408,14 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || 'Lütfen acente seçiniz!',]"
+                                || $t('required'),]"
                             />
 
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
                                     color="primary"
-                                    label="Teklif Al"
+                                    :label="$t('get_a_quote')"
                                     no-caps
                                     class="full-width"
                                 />
@@ -463,27 +432,17 @@
                                     class="col-11 text-grey-8"
                                     style="font-size: 11px"
                                 >
-                                    <b>Uyarı:</b> Bir sigorta poliçesinin
-                                    düzenlenmesi amacı ile beyan edilen
-                                    bilgilerin eksiklik içermesi ve/veya yanlış
-                                    olması ve/veya yanıltıcı beyan içermesi
-                                    halinde, işbu sigorta poliçesi ile ilgili
-                                    şirketimizin her hangi bir sorumluluğu
-                                    bulunmayacak ve/veya poliçe geçersiz
-                                    kılınabilecektir.
+                                    <b>{{$t('warning')}}:</b>  {{$t('warning_text')}}
                                 </div>
                                 <div class="col-12">
                                     <q-separator spaced />
                                 </div>
                                 <div class="col-12">
-                                    Önemli Not: Lehtar kısmı doldurulmaması halinde kanuni varisleri lehtar olarak değerlendirilecektir.
+                                    {{$t('warning_text2')}}
                                 </div>
                             </div>
                         </q-form>
                     </q-step>
-
-
-
                 </q-stepper>
 
             </q-page-container>
@@ -501,6 +460,7 @@ import { api } from "boot/axios";
 import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import {useFerdiKazaStore} from "stores/ferdi-kaza-store";
+import HeaderComponent from "components/HeaderComponent.vue";
 const router = useRouter();
 const store = useMainStore();
 const authStore = useAuthStore();
@@ -549,11 +509,11 @@ const currencyOptions = [
     {value: "GBP", label: "GBP" }
 ];
 const tlCurrencyOptions = [
-    { value: "200", label: "200.000" },
-    { value: "400", label: "400.000" },
-    { value: "750", label: "750.000 " },
-    { value: "1000", label: "1000.000" },
-    { value: "1500", label: "1500.000" },
+    { value: "200000", label: "200.000 TL" },
+    { value: "400000", label: "400.000 TL" },
+    { value: "750000", label: "750.000 TL" },
+    { value: "1000000", label: "1.000.000 TL" },
+    { value: "1500000", label: "1.500.000 TL" },
 ]
 const usdCurrencyOptions = [
     { value: "10", label: "10.000" },
@@ -568,9 +528,13 @@ let countriesOptions = ref(countries.value);
 let aracModelOptions = ref();
 const ilOptions = ref(il.value);
 let ilceSelectGetOptions = ref([]);
-const belediyeSelectGetOptions = ref();
-const mahalleSelectOptions = ref(mahalleSelect.value);
-const sokakSelectOptions = ref();
+let ilceOptions = ref([]);
+const belediyeSelectGetOptions = ref([]);
+const belediyeOptions = ref([]);
+const mahalleSelectOptions = ref([]);
+const mahalleOptions = ref([]);
+const sokakSelectOptions = ref([]);
+const sokakOptions = ref([]);
 const agentOptions = ref(agent.value);
 let currencyOptionsValue = ref();
 
@@ -602,30 +566,18 @@ const filterIl = (val: any, update: any) => {
     });
 };
 const filterIlce = (val: string, update: any) => {
-    // if (val === "") {
-    //     update(() => {
-    //         ilceSelectGetOptions.value = ilce.value;
-    //     });
-    //     return;
-    // }
     update(() => {
         const needle = val.toLowerCase();
-        ilceSelectGetOptions.value = ilce.value.filter(
+        ilceOptions.value = ilceSelectGetOptions.value.filter(
             // @ts-ignore
             (v) => v.ilce_Adi.toLowerCase().indexOf(needle) > -1
         );
     });
 };
 const filterBelediye = (val: string, update: any) => {
-    // if (val === "") {
-    //     update(() => {
-    //         belediyeSelectGetOptions.value = belediyeSelect.value;
-    //     });
-    //     return;
-    // }
     update(() => {
         const needle = val.toLowerCase();
-        belediyeSelectGetOptions.value = belediyeSelect.value.filter(
+        belediyeOptions.value = belediyeSelectGetOptions.value.filter(
             // @ts-ignore
 
             (v) => v.Belediye_Adi.toLowerCase().indexOf(needle) > -1
@@ -633,32 +585,20 @@ const filterBelediye = (val: string, update: any) => {
     });
 };
 const filterMahalle = (val: string, update: any) => {
-    // if (val === "") {
-    //     update(() => {
-    //         mahalleSelectOptions.value = mahalleSelect.value;
-    //     });
-    //     return;
-    // }
     update(() => {
         const needle = val.toLowerCase();
-        mahalleSelectOptions.value = mahalleSelect.value.filter(
+        mahalleOptions.value = mahalleSelectOptions.value.filter(
             // @ts-ignore
             (v) => v.Mahalle_Adi.toLowerCase().indexOf(needle) > -1
         );
     });
 };
 const filterSokak = (val: string, update: any) => {
-    // if (val === "") {
-    //     update(() => {
-    //         sokakSelectOptions.value = sokakSelect.value;
-    //     });
-    //     return;
-    // }
     update(() => {
         const needle = val.toLowerCase();
-        sokakSelectOptions.value = sokakSelect.value.filter(
+        sokakOptions.value = sokakSelectOptions.value.filter(
             // @ts-ignore
-            (v) => v.Sokak_Adi.toLowerCase().indexOf(needle) > -1
+            (v) => v.Sokak_Adi?.toLowerCase().indexOf(needle) > -1
         );
     });
 };
@@ -681,30 +621,39 @@ const filterAgent = (val: string, update: any) => {
 // ************* Select box on update for the form *************** /
 
 const getIlOnSelect = (id: number) => {
-    console.log(id)
-    ilceSelectGetOptions.value = ilce.value.filter(
-        // @ts-ignore
-        (item) => +item.il_Kodu === +id
-    );
-    console.log(ilceSelectGetOptions.value)
+    if (id !== null) {
+        ilceSelectGetOptions.value = ilce.value.filter(
+            // @ts-ignore
+            (item) => item.il_Kodu === +id
+        );
+    }else {
+        ilceSelectGetOptions.value = []
+    }
 };
-const getIlceOnSelect = (data: object) => {
-    belediyeSelectGetOptions.value = belediyeSelect.value.filter(
-        // @ts-ignore
-
-        (item) => item.ilce_Kodu === data?.id
-    );
+const getIlceOnSelect = (data: number) => {
+    if (data !== null) {
+        belediyeSelectGetOptions.value = belediyeSelect.value.filter(
+            // @ts-ignore
+            (item) => item.ilce_Kodu === +data
+        );
+    }else {
+        belediyeSelectGetOptions.value = []
+    }
 };
-const getBelediyeOnSelect = (data: object) => {
-    mahalleSelectOptions.value = mahalleSelect.value.filter(
-        // @ts-ignore
-        (item) => item.belediyenin_Kodu === data?.id
-    );
+const getBelediyeOnSelect = (data: number) => {
+    if (data !== null) {
+        mahalleSelectOptions.value = mahalleSelect.value.filter(
+            // @ts-ignore
+            (item) => +item.belediyenin_Kodu === +data
+        );
+    }else {
+        mahalleSelectOptions.value = []
+    }
 };
 const getMahalleOnSelect = (data: object) => {
     sokakSelectOptions.value = sokakSelect.value.filter(
         // @ts-ignore
-        (item) => item.mahallenin_Kodu === data?.id
+        (item) => +item.mahallenin_Kodu === +data
     );
 };
 const getDovizOnSelect = (data: object) => {
@@ -757,8 +706,8 @@ const formFields = ref({
     MusteriCSBMKodu: "", // select box
     MusteriCepTelefonNo: "5488321621", // input
     MusteriEPosta: "azamat1696@gmail.com", // input
-    AcenteNo: "", // input
-    uyar: "", // 'accepted'
+    AcenteId: "", // input
+    uyar: false, // 'accepted'
     TeminatLimiti: "", // select box
     Lehtar: "", // select box
     Meslegi: "", // select box

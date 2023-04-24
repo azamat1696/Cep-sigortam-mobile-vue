@@ -42,8 +42,10 @@ export default route(function (/* { store, ssrContext } */) {
                 next({path : '/auth/login'})
             }
             next()
+            return
         }
         next()
+        return
     });
 
     return Router

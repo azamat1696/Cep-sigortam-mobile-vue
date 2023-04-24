@@ -1,5 +1,5 @@
 <template>
-    <div class="fullscreen flex flex-center no-padding">
+    <div class="full-width flex flex-center no-padding">
         <q-card
             class="no-shadow transparent"
             style="height: auto; min-width: 370px; margin-top: 130px"
@@ -21,7 +21,7 @@
                         class="text-subtitle1 q-pb-lg q-pl-md q-pr-md text-center"
                         style="color: #5e5e5e"
                     >
-                        Lütfen telefonunuza gelen 4 haneli şifreyi giriniz.
+                        {{ $t("enter_4_digit_code") }}
                     </div>
                     <div class="flex flex-center q-pb-xl q-pt-lg q-pa-lg">
                         <div v-for="item in length" class="q-pa-sm">
@@ -45,7 +45,7 @@
                         <q-btn
                             color="primary"
                             text-color="white"
-                            label="Onay Kodu Al"
+                            :label="$t('verification_code_get')"
                             no-caps
                             class="full-width"
                             style="border-radius: 8px"
@@ -59,7 +59,7 @@
                             <q-btn
                                 color="primary"
                                 text-color="grey-8"
-                                label="Giriş"
+                                :label="$t('login')"
                                 no-caps
                                 dense
                                 flat
@@ -85,7 +85,7 @@ import {
     ref,
     onBeforeUpdate,
     computed,
-    watch,
+    watch, onMounted,
 
 } from "vue";
 import {storeToRefs} from "pinia";
@@ -99,6 +99,7 @@ export default defineComponent({
     name: "RenewPassword",
     emits: ["update:modelValue"],
     setup() {
+
         const length = ref(4);
         const fields = ref([]);
         const fieldValues = ref([]);
@@ -110,9 +111,14 @@ export default defineComponent({
             return nonNullField.join("");
         });
         const authStore = useAuthStore();
-        const {user,permenantUser} = storeToRefs(authStore);
+        const {user,permenantUser,authToken} = storeToRefs(authStore);
+         const { passwordResetSms,getUserInfo,resendSmsCode } = authStore;
         const router = useRouter();
-        const { passwordResetSms,getUserInfo,resendSmsCode } = authStore;
+        onMounted(() => {
+            if (authToken.value) {
+                router.push({ name: 'homeLogin' });
+            }
+        })
         watch(composite, () => {
             if (composite.value) {
                 //emit('update:modelValue',composite.value)

@@ -1,104 +1,103 @@
 <template>
     <div class="q-pa-md row">
-      <div class="col-12 text-center" >
-          <img src="/nesuygulamaikon.svg" alt="" height="100" width="160" />
-<!--             <div class="text-h5 text-primary text-custom-1">CEP SIGORTA</div>-->
-<!--             <div class="text-h5 text-primary text-custom-2">Sizin İçin Çalışır O</div>-->
-      </div>
-      <div class="col-12">
+        <div class="col-12 text-center" >
+            <img src="/nesuygulamaikon.svg" alt="" height="100" width="160" />
+            <!--             <div class="text-h5 text-primary text-custom-1">CEP SIGORTA</div>-->
+            <!--             <div class="text-h5 text-primary text-custom-2">Sizin İçin Çalışır O</div>-->
+        </div>
+        <div class="col-12">
 
-             <q-carousel
-                 animated
-                 v-model="slide"
-                 transition-prev="slide-right"
-                 transition-next="slide-left"
-                 swipeable
-                 navigation
-                 infinite
-                 autoplay
-              >
-                 <template v-slot:navigation-icon="{ active, btnProps, onClick }">
-                     <q-btn
-                         v-if="active"
-                         size="md"
-                         icon="radio_button_checked"
-                         color="primary"
-                         flat
-                         round
-                         dense
-                         @click="onClick"
-                     />
-                     <q-btn
-                         v-else
-                         size="md"
-                         icon="radio_button_unchecked"
-                         color="white"
-                         flat
-                         round
-                         text-color="grey-5"
-                         dense
-                         @click="onClick"
-                     />
+            <q-carousel
+                animated
+                v-model="slide"
+                transition-prev="slide-right"
+                transition-next="slide-left"
+                swipeable
+                navigation
+                infinite
+                autoplay
+            >
+                <template v-slot:navigation-icon="{ active, btnProps, onClick }">
+                    <q-btn
+                        v-if="active"
+                        size="md"
+                        icon="radio_button_checked"
+                        color="primary"
+                        flat
+                        round
+                        dense
+                        @click="onClick"
+                    />
+                    <q-btn
+                        v-else
+                        size="md"
+                        icon="radio_button_unchecked"
+                        color="white"
+                        flat
+                        round
+                        text-color="grey-5"
+                        dense
+                        @click="onClick"
+                    />
 
-                 </template>
+                </template>
 
-                 <q-carousel-slide :name="1" >
-                <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
-                    <div >
-                        <q-img  src="/slides/slide1.png"/>
-                    </div>
-                    <div >
-                        <div class="slider_text q-pt-md">
-                            Trafik ve Ferdi Kaza Sigorta Poliçelerin
-                            Uygulamadan Anında Oluşturun
+                <q-carousel-slide :name="1" >
+                    <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
+                        <div >
+                            <q-img  src="/slides/slide1.png"/>
+                        </div>
+                        <div >
+                            <div class="slider_text q-pt-md">
+                                {{$t('slider_text1')}}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                 </q-carousel-slide>
-                 <q-carousel-slide :name="2" >
-                     <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
-                         <div >
-                             <q-img  src="/slides/slide2.png"/>
-                         </div>
-                         <div >
-                             <div class="slider_text q-pt-md">
-                                 Kasko, Konut, Trafik ve Ferdi Kaza
-                                 Sigorta Poliçeleri için Teklif Alabilirsiniz.
-                             </div>
-                         </div>
-                     </div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="2" >
+                    <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
+                        <div >
+                            <q-img  src="/slides/slide2.png"/>
+                        </div>
+                        <div >
+                            <div class="slider_text q-pt-md">
+                                {{$t('slider_text2')}}
+                            </div>
+                        </div>
+                    </div>
 
-                 </q-carousel-slide>
-                 <q-carousel-slide :name="3">
-                     <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
-                         <div >
-                             <q-img  src="/slides/slide3.png"/>
-                         </div>
-                         <div >
-                             <div class="slider_text q-pt-md">
-                                 Oluşturulmuş Poliçe ve Hasar
-                                 Uygulama Üzerinden Görebilirsiniz.
-                             </div>
-                         </div>
-                     </div>
+                </q-carousel-slide>
+                <q-carousel-slide :name="3">
+                    <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
+                        <div >
+                            <q-img  src="/slides/slide3.png"/>
+                        </div>
+                        <div >
+                            <div class="slider_text q-pt-md">
+                                {{$t('slider_text3')}}
+                            </div>
+                        </div>
+                    </div>
 
-                 </q-carousel-slide>
-             </q-carousel>
+                </q-carousel-slide>
+            </q-carousel>
 
-         </div>
+        </div>
 
-      </div>
+    </div>
     <div class="q-pa-lg row">
         <div class="col-12">
             <q-btn no-wrap no-caps unelevated :to="{name:'homeLogin'}" v-if="authToken">
-                <div class="text-subtitle1 text-weight-bold text-grey-7">Atla <q-icon size="sm" name="chevron_right" /></div>
+                <div class="text-subtitle1 text-weight-bold text-grey-7">{{$t('skip')}} <q-icon size="sm" name="chevron_right" /></div>
             </q-btn>
             <q-btn no-wrap no-caps unelevated :to="{name:'home'}" v-else>
-                <div class="text-subtitle1 text-weight-bold text-grey-7">Atla <q-icon size="sm" name="chevron_right" /></div>
+                <div class="text-subtitle1 text-weight-bold text-grey-7">{{$t('skip')}}  <q-icon size="sm" name="chevron_right" /></div>
             </q-btn>
         </div>
     </div>
+
+
 </template>
 
 <script lang="ts" setup>
@@ -107,8 +106,7 @@ import {storeToRefs} from "pinia";
 import {useAuthStore} from "stores/auth-store";
 
 const {user,authToken} = storeToRefs(useAuthStore())
-console.log(localStorage.getItem('authToken'))
-const slide = ref(1)
+ const slide = ref(1)
 
 </script>
 

@@ -1,12 +1,12 @@
 <template>
-    <div class="fullscreen flex flex-center no-padding">
+    <div class="full-width flex flex-center no-padding">
         <q-card
             class="no-shadow transparent"
             style="height: auto; min-width: 370px"
         >
             <q-card-section class="q-pb-xs">
-                <div class="text-primary text-uppercase text-left cep-sigortam">
-                    Cep Sigortam
+                <div class="text-primary text-uppercase text-center cep-sigortam">
+                    <img src="/logo.svg" height="60" width="250" />
                 </div>
             </q-card-section>
             <q-card-section class="q-pt-xs">
@@ -15,65 +15,76 @@
                         v-model="formFields.id_card"
                         outlined
                         color="#EBEBEB"
-                        label="Kimlik No"
+                        :label="$t('identity_no')"
                         clearable
                         class="q-pt-sm q-pb-sm"
                         lazy-rules
-                        :rules="[val => val.length > 0 || 'Kimlik No 11 haneli olmalıdır']"
+                        :rules="[val => val.length > 0]"
                     />
                     <q-checkbox
                         v-model="formFields.TCVat"
                         dense
-                        label="TC Vatandasiyim"
+                        :label="$t('tc_citizen')"
                         class="q-pt-sm q-pb-sm text-subtitle2"
                     />
                     <q-input
                         v-model="formFields.phone"
                         outlined
                         color="#EBEBEB"
-                        label="Cep No"
+                        :label="$t('phone_no')"
                         clearable
                         class="q-pt-sm q-pb-sm"
+                        prefix="+90"
+                        mask="### ### ## ##"
+                        unmasked-value
+                        lazy-rules
+                        :rules="[val => val.length > 0]"
                     />
                     <q-input
                         v-model="formFields.password"
                         type="password"
                         outlined
                         color="#EBEBEB"
-                        label="Şifre"
+                        :label="$t('password')"
                         clearable
                         class="q-pt-sm q-pb-sm"
                     />
                     <q-btn
                         color="primary"
                         text-color="white"
-                        label="Giriş"
+                        :label="$t('login')"
                         no-caps
                         type="submit"
                         class="full-width q-mt-md"
                         style="border-radius: 8px"
                         size="20px"
                     />
-                    <q-checkbox
-                        v-model="formFields.rememberMe"
-                        dense
-                        label="Beni Hatirla"
-                        class="q-pt-md q-pb-sm text-subtitle2"
+                    <q-btn
+                        color="primary"
+                        text-color="white"
+                        :label="$t('register')"
+                        no-caps
+                        type="submit"
+                        class="full-width q-mt-md"
+                        style="border-radius: 8px"
+                        size="20px"
+                        @click="$router.push({ name: 'registerPage' })"
                     />
+
                     <div class="flex justify-between q-pt-sm">
                         <div
                             class="custom-text cursor-pointer"
                             @click="$router.push({ name: 'forgotPasswordPage' })"
                         >
-                            Şifremi Unuttum
+                            {{ $t('forgot_password')}}
                         </div>
 
-                        <div
-                            class="custom-text cursor-pointer"
-                            @click="$router.push({ name: 'registerPage' })"
-                        >
-                            Üye Ol
-                        </div>
+                        <q-checkbox
+                            v-model="formFields.rememberMe"
+                            dense
+                            :label="$t('remember_me')"
+                            class=" text-subtitle2"
+                        />
                     </div>
                 </q-form>
             </q-card-section>
@@ -81,7 +92,7 @@
                 <q-btn
                     color="primary"
                     text-color="white"
-                    label="Teklif Al"
+                    :label="$t('continue_without_login')"
                     no-caps
                     class="full-width q-mt-md"
                     style="border-radius: 8px"
@@ -94,7 +105,7 @@
 </template>
 
 <script lang="ts" setup>
-import {  ref } from "vue";
+import {onMounted, ref} from "vue";
 import { storeToRefs} from "pinia";
 import { useAuthStore } from "stores/auth-store";
 import { useRouter } from "vue-router";
@@ -102,10 +113,18 @@ const router = useRouter();
 const { authToken,user,permenantUser } = storeToRefs(useAuthStore());
 const { login } = useAuthStore();
 const formFields = ref({
-    id_card: "2830404084",
+    // id_card: "14918431832",
+    // TCVat: true,
+    // phone: "5338510513",
+    // password: "123456",
+    // rememberMe: false,
+    id_card: "",
     TCVat: false,
-    phone: "5428872827",
-    password: "121212",
+    phone: "",
+    password: {
+        value: "",
+        number: true,
+    },
     rememberMe: false,
 })
 
@@ -118,21 +137,25 @@ const onSubmit = () => {
         }else if (key === 'TCVat' && val === false)
         {
             formData.append(key,0);
-
+        }
+        else if (key === 'rememberMe' && val === true) {
+            formData.append(key, 1);
         }
         else{
             formData.append(key,val);
         }
     }
-    login(formData).then((res) => {
-
+    login(formData).then(() => {
             permenantUser.value = formFields.value;
-
-        console.log('user',permenantUser.value);
     }).catch((err) => {
         console.log('err',err);
     });
 }
+onMounted(() => {
+    if (authToken.value) {
+        router.push({ name: 'homeLogin' });
+    }
+})
 </script>
 
 <style scoped>
