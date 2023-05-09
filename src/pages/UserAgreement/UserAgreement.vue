@@ -20,10 +20,10 @@
                 <p class="text-subtitle2 text-weight-normal">
                     {{ $t("userAgreement_body1") }}
                  </p>
-                <p>
+                <p class="text-subtitle2 text-weight-normal">
                     {{ $t("userAgreement_body2") }}
                  </p>
-                <p>
+                <p class="text-subtitle2 text-weight-normal">
                     {{ $t("userAgreement_body3") }}
                 </p>
                 <div class="text-subtitle1 text-weight-bold text-center">

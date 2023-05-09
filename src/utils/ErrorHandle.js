@@ -1,6 +1,6 @@
 import {Notify} from "quasar";
 import {routerInstance} from 'boot/customRouteInstance'
- export function ErrorHandle (errorsObj,customMessage=null,locale='Tr') {
+   export function ErrorHandle (errorsObj,locale='tr',customMessage=null) {
 
     let error = errorsObj.response.data?.error
      let data = errorsObj.response.data
@@ -30,19 +30,42 @@ import {routerInstance} from 'boot/customRouteInstance'
 
         Notify.create({
             type:'negative',
-            message: data.Error2|| data.Error1||data.errorTr || data.errorEng || errorsObj.response.data.error,
-            //timeout:1000,
+            message: locale === 'tr' ? data.errorTr : data.errorEng || data.errorEng || data.Error2|| data.Error1 || errorsObj.response.data.error|| "Something went wrong",
+            timeout:1000,
             position:'bottom',
             progress:true,
             closeBtn:'X',
             closeBtnClass:'text-white'
         })
-
-    } else if (status === 400) {
-        console.log(data)
         Notify.create({
             type:'negative',
-            message: data.errorTr || data.errorEng || data.error || data.message || 'Something went wrong',
+            message: data.Error1 || data.errorEng || data.Error2 || errorsObj.response.data.error|| "Something went wrong",
+            timeout:1000,
+            position:'bottom',
+            progress:true,
+            closeBtn:'X',
+        })
+        Notify.create({
+            type:'negative',
+            message: data.Error2 || data.errorEng || data.Error2 || data.Error1 || errorsObj.response.data.error|| "Something went wrong",
+            timeout:1000,
+            position:'bottom',
+            progress:true,
+            closeBtn:'X',
+        })
+
+    } else if (status === 400) {
+        Notify.create({
+            type:'negative',
+            message: data.errorTr || data.errorEng || data.error || data.message || "Something went wrong",
+            timeout:1000,
+            position:'bottom',
+            progress:true
+        })
+    } else if (status === 500){
+        Notify.create({
+            type:'negative',
+            message:  "Sunucu hatası oluştu lütfen daha sonra tekrar deneyiniz",
             timeout:1000,
             position:'bottom',
             progress:true
@@ -50,7 +73,7 @@ import {routerInstance} from 'boot/customRouteInstance'
     } else {
         Notify.create({
             type:'negative',
-            message: data.errorTr || data.errorEng || error || customMessage || 'Something went wrong',
+            message: data.errorTr || data.errorEng || error || customMessage || "Something went wrong",
             timeout:1000,
             position:'bottom',
             progress:true

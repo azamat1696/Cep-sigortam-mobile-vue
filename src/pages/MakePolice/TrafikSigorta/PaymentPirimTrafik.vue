@@ -9,7 +9,7 @@
                         <q-expansion-item
                             class="text-grey-8"
                             expand-separator
-                            label=" Ferdi Kaza Sigortası "
+                            :label="$t('motor')"
                             default-opened
                         >
                             <q-card>

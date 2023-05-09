@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { api } from "boot/axios";
 import { Loading, Notify } from "quasar";
+import {ErrorHandle} from "src/utils/ErrorHandle";
 
 export const useKaskoStore = defineStore("kasko", {
     state: () => ({
@@ -24,29 +25,30 @@ export const useKaskoStore = defineStore("kasko", {
                     return true;
                 }
             } catch (err) {
-                if (err.response) {
-                    const { data, status } = err.response;
-                    if (status === 422) {
-                        Notify.create({
-                            message: "Başvuru: " + data.message,
-                            color: "negative",
-                            timeout: 3000,
-                        });
-
-                        for (const value of Object.entries(data.errors)) {
-                            Notify.create({
-                                message: "Başvuru: " + value[1],
-                                color: "negative",
-                                timeout: 3000,
-                            });
-                        }
-                    } else {
-                        this.error = {};
-                    }
-                } else {
-                    this.error = {};
-                }
-                return err.response;
+                ErrorHandle(err)
+                // if (err.response) {
+                //     const { data, status } = err.response;
+                //     if (status === 422) {
+                //         Notify.create({
+                //             message: "Başvuru: " + data.message,
+                //             color: "negative",
+                //             timeout: 3000,
+                //         });
+                //
+                //         for (const value of Object.entries(data.errors)) {
+                //             Notify.create({
+                //                 message: "Başvuru: " + value[1],
+                //                 color: "negative",
+                //                 timeout: 3000,
+                //             });
+                //         }
+                //     } else {
+                //         this.error = {};
+                //     }
+                // } else {
+                //     this.error = {};
+                // }
+                // return err.response;
             } finally {
                 Loading.hide();
             }

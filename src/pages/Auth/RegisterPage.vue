@@ -20,8 +20,8 @@
                         dense
                         mask="#### #### ###"
                         unmasked-value
-                        class="q-pt-sm q-pb-sm"
                         @update:model-value="onIdCardChange"
+                        class="q-pt-sm q-pb-sm"
                         lazy-rules
                         :rules="[
                                     (val) =>

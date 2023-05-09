@@ -23,21 +23,21 @@
         </q-header>
         <q-page-container>
             <q-list>
-                <q-item clickable class="q-pa-lg" :to="{name: 'TrafikSigortaRegister'}">
-                    <q-item-section avatar>
-                        <img
-                            src="~assets/car.png"
-                            style="
-                                width: 24px;
-                                height: 24px;
-                                object-fit: contain;
-                            "
-                        />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>{{$t('motor_insurance')}}</q-item-label>
-                    </q-item-section>
-                </q-item>
+<!--                <q-item clickable class="q-pa-lg" :to="{name: 'TrafikSigortaRegister'}">-->
+<!--                    <q-item-section avatar>-->
+<!--                        <img-->
+<!--                            src="~assets/car.png"-->
+<!--                            style="-->
+<!--                                width: 24px;-->
+<!--                                height: 24px;-->
+<!--                                object-fit: contain;-->
+<!--                            "-->
+<!--                        />-->
+<!--                    </q-item-section>-->
+<!--                    <q-item-section>-->
+<!--                        <q-item-label>{{$t('motor_insurance')}}</q-item-label>-->
+<!--                    </q-item-section>-->
+<!--                </q-item>-->
                 <q-separator inset />
                 <q-item clickable class="q-pa-lg" :to="{ name: 'kaskoRegister' }">
                     <q-item-section avatar>
@@ -74,21 +74,21 @@
                 </q-item>
 
                 <q-separator inset />
-                <q-item clickable class="q-pa-lg" :to="{name:'FerdiKazaRegister'}">
-                    <q-item-section avatar>
-                        <img
-                            src="~assets/car_crash.png"
-                            style="
-                                width: 26px;
-                                height: 26px;
-                                object-fit: contain;
-                            "
-                        />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>{{$t('personel_accident_insurance')}}</q-item-label>
-                    </q-item-section>
-                </q-item>
+<!--                <q-item clickable class="q-pa-lg" :to="{name:'FerdiKazaRegister'}">-->
+<!--                    <q-item-section avatar>-->
+<!--                        <img-->
+<!--                            src="~assets/car_crash.png"-->
+<!--                            style="-->
+<!--                                width: 26px;-->
+<!--                                height: 26px;-->
+<!--                                object-fit: contain;-->
+<!--                            "-->
+<!--                        />-->
+<!--                    </q-item-section>-->
+<!--                    <q-item-section>-->
+<!--                        <q-item-label>{{$t('personel_accident_insurance')}}</q-item-label>-->
+<!--                    </q-item-section>-->
+<!--                </q-item>-->
             </q-list>
         </q-page-container>
     </q-layout>

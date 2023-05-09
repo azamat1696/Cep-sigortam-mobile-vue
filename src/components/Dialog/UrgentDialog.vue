@@ -80,7 +80,9 @@
                         </q-item-section>
 
                         <q-item-section class="text-white">
-                            <div class="text-subtitle2 text-weight-bold">WhatsApp Hattı</div>
+                            <a href="tel:05488292277" style="text-decoration: none" class="text-white">
+                                <div class="text-subtitle2 text-weight-bold text-white">WhatsApp Hattı</div>
+                            </a>
                         </q-item-section>
                     </q-item>
                 </q-list>

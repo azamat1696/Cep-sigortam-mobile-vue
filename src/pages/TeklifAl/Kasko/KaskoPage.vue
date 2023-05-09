@@ -5,15 +5,15 @@
     <q-layout view="lHh Lpr lFf">
         <q-header   elevated>
             <q-toolbar>
-                <q-avatar size="sm">
+                <q-avatar class="cursor-pointer q-btn q-btn--flat" size="sm" @click="authToken ? $router.push({ name: 'teklifAl'}) : $router.push({ name: 'home'})">
                     <q-icon
                         name="chevron_left"
-                        @click="authToken ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
                         size="md"
-                        class="cursor-pointer"
+                        class="cursor-pointer q-mt-sm"
+
                     />
                 </q-avatar>
-                <q-toolbar-title class="text-subtitle2 text-bold text-center"
+                <q-toolbar-title class="text-subtitle2 text-bold text-center q-mr-xl"
                     >{{$t('insurance')}}</q-toolbar-title
                 >
             </q-toolbar>
@@ -28,7 +28,7 @@
                     active-icon="none"
                     done-icon="none"
                     animated
-                    class="no-shadow"
+                    class="no-shadow stepper_header"
                     header-class="no-border"
                 >
                     <q-step
@@ -72,6 +72,9 @@
                                 v-model="formFields.MusteriTcKimlikNo"
                                 :label="$t('identity_no')"
                                 hide-bottom-space
+                                mask="#### #### ###"
+                                unmasked-value
+                                @update:model-value="onIdCardChange"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -85,6 +88,7 @@
                                 dense
                                 :label="$t('tc_citizen')"
                                 class="text-subtitle2"
+                                :disable="checkIdCardNumber"
                             />
 
                             <q-input
@@ -106,6 +110,7 @@
                                                     formFields.MusteriDogumTarihi
                                                 "
                                                 mask="DD / MM /YYYY"
+                                                :locale="dateLocale"
                                             >
                                                 <div
                                                     class="row items-center justify-end"
@@ -192,7 +197,7 @@
                                 dense
                                 outlined
                                 v-model="formFields.MusteriDogumYeri"
-                                label="Doğum Yeri"
+                                :label="$t('birthplace')"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -419,11 +424,33 @@
                                         $t('required'),
                                 ]"
                             />
+                            <q-select
+                                outlined
+                                v-model="formFields.TeminatLimitiDovic"
+                                :options="currencyOptions"
+                                :option-label="(option) => option.label"
+                                option-value="value"
+                                emit-value
+                                map-options
+                                :label="$t('currency_select')"
+                                dense
+                                clearable
+                                use-input
+                                hide-bottom-space
+                                behavior="menu"
+                                lazy-rules
+                                :rules="[val => val !== null && val !== ''
+                                          || $t('required'),]"
+                            />
                             <q-input
                                 dense
                                 outlined
                                 v-model="formFields.AracBedeli"
-                                type="number"
+                                type="text"
+                                mask="###,###,###,###"
+                                reverse-fill-mask
+                                unmasked-value
+                                :suffix="formFields.TeminatLimitiDovic"
                                 :label="$t('car_price')"
                                 hide-bottom-space
                                 lazy-rules
@@ -440,12 +467,7 @@
                                 type="text"
                                 :label="$t('ipotekli')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                         $t('required'),
-                                ]"
+
                             />
                             <q-input
                                 dense
@@ -454,12 +476,7 @@
                                 type="text"
                                 :label="$t('motor_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-input
                                 dense
@@ -468,12 +485,7 @@
                                 type="text"
                                 :label="$t('chassis_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-select
                                 outlined
@@ -488,9 +500,7 @@
                                 hide-bottom-space
                                 clearable
                                 behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+
                             />
                             <q-select
                                 outlined
@@ -508,9 +518,7 @@
                                 clearable
                                 @filter="filterRenk"
                                 behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+
                             />
                             <q-select
                                 outlined
@@ -525,9 +533,7 @@
                                 hide-bottom-space
                                 clearable
                                 behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+
                             />
                             <q-stepper-navigation>
                                 <q-btn
@@ -655,12 +661,7 @@
                                 type="text"
                                 :label="$t('building_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-input
                                 dense
@@ -669,12 +670,7 @@
                                 type="text"
                                 :label="$t('apartment_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
 
                             <q-input
@@ -682,6 +678,8 @@
                                 outlined
                                 v-model="formFields.MusteriCepTelefonNo"
                                 type="text"
+                                prefix="+90"
+                                mask="### ### ## ##"
                                 :label="$t('phone_no')"
                                 hide-bottom-space
                                 lazy-rules
@@ -695,7 +693,7 @@
                                 dense
                                 outlined
                                 v-model="formFields.MusteriEPosta"
-                                type="text"
+                                type="email"
                                 :label="$t('email_address')"
                                 hide-bottom-space
                                 lazy-rules
@@ -722,8 +720,14 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+                                        || $t('required'),]"
                             />
+                            <div class="text-subtitle2 text-bold">
+                                {{$t('contact_type')}}
+                            </div>
+                            <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
+                            <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
+                            <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
@@ -775,6 +779,50 @@ import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import { useKaskoStore } from "stores/kosko-store";
 import {useAuthStore} from "stores/auth-store";
+
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
 
 const router = useRouter();
 const store = useMainStore();
@@ -847,7 +895,8 @@ const aracDireksiyonOptions = [
 let countriesOptions = ref(countries.value);
 let aracMarkaOptions = ref(aracMarka.value);
 let aracTipiOptions = ref(aracTipi.value);
- let aracModelOptions = ref();
+const aracModelSelectOptions = ref([]);
+ let aracModelOptions = ref([]);
 let filteredArachModel = aracModelSelect.value;
 let renkOptions = ref(renk.value);
 const ilOptions = ref(il.value);
@@ -894,17 +943,10 @@ const filterAracMarka = (val: any, update: any) => {
     });
 };
 const filterAracModel = (val: any, update: any) => {
-    // @ts-ignore
-    // formFields.AracModel = "";
-    // if (val === "") {
-    //     update(() => {
-    //         aracModelOptions.value = filteredArachModel;
-    //     });
-    //     return;
-    // }
+
     update(() => {
         const needle = val.toLowerCase();
-        aracModelOptions.value = filteredArachModel.filter(
+        aracModelOptions.value = aracModelSelectOptions.value.filter(
             // @ts-ignore
             (v) => v.Tip_Adi.toLowerCase().indexOf(needle) > -1
         );
@@ -1007,15 +1049,21 @@ const filterAgent = (val: string, update: any) => {
 };
 
 // ************* Select box on update for the form *************** /
-const aracMarkaUpdated = (id?: number) => {
-    // @ts-ignore
-    const marka = aracMarka.value.find((item) => item.id === id);
-    // @ts-ignore
-    let filteredModels = aracModelSelect.value.filter(
+const aracMarkaUpdated = (id: number) => {
+    let aracModel = aracMarkaOptions.value.find(
         // @ts-ignore
-        (item) => item.Marka_Kod === marka?.Marka_Kod
+        (item) => +item.id === +id
     );
-    filteredArachModel = filteredModels;
+
+    if (id !== null) {
+
+        aracModelSelectOptions.value = aracModelSelect.value.filter(
+            // @ts-ignore
+            (item) => item.Marka_Adi ===  aracModel.Marka_Adi
+        );
+    }else {
+        aracModelSelectOptions.value = []
+    }
 };
 
 const getIlOnSelect = (data: number) => {
@@ -1065,6 +1113,11 @@ const getMahalleOnSelect = (data: number) => {
 const onSubmitKasko = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
+        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+            // @ts-ignore
+            formData.append(key, val === true ? 1 : 0);
+            continue;
+        }
         // @ts-ignore
         formData.append(key, val);
     }
@@ -1081,44 +1134,63 @@ const onSubmitKasko = async () => {
 // ************* Form Field states *************** /
 const step = ref(1);
 const formFields = ref({
-    KullaniciAdi: "Ali",
-    KullaniciSoyAdi: "sahin",
-    MusteriTcKimlikNo: "76876876786",
+    KullaniciAdi: "",
+    KullaniciSoyAdi: "",
+    MusteriTcKimlikNo: "",
     TCVat: false,
-    MusteriDogumYeri: "Tkm",
-    MusteriCinsiyet: "Erkek",
-    MusteriUyruk: 2,
-    MusteriDogumTarihi: "01 / 02 /2023",
-    AracPlaka1: "ds",
-    AracPlaka2: "786",
+    MusteriDogumYeri: "",
+    MusteriCinsiyet: "",
+    MusteriUyruk: '',
+    MusteriDogumTarihi: "",
+    AracPlaka1: "",
+    AracPlaka2: "",
     AracPlakaIlKodu: "", // select box
-    AracMarka: 3, // select box
+    AracMarka:"", // select box
     AracTipi: "", // select box
-    AracModelYili: "2000", // select box
+    AracModelYili: "", // select box
     AracTarz: "", // select box
     _YakitTipi: "", // select box
-    Motor_cc: "54",
-    AracBedeli: "87897979",
-    ipotekli: "ipotekli değil",
-    AracMotorNo: "232323232",
-    AracSasiNo: "232323232323",
-    AracDireksiyonTarafi: "Sağ", // select box
+    Motor_cc: "",
+    AracBedeli: "",
+    ipotekli: "",
+    AracMotorNo: "",
+    AracSasiNo: "",
+    AracDireksiyonTarafi: "", // select box
     _AracVitesBilgisi: "", // select box
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
     MusteriCSBMKodu: "", // select box
-    MusteriApartmanAdi: "apartman adı", //
-    MusteriApartmanNo: "34", // input
-    MusteriCepTelefonNo: "05488321621", // input
-    MusteriEPosta: "azamat1696@gmail.com", // input
-    AcenteNo: "000111", // input
+    MusteriApartmanAdi: "", //
+    MusteriApartmanNo: "", // input
+    MusteriCepTelefonNo: "", // input
+    MusteriEPosta: "", // input
+    AcenteNo: "", // input
     _SbmCarColorCode: "", // select box
     uyar: false, // 'accepted'
+    TeminatLimitiDovic: "", // select box
+    contact_email: false,
+    contact_phone: false,
+    contact_sms: false,
 
 });
-
+const currencyOptions = [
+    { value: "TL", label: "₺" },
+    { value: "$", label: "$" },
+    { value: "€", label: "€" },
+    {value: "£", label: "£" }
+];
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    //@ts-ignore
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
 const onNextStep = () => {
     step.value++;
 };
@@ -1171,7 +1243,8 @@ watch(formFields.value, (value, oldValue, onCleanup) => {
 // }
 </script>
 
-<style>
+<style >
+
 .q-field--outlined .q-field__control {
     border-radius: 8px !important;
 }

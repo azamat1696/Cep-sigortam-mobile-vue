@@ -69,6 +69,9 @@
                                 outlined
                                 v-model="formFields.MusteriTcKimlikNo"
                                 :label="$t('identity_no')"
+                                mask="#### #### ###"
+                                unmasked-value
+                                @update:model-value="onIdCardChange"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -82,6 +85,7 @@
                                 dense
                                 :label="$t('tc_citizen')"
                                 class=" text-subtitle2"
+                                :disable="checkIdCardNumber"
                             />
 
                             <q-input
@@ -102,7 +106,9 @@
                                                 v-model="
                                                     formFields.MusteriDogumTarihi
                                                 "
-                                                mask="DD / MM /YYYY"
+                                                mask="DD/MM/YYYY"
+                                                :locale="dateLocale"
+
                                             >
                                                 <div
                                                     class="row items-center justify-end"
@@ -266,6 +272,7 @@
                                     </q-item>
                                 </template>
                             </q-select>
+
                             <q-select
                                 outlined
                                 v-model="formFields.AracTipi"
@@ -283,7 +290,7 @@
                                 clearable
                                 @filter="filterAracModel"
                                 behavior="menu"
-                                lazy-rules
+                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
                             >
@@ -419,20 +426,20 @@
 <!--                                        'Lutfen Araç Bedeli giriniz',-->
 <!--                                ]"-->
 <!--                            />-->
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.ipotekli"
-                                type="text"
-                                :label="$t('ipotekli')"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
-                            />
+<!--                            <q-input-->
+<!--                                dense-->
+<!--                                outlined-->
+<!--                                v-model="formFields.ipotekli"-->
+<!--                                type="text"-->
+<!--                                :label="$t('ipotekli')"-->
+<!--                                hide-bottom-space-->
+<!--                                lazy-rules-->
+<!--                                :rules="[-->
+<!--                                    (val) =>-->
+<!--                                        (val && val.length > 0) ||-->
+<!--                                        $t('required'),-->
+<!--                                ]"-->
+<!--                            />-->
                             <q-input
                                 dense
                                 outlined
@@ -440,12 +447,7 @@
                                 type="text"
                                 :label="$t('motor_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-input
                                 dense
@@ -454,12 +456,7 @@
                                 type="text"
                                 :label="$t('chassis_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-select
                                 outlined
@@ -474,9 +471,6 @@
                                 hide-bottom-space
                                 clearable
                                 behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
                             />
                             <q-select
                                 outlined
@@ -494,9 +488,7 @@
                                 clearable
                                 @filter="filterRenk"
                                 behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+
                             />
                             <q-select
                                 outlined
@@ -511,9 +503,7 @@
                                 hide-bottom-space
                                 clearable
                                 behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+
                             />
                             <q-stepper-navigation>
                                 <q-btn
@@ -642,12 +632,7 @@
                                 type="text"
                                 :label="$t('building_no')"
                                 hide-bottom-space
-                                lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-input
                                 dense
@@ -657,11 +642,7 @@
                                 :label="$t('apartment_no')"
                                 hide-bottom-space
                                 lazy-rules
-                                :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                        $t('required'),
-                                ]"
+
                             />
                             <q-input
                                 dense
@@ -670,6 +651,9 @@
                                 type="text"
                                 :label="$t('phone_no')"
                                 hide-bottom-space
+                                prefix="+90"
+                                mask="### ### ## ##"
+                                unmasked-value
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -681,7 +665,7 @@
                                 dense
                                 outlined
                                 v-model="formFields.MusteriEPosta"
-                                type="text"
+                                type="email"
                                 :label="$t('email_address')"
                                 hide-bottom-space
                                 lazy-rules
@@ -708,8 +692,14 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+                                        || $t('required'),]"
                             />
+                            <div class="text-subtitle2 text-bold">
+                                {{$t('contact_type')}}
+                            </div>
+                            <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
+                            <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
+                            <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
@@ -760,6 +750,60 @@ import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import { useTrafikSigortaStore } from "stores/trafik-store";
 import {useAuthStore} from "stores/auth-store";
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
+
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
+
 const router = useRouter();
 const store = useMainStore();
 const trafikSigortaStore = useTrafikSigortaStore();
@@ -830,10 +874,14 @@ const aracDireksiyonOptions = [
 ];
 // ************* Options for the form *************** /
 let countriesOptions = ref(countries.value);
-let aracMarkaOptions = ref(aracMarka.value);
+console.log('aracMarka.value',aracMarka.value)
+let aracMarkaOptions = ref(aracMarka.value); // arac marka options (brand)
 let aracTipiOptions = ref(aracTipi.value);
-let aracModelOptions = ref();
-let filteredArachModel = aracModelSelect.value;
+
+
+const aracModelSelectOptions = ref([]);
+const aracModelOptions = ref([]);
+
 let renkOptions = ref(renk.value);
 const ilOptions = ref(il.value);
 let ilceSelectGetOptions = ref([]);
@@ -844,7 +892,7 @@ const mahalleSelectOptions = ref([]);
 const mahalleOptions = ref([]);
 const sokakSelectOptions = ref();
 const sokakOptions = ref([]);
-const agentOptions = ref(agent.value);
+const agentOptions = ref([]);
 
 // ************* Fiters for the form  select *************** /
 const filterCountries = (val: any, update: any) => {
@@ -878,17 +926,10 @@ const filterAracMarka = (val: any, update: any) => {
     });
 };
 const filterAracModel = (val: any, update: any) => {
-    // @ts-ignore
-    formFields.AracModel = "";
-    if (val === "") {
-        update(() => {
-            aracModelOptions.value = filteredArachModel;
-        });
-        return;
-    }
+
     update(() => {
         const needle = val.toLowerCase();
-        aracModelOptions.value = filteredArachModel.filter(
+        aracModelOptions.value = aracModelSelectOptions.value.filter(
             // @ts-ignore
             (v) => v.Tip_Adi.toLowerCase().indexOf(needle) > -1
         );
@@ -1013,16 +1054,23 @@ const filterAgent = (val: string, update: any) => {
 };
 
 // ************* Select box on update for the form *************** /
-const aracMarkaUpdated = (id?: number) => {
+const aracMarkaUpdated = (id: number) => {
+let aracModel = aracMarkaOptions.value.find(
     // @ts-ignore
-    const marka = aracMarka.value.find((item) => item.id === id);
-    let filteredModels = aracModelSelect.value.filter(
-        // @ts-ignore
-        (item) => item.Marka_Kod === marka?.Marka_Kod
-    );
-    filteredArachModel = filteredModels;
-};
+    (item) => +item.id === +id
+);
 
+if (id !== null) {
+
+    aracModelSelectOptions.value = aracModelSelect.value.filter(
+        // @ts-ignore
+        (item) => item.Marka_Adi ===  aracModel.Marka_Adi
+    );
+} else {
+    aracModelSelectOptions.value = []
+}
+};
+//
 const getIlOnSelect = (data: object) => {
     if (data !== null) {
         ilceSelectGetOptions.value = ilce.value.filter(
@@ -1067,6 +1115,11 @@ const onNextStep = () => {
 const onSubmitKasko = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
+        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+            // @ts-ignore
+            formData.append(key, val === true ? 1 : 0);
+            continue;
+        }
         // @ts-ignore
         formData.append(key, val);
     }
@@ -1083,40 +1136,44 @@ const onSubmitKasko = async () => {
 // ************* Form Field states *************** /
 const step = ref(1);
 const formFields = ref({
-    KullaniciAdi: "Ali",
-    KullaniciSoyAdi: "sahin",
-    MusteriTcKimlikNo: "76876876786",
-    MusteriDogumYeri: "Tkm",
-    MusteriCinsiyet: "Erkek",
-    MusteriUyruk: 2,
-    MusteriDogumTarihi: "01 / 02 /2023",
-    AracPlaka1: "ds",
-    AracPlaka2: "786",
+    KullaniciAdi: "",
+    KullaniciSoyAdi: "",
+    MusteriTcKimlikNo: "",
+    MusteriDogumYeri: "",
+    MusteriCinsiyet: "",
+    MusteriUyruk: "",
+    MusteriDogumTarihi: "",
+    AracPlaka1: "",
+    AracPlaka2: "",
     AracPlakaIlKodu: "", // select box
-    AracMarka: 3, // select box
-    AracModelYili: "2000", // select box
+    AracMarka: "", // select box
+    AracTipi: "", // select box
+    AracModelYili: "", // select box
     AracTarz: "", // select box
     _YakitTipi: "", // select box
-    Motor_cc: "54",
+    Motor_cc: "",
     // AracBedeli: "87897979",
-    ipotekli: "ipotekli değil",
-    AracMotorNo: "232323232",
-    AracSasiNo: "232323232323",
-    AracDireksiyonTarafi: "Sağ", // select box
+    ipotekli: "",
+    AracMotorNo: "",
+    AracSasiNo: "",
+    AracDireksiyonTarafi: "", // select box
     _AracVitesBilgisi: "", // select box
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
     MusteriCSBMKodu: "", // select box
-    MusteriApartmanAdi: "apartman adı", //
-    MusteriApartmanNo: "34", // input
-    MusteriCepTelefonNo: "05488321621", // input
-    MusteriEPosta: "azamat1696@gmail.com", // input
-    AcenteNo: "000111", // input
+    MusteriApartmanAdi: "", //
+    MusteriApartmanNo: "", // input
+    MusteriCepTelefonNo: "", // input
+    MusteriEPosta: "", // input
+    AcenteNo: "", // input
     _SbmCarColorCode: "", // select box
     uyar: false, // 'accepted'
-    TCVat: false
+    TCVat: false,
+    contact_email: false,
+    contact_phone: false,
+    contact_sms: false,
 });
 // ************* Garanti ödeme test *************** /
 // const data ={

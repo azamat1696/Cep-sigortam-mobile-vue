@@ -15,8 +15,7 @@ export const useFerdiKazaCreateStore = defineStore("ferdiKazaCreate", {
         async hesaplaFerdiKaza(payload: any) {
             Loading.show();
            return  await api.post("/hesapla260Cep", payload).then((response) => {
-                console.log(response.data);
-               if(response.data.status === 'success'){
+                if(response.data.status === 'success'){
                    this.ferdiKaza = response.data;
                    return true;
                    //this.router.push({ name: "FerdiKazaHesaplananPirim" });
@@ -32,8 +31,7 @@ export const useFerdiKazaCreateStore = defineStore("ferdiKazaCreate", {
         async createFerdiKaza(payload: any) {
             Loading.show();
             await api.post("/Kayet260Cep", payload).then((response) => {
-                console.log(response.data);
-                if (response.data.status === 'success') {
+                 if (response.data.status === 'success') {
                     this.createdFerdiKaza = response.data;
                     this.router.push({ name: "FerdiKazaSuccess" });
                 }

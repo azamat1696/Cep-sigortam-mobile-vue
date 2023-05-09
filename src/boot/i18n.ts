@@ -25,6 +25,7 @@ export default boot(({ app }) => {
     const i18n = createI18n({
         locale: 'tr',
         fallbackLocale: 'tr',
+        //@ts-ignore
         messages,
     });
 

@@ -1,12 +1,36 @@
-<!--suppress ALL -->
+
+<style>
+.hide_header {
+    display: none !important;
+}
+
+.q-field--outlined .q-field__control {
+    border-radius: 8px !important;
+}
+.q-select__dialog {
+    max-height: calc(100vh - 500px) !important;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+.q-stepper--horizontal .q-stepper__step-inner {
+    padding-top: 0px !important;
+}
+</style>
 <template>
     <transition-group
         appear
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeIn"
     >
-        <q-layout key="ferdiKazaOlustur" view="lHh Lpr lFf">
-            <q-header   elevated>
+            <q-header key="ferdiKazaCreate"   elevated>
                 <q-toolbar>
                     <q-avatar size="sm">
                         <q-icon
@@ -22,15 +46,16 @@
                 </q-toolbar>
             </q-header>
             <q-page-container>
+                <div class=" ">
                 <q-stepper
-                    v-model="step"
+                     v-model="step"
                     header-nav
                     ref="stepper"
                     color="primary"
                     active-icon="none"
                     animated
                     class="no-shadow"
-                    header-class="no-border"
+                    header-class="no-border hide_header"
                 >
                     <q-step
                         :name="1"
@@ -154,35 +179,35 @@
                                 || $t('required'),]"
                             />
 
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriUyruk"
-                                :options="countriesOptions"
-                                :option-label="(item) => item.Aciklama"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                use-input
-                                input-debounce="0"
-                                options-dense
-                                :label="$t('country')"
-                                dense
-                                hide-bottom-space
-                                clearable
-                                @filter="filterCountries"
-                                behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
-                            >
-                                <template v-slot:no-option>
-                                    <q-item>
-                                        <q-item-section class="text-grey">
-                                            {{ $t('no_results')}}
-                                        </q-item-section>
-                                    </q-item>
-                                </template>
-                            </q-select>
+<!--                            <q-select-->
+<!--                                outlined-->
+<!--                                v-model="formFields.MusteriUyruk"-->
+<!--                                :options="countriesOptions"-->
+<!--                                :option-label="(item) => item.Aciklama"-->
+<!--                                option-value="id"-->
+<!--                                emit-value-->
+<!--                                map-options-->
+<!--                                use-input-->
+<!--                                input-debounce="0"-->
+<!--                                options-dense-->
+<!--                                :label="$t('country')"-->
+<!--                                dense-->
+<!--                                hide-bottom-space-->
+<!--                                clearable-->
+<!--                                @filter="filterCountries"-->
+<!--                                behavior="menu"-->
+<!--                                lazy-rules-->
+<!--                                :rules="[val => val !== null && val !== ''-->
+<!--                                || $t('required'),]"-->
+<!--                            >-->
+<!--                                <template v-slot:no-option>-->
+<!--                                    <q-item>-->
+<!--                                        <q-item-section class="text-grey">-->
+<!--                                            {{ $t('no_results')}}-->
+<!--                                        </q-item-section>-->
+<!--                                    </q-item>-->
+<!--                                </template>-->
+<!--                            </q-select>-->
                             <q-input
                                 dense
                                 outlined
@@ -407,13 +432,28 @@
                             />
 
                             <q-stepper-navigation>
-                                <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    :label="$t('calculate')"
-                                    no-caps
-                                    class="full-width"
-                                />
+                                <div class="row">
+                                    <div class="col-6">
+                                        <q-btn
+                                            color="primary"
+                                            :label="$t('backward')"
+                                            no-caps
+                                            @click="onPrevStep"
+                                        />
+
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <q-btn
+                                            type="submit"
+                                            color="primary"
+                                            :label="$t('calculate')"
+                                            no-caps
+                                            class="full-width"
+                                        />
+
+                                    </div>
+                                </div>
+
                             </q-stepper-navigation>
                             <div class="row">
                                 <div class="col-1">
@@ -476,11 +516,12 @@
 <!--                                @click="onNextStep"-->
 <!--                            />-->
 <!--                        </q-stepper-navigation>-->
+
                     </q-step>
                 </q-stepper>
-
+                </div>
             </q-page-container>
-        </q-layout>
+
     </transition-group>
 
 </template>
@@ -567,7 +608,7 @@ const mahalleSelectOptions = ref([]);
 const mahalleOptions = ref([]);
 const sokakSelectOptions = ref([]);
 const sokakOptions = ref([]);
-
+const filterOfArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const agentOptions = ref(agent.value);
 const jobOptions = ref(jobs.value);
 // ************* Fiters for the form  select *************** /
@@ -646,13 +687,13 @@ const filterJob = (val: string, update: any) => {
 const filterAgent = (val: string, update: any) => {
     if (val === "") {
         update(() => {
-            agentOptions.value = agent.value;
+            agentOptions.value = agent.value.filter((item: any) => filterOfArray.includes(item.id));
         });
         return;
     }
     update(() => {
         const needle = val.toLowerCase();
-        agentOptions.value = agent.value.filter(
+        agentOptions.value = agent.value.filter((item: any) => filterOfArray.includes(item.id)).filter(
             // @ts-ignore
             (v) => v.Acente_Adi.toLowerCase().indexOf(needle) > -1
         );
@@ -707,12 +748,14 @@ const getMahalleOnSelect = (data: number) => {
 const onNextStep = () => {
     step.value++;
 };
-
+const onPrevStep = () => {
+    step.value--;
+};
 // ************* Form Submit *************** /
 const onSubmitFerdiKaza = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
-        if(key === 'uyar'){
+        if(key === 'uyar'  ){
             formData.append(key, val ? '1' : '0');
         }else {
             // @ts-ignore
@@ -732,13 +775,18 @@ const onSubmitFerdiKaza = async () => {
 // ************* Form Field states *************** /
 const step = ref(1);
 const formFields = ref({
+    //@ts-ignore
     KullaniciAdi: user.value?.name, //ok
+    //@ts-ignore
     KullaniciSoyAdi: user.value?.surname, //ok
+    //@ts-ignore
     MusteriTcKimlikNo: user.value.id_card, //ok
+    //@ts-ignore
     MusteriDogumYeri: user.value.birthplace, //ok
 
     MusteriCinsiyet: "E", // ok
     MusteriUyruk: '', // ok
+    //@ts-ignore
     MusteriDogumTarihi: date.formatDate(user.value.birth_date,'DD/MM/YYYY'), //ok
 
     MusteriIlceKodu: '', // select box // ok
@@ -746,39 +794,18 @@ const formFields = ref({
     MusteriBelediyeKodu: '', // select box // ok
     MusteriMahalleKodu: '', // select box // ok
     MusteriCSBMKodu: '', // select box  // ok
+    //@ts-ignore
     MusteriCepTelefonNo: user.value.phone, // input // ok
+    //@ts-ignore
     MusteriEPosta: user.value.email, // input // ok
     AcenteId: "", // input // ok
     uyar: false, // 'accepted' // ok
     TeminatLimiti: "", // select box // ok
     Lehtar: "", // select box // ok
     Meslegi: "", // select box // ok
-    TCVat: false,
+    //@ts-ignore
+    TCVat: user.value.id_type,
 });
 
 </script>
 
-<style scoped>
-.q-stepper__header {
-    display: none !important;
-}
-.q-field--outlined .q-field__control {
-    border-radius: 8px !important;
-}
-.q-select__dialog {
-    max-height: calc(100vh - 500px) !important;
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-input[type="number"] {
-    -moz-appearance: textfield;
-}
-.q-stepper--horizontal .q-stepper__step-inner {
-    padding-top: 0px !important;
-}
-</style>

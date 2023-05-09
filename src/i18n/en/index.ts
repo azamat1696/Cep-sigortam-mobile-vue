@@ -2,16 +2,17 @@
 // so you can safely delete all default props below
 
 export default {
+
     failed: "Failed",
     success: "Success",
     my_profile: "Profile",
-    welcome_to: "Welcome to",
+    welcome_to: "Welcome to Cep Sigorta",
     home_text: "With Cep Sigortam, you can create your Traffic and Personal Accident Insurance policies for your vehicle instantly by making online payment in Northern Cyprus.",
     home_text2: " You can Get Quotes for Comprehensive, Home, Traffic and Personal Accident Insurance.",
-    motor_insurance: "Traffic Insurance",
-    home_insurance: "Home Insurance",
-    home_insurance_kasko: "Comprehensive Insurance",
-    personel_accident_insurance: "Personal Accident Insurance",
+    motor_insurance: "Get a Quote to Traffic Insurance",
+    home_insurance: "Get a Quote to Home Insurance",
+    home_insurance_kasko: "Get a Quote to Car Insurance",
+    personel_accident_insurance: "Get a Quote to Personal Accident Insurance",
     get_a_quote: "Get a Quote",
     login: "Login",
     logout: "Logout",
@@ -23,11 +24,11 @@ export default {
     show_damage : "Show Damage Status",
     damage: "Damage",
     damage_status: "Damage Status",
-    motor_insurance_commercial_paper_create:"Create Traffic Insurance Policy",
-    personel_accident_insurance_commercial_paper_create:"Create Personal Accident Insurance Policy",
+    motor_insurance_commercial_paper_create:"Traffic Insurance Get Offer and Create Policy",
+    personel_accident_insurance_commercial_paper_create:"Personal Accident Insurance Get Offer and Create Policy",
     agreed_motor_services: "Agreed Motor Services",
     social_media: "Social Media",
-    slider_text1: "Create Your Traffic and Personal Accident Insurance Policies Instantly from the Application",
+    slider_text1: "Create Your Traffic and Personal Accident Insurance Policies Instantly from the Application.",
     slider_text2: "You Can Get Quotes for Comprehensive, Home, Traffic and Personal Accident Insurance Policies.",
     slider_text3: "You Can See Created Policies and Damages on the Application.",
     skip: "Skip",
@@ -35,7 +36,7 @@ export default {
     all: "All",
     start_end_date: "Start and End Date",
     total_pirim: "Total Premium",
-    renew_count: "Renewal Count",
+    renew_count: "Renewal Count",//delete
     name_surname: "Name Surname",
     insured_no: "Insured Number",
     active_commercial_papers: "Active Policy",
@@ -71,7 +72,7 @@ export default {
     fuel_type: "Fuel Type",
     forward: "Next",
     motor_cc: "Engine Capacity",
-    ipotekli: "If it is under mortgage, Name of the Bank and Branch",
+    ipotekli: "If it is under mortgage, Name of the Bank and Branch",//delete
     chassis_no: "Chassis No",
     car_direction: "Steering Side",
     car_color: "Car Color",
@@ -101,13 +102,13 @@ export default {
     building_construct_type: "Building Construction Type",
     building_type: "Building Type",
     floor_info: "Floor Information",
-    living_person_count: "Number of People Living in the House",
-    building_year: "Year of Building Construction",
+    living_person_count: "Number Of People Living In The House",
+    building_year: "Year Of Building Construction",
     currency_select: "Select Currency",
     new_building_price: "New Building Value",
     new_furniture_price: "New Furniture Value",
     new_glass_price: "New Glass Value",
-    any_damage_in_the_house: "Has There Been Any Damage to the House in the Last 5 Years?",
+    any_damage_in_the_house: "Has There Been Any Damage To The House In The Last 5 Years?",
     car_price: "Vehicle Value",
 // validation messages
     required: "This field is required",
@@ -140,11 +141,11 @@ export default {
     month: "Month",
     year: "Year",
     finish_payment: "Complete Payment",
-    insurance: "Kasko Insurance",
+    insurance: "Car Insurance",
 
 
 
-    no_damage_to_show: "No Damage Record Found",
+    no_damage_to_show: "No Damage Record Found.",
     descriotion: "Description",
     update: "Update",
     contact_info_selection: "Click here to change your contact preferences.",
@@ -164,11 +165,45 @@ export default {
     remember_me: "Remember Me",
     register: "Sign Up",
     subscriber_login: "Member Login",
-    continue_without_login: "Continue without logging in",
+    continue_without_login: "Continue Without Logging In",
     enter_your_info: "Enter Your Information",
     enter_4_digit_code: "Please enter the 4-digit code sent to your phone.",
     re_send_code: "Resend Code",
     verification_code_get: "Get Verification Code",
     verify: "Verify",
+
+    new_password: "New Password",
+    confirm_new_password: "Confirm New Password",
+    password_rules1: "Password Must Be 6 Digits",
+    password_rules2: "Passwords Do Not Match",
+    renew_password: "Reset Password",
+    renew_my_password: "Reset My Password",
+    register_title: "Create Account",
+    sms: "SMS",
+    address: "Address",
+    register_success: "You have successfully completed your membership. You can now log in and use the application",
+    earthquake_teminati: "Earthquake Coverage",
+    payment_submit: "Make a Payment",
+    no_active_commercial_papers: "You do not have a policy in effect.",
+    backward: "Back",
+    header_cookie: "Cookie Policy",
+    cookie_text1: "Cookies are used on our portal to provide you with a better experience and to show you relevant content.",
+    cookie_text2: "For detailed information",
+    cookie_text3: "You can review our Cookie Policy",
+    policy_info : "Personal Accident Insurance",
+
+
+    personel_accident_insurance_quote: "Personal Accident Insurance Get Quote",
+
+
+    contact_type: "Contact Type",
+
+
+
+
+
+
+
+
 
 };

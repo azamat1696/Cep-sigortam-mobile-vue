@@ -2,6 +2,7 @@ import {defineStore} from "pinia";
 import {api} from "boot/axios";
 import {Loading, Notify} from "quasar";
 import {ErrorHandle} from "src/utils/ErrorHandle";
+
   export const useAuthStore = defineStore("auth",
     {
         state: () => ({
@@ -11,7 +12,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
             permenantUser: {},
             hasarPolicy: [],
             greetingsLang: {},
-            coockie: true,
+            coockie: false,
         }),
         getters: {
             getActivePolicies(state) {
@@ -26,31 +27,42 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
         },
         actions: {
             async getAllPolicy() {
-                const res = await api.get('/policies')
-                if (res.data.status === 'success')
-                    this.policy = res.data.policeInfo
+                 await api.get('/policies').then((res) => {
+                     if (res.data.status === 'success')
+                         this.policy = res.data.policeInfo
+
+                }).catch((err) => {
+                    ErrorHandle(err)
+                })
+
             },
             getHasarPolicy: async function () {
-                const res = await api.get('/hasarCep')
-                if (!(res.data.status === 'success' && res.data.damageInfo.length > 0)) {
-                    return;
-                }
-                let arr2 = []
-                for (let i = 0; i < res.data.damageInfo.length; i++) {
-                    arr2.push(res.data.damageInfo[i][0])
+               await api.get('/hasarCep').then((res) => {
+                    if (!(res.data.status === 'success' && res.data.damageInfo.length > 0)) {
+                        return;
+                    }
+                    let arr2 = []
+                    for (let i = 0; i < res.data.damageInfo.length; i++) {
+                        arr2.push(res.data.damageInfo[i][0])
 
-                }
-                let newa = arr2.map((item: any) => {
-                    return this.renameKeys('s', item)
+                    }
+                    let newa = arr2.map((item: any) => {
+                        return this.renameKeys('s', item)
+                    })
+                    // @ts-ignore
+                    this.hasarPolicy = newa
+                }).catch((err) => {
+                    ErrorHandle(err)
                 })
-                // @ts-ignore
-                this.hasarPolicy = newa
+
 
             },
             getUserInfo() {
                 api.get('/userInfo').then((res) => {
                     this.user = res.data;
                     localStorage.setItem("user", JSON.stringify(this.user));
+                }).catch((err) => {
+                    ErrorHandle(err)
                 })
             },
             async initAuth() {
@@ -64,14 +76,22 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                         this.user = user.data;
                         localStorage.setItem("user", JSON.stringify(this.user));
                     }
+                    if (localStorage.getItem("coockie") && localStorage.getItem("coockie") !== "undefined") {
+                        console.log("coockie")
+                        this.coockie = JSON.parse(<string>localStorage.getItem("coockie"));
+                        console.log(this.coockie)
+                    }else{
+                        this.coockie = true;
+                    }
 
                 }
 
+
             },
             async login(payload: any) {
+                 Loading.show();
+                 await api.post("/loginCep", payload).then((res) => {
 
-                Loading.show();
-                await api.post("/loginCep", payload).then((res) => {
                     this.router.push({name: "optVerificationPage"});
                  if (res.data.status === "success") {
                      Notify.create({
@@ -124,6 +144,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                     }
                 }).catch((err) => {
                     console.log(err)
+                    ErrorHandle(err)
                 }).finally(() => {
                     Loading.hide();
                 });
@@ -138,7 +159,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                     Loading.hide();
                     Notify.create({
                         type: "positive",
-                        message: "Registered successfully",
+                        message: "Kayıt başarılı!",
                     });
 
                     return true;
@@ -205,10 +226,11 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                         this.router.push({name: "optPasswordResetVerificationPage"});
                     }
                 }).catch((err) => {
-                    Notify.create({
-                        type: "negative",
-                        message: "Girdiğiniz bilgiler hatalı",
-                    })
+                    ErrorHandle(err)
+                    // Notify.create({
+                    //     type: "negative",
+                    //     message: "Girdiğiniz bilgiler hatalı",
+                    // })
                     console.log(err)
                 }).finally(
                     () => {
@@ -234,12 +256,13 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                     }
 
                 } catch (error) {
+                    ErrorHandle(error)
                     Loading.hide();
-                    Notify.create({
-                        type: "negative",
-                        //@ts-ignore
-                        message: error.response.data.message,
-                    });
+                    // Notify.create({
+                    //     type: "negative",
+                    //     //@ts-ignore
+                    //     message: error.response.data.message,
+                    // });
 
                 }
             },
@@ -267,15 +290,17 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                     }
 
                 } catch (error) {
-                    ErrorHandle(error)
                     Loading.hide();
-                    Notify.create({
-                        type: "negative",
-                        //@ts-ignore
-                        message: error.response.data.message,
-                    });
+                    ErrorHandle(error)
+                    // Loading.hide();
+                    // Notify.create({
+                    //     type: "negative",
+                    //     //@ts-ignore
+                    //     message: error.response.data.message,
+                    // });
 
                 }
+                Loading.hide();
             },
             getCurrentGreetings(){
                 let today = new Date();

@@ -13,6 +13,13 @@ const path = require("path");
 
 module.exports = configure(function (/* ctx */) {
     return {
+        //splashscreen: "src/assets/splashscreen.png",
+        plugins: {
+            SplashScreen: {
+                launchShowDuration: 5000
+            }
+        },
+
         // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
         // preFetch: true,
 

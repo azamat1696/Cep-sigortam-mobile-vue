@@ -109,7 +109,7 @@
                         />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>{{$t('personel_accident_insurance')}}</q-item-label>
+                        <q-item-label>{{$t('personel_accident_insurance_quote')}}</q-item-label>
                     </q-item-section>
                 </q-item>
                 <div class="q-pa-md">

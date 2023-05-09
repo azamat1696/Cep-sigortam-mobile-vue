@@ -172,7 +172,7 @@
 
                  </q-card-section>
                 <q-card-actions align="right" class="bg-white text-primary">
-                    <q-btn flat :label="$t('close')" v-close-popup @click="coockie = false" />
+                    <q-btn flat :label="$t('close')" v-close-popup @click="cookieHandle" />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -233,6 +233,10 @@ export default defineComponent({
              this.locale = lang
 
         },
+        cookieHandle(){
+            this.coockie = false
+            localStorage.setItem('coockie', 'false')
+        }
 
 
     },

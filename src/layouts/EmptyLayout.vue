@@ -17,6 +17,7 @@ export default defineComponent({
 })
 </script>
 <style>
+
 /* Transitions */
 
 .next-leave-to {

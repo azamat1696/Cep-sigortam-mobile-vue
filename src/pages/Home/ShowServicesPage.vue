@@ -317,6 +317,13 @@ export default {
             },
             {
                 city: "Mağusa",
+                name: "Cafer Tosunoğlu Otomotiv Ltd. (RS Servis Gazimağusa)",
+                address: "Renault Showroom, No:21, Milas Sokak, Küçük Sanayi Bölgesi, Gazimağusa / KKTC",
+                phone: "+90 392 444 66 22",
+                email: "cto.hasar@gmail.com",
+            },
+            {
+                city: "Mağusa",
                 name: "Carline Otomotiv Ltd.",
                 address: "Şehit İbrahim Hasan Sokak, Küçük Sanayi Bölgesi, Mağu",
                 phone: "+90 533 884 10 00",
@@ -333,13 +340,13 @@ export default {
                 address: "Karaoğlanoğlu Küçük Sanayi Bölgesi, 7/A, Girne",
                 phone: "+90 533 862 41 97",
             },
-            {
-                city: "Lefkoşa",
-                name: "Halpent Ltd.(Otoform)",
-                address: "Lefkoşa Organize Sanayi Bölgesi Lefkoşa, Kıbrıs",
-                email: "otoformservisltd@gmail.com",
-                phone: "+90533 828 06 66",
-            },
+            // {
+            //     city: "Lefkoşa",
+            //     name: "Halpent Ltd.(Otoform)",
+            //     address: "Lefkoşa Organize Sanayi Bölgesi Lefkoşa, Kıbrıs",
+            //     email: "otoformservisltd@gmail.com",
+            //     phone: "+90533 828 06 66",
+            // },
             {
                 city: "Lefkoşa",
                 name: "İntercity Trading Ltd.",

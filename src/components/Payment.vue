@@ -599,7 +599,7 @@ body {
     width: 100%;
 
     @media screen and (max-width: 480px) {
-        max-width: 310px;
+        max-width: 340px;
         height: 220px;
         width: 90%;
     }

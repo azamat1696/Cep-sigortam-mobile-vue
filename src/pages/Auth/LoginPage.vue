@@ -59,17 +59,7 @@
                         style="border-radius: 8px"
                         size="20px"
                     />
-                    <q-btn
-                        color="primary"
-                        text-color="white"
-                        :label="$t('register')"
-                        no-caps
-                        type="submit"
-                        class="full-width q-mt-md"
-                        style="border-radius: 8px"
-                        size="20px"
-                        @click="$router.push({ name: 'registerPage' })"
-                    />
+
 
                     <div class="flex justify-between q-pt-sm">
                         <div
@@ -89,6 +79,17 @@
                 </q-form>
             </q-card-section>
             <q-card-section class="q-pt-xl">
+                <q-btn
+                    color="primary"
+                    text-color="white"
+                    :label="$t('register')"
+                    no-caps
+                    type="submit"
+                    class="full-width q-mt-md"
+                    style="border-radius: 8px"
+                    size="20px"
+                    @click="$router.push({ name: 'registerPage' })"
+                />
                 <q-btn
                     color="primary"
                     text-color="white"
@@ -121,10 +122,7 @@ const formFields = ref({
     id_card: "",
     TCVat: false,
     phone: "",
-    password: {
-        value: "",
-        number: true,
-    },
+    password: '',
     rememberMe: false,
 })
 

@@ -4,15 +4,15 @@
         <q-layout view="lHh Lpr lFf">
             <q-header   elevated>
                 <q-toolbar>
-                    <q-avatar size="sm">
+                    <q-avatar class="cursor-pointer q-btn q-btn--flat" size="sm" @click="authToken ? $router.push({ name: 'teklifAl'}) : $router.push({ name: 'home'})">
                         <q-icon
                             name="chevron_left"
-                            @click="authToken ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
                             size="md"
-                            class="cursor-pointer"
+                            class="cursor-pointer q-mt-sm"
+
                         />
                     </q-avatar>
-                    <q-toolbar-title class="text-subtitle2 text-bold text-center"
+                    <q-toolbar-title class="text-subtitle2 text-bold text-center  q-mr-xl"
                     >{{$t('housing')}}</q-toolbar-title
                     >
                 </q-toolbar>
@@ -71,6 +71,9 @@
                                     v-model="formFields.MusteriTcKimlikNo"
                                     :label="$t('identity_no')"
                                     hide-bottom-space
+                                    mask="#### #### ###"
+                                    unmasked-value
+                                    @update:model-value="onIdCardChange"
                                     lazy-rules
                                     :rules="[
                                     (val) =>
@@ -83,6 +86,8 @@
                                     dense
                                     :label="$t('tc_citizen')"
                                     class="text-subtitle2"
+                                    :disable="checkIdCardNumber"
+
                                 />
                                 <q-input
                                     dense
@@ -155,7 +160,8 @@
                                                     v-model="
                                                     formFields.MusteriDogumTarihi
                                                 "
-                                                    mask="DD / MM /YYYY"
+                                                    mask="DD/MM/YYYY"
+                                                    :locale="dateLocale"
                                                 >
                                                     <div
                                                         class="row items-center justify-end"
@@ -180,6 +186,9 @@
                                     type="text"
                                     :label="$t('phone_no')"
                                     hide-bottom-space
+                                    prefix="+90"
+                                    mask="### ### ## ##"
+                                    unmasked-value
                                     lazy-rules
                                     :rules="[
                                     (val) =>
@@ -191,8 +200,8 @@
                                     dense
                                     outlined
                                     v-model="formFields.MusteriEPosta"
-                                    type="text"
-                                    label="E-Posta Adresi"
+                                    type="email"
+                                    :label="$t('email')"
                                     hide-bottom-space
                                     lazy-rules
                                     :rules="[
@@ -201,6 +210,9 @@
                                          $t('required'),
                                 ]"
                                 />
+                                <div class="text-subtitle2 text-bold">
+                                     Sigortalanacak Konutun Adresi
+                                </div>
                                 <q-select
                                     outlined
                                     v-model="formFields.MusteriIlceKodu"
@@ -350,20 +362,21 @@
                                         $t('required'),
                                 ]"
                                 />
-                                <q-input
-                                    dense
-                                    outlined
-                                    v-model="formFields.SigortalanacakKonutunAdresi"
-                                    type="text"
-                                    :label="$t('insured_house_address')"
-                                    hide-bottom-space
-                                    lazy-rules
-                                    :rules="[
-                                    (val) =>
-                                        (val && val.length > 0) ||
-                                       $t('required'),
-                                ]"
-                                />
+<!--                                <q-input-->
+<!--                                    dense-->
+<!--                                    outlined-->
+<!--                                    v-model="formFields.SigortalanacakKonutunAdresi"-->
+<!--                                    type="text"-->
+<!--                                    :label="$t('insured_house_address')"-->
+<!--                                    hide-bottom-space-->
+<!--                                    autogrow-->
+<!--                                    lazy-rules-->
+<!--                                    :rules="[-->
+<!--                                    (val) =>-->
+<!--                                        (val && val.length > 0) ||-->
+<!--                                       $t('required'),-->
+<!--                                ]"-->
+<!--                                />-->
 
                                 <q-select
                                     outlined
@@ -570,6 +583,10 @@
                                     type="text"
                                     :label="$t('new_building_price')"
                                     hide-bottom-space
+                                    mask="###,###,###,###"
+                                    reverse-fill-mask
+                                    unmasked-value
+                                    :suffix="formFields.TeminatLimitiDovic"
                                     lazy-rules
                                     :rules="[
                                     (val) =>
@@ -584,7 +601,11 @@
                                     type="text"
                                     :label="$t('new_furniture_price')"
                                     hide-bottom-space
-                                    lazy-rules
+                                    mask="###,###,###,###"
+                                    reverse-fill-mask
+                                    unmasked-value
+                                    :suffix="formFields.TeminatLimitiDovic"
+                                     lazy-rules
                                     :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
@@ -599,6 +620,10 @@
                                     :label="$t('new_glass_price')"
                                     hide-bottom-space
                                     lazy-rules
+                                    mask="###,###,###,###"
+                                    reverse-fill-mask
+                                    unmasked-value
+                                    :suffix="formFields.TeminatLimitiDovic"
                                     :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
@@ -636,7 +661,16 @@
                                     @filter="filterAgent"
                                     hide-bottom-space
                                     behavior="menu"
+                                    lazy-rules
+                                    :rules="[val => val !== null && val !== ''
+                                        || $t('required'),]"
                                 />
+                                <div class="text-subtitle2 text-bold">
+                                    {{$t('contact_type')}}
+                                </div>
+                                <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
+                                <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
+                                <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
                                 <q-stepper-navigation>
                                     <q-btn
                                         type="submit"
@@ -688,6 +722,50 @@ import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import { useKonutStore } from "stores/konut-store";
 import { useAuthStore } from "stores/auth-store";
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
+
 const router = useRouter();
 const store = useMainStore();
 const konutStore = useKonutStore();
@@ -728,7 +806,7 @@ const sigortalSifatiOptions = [
     { value: "Kiracı", label: "Kiracı" },
 ];
 const binaYapiOptions = [
-    { value: "Tam Kagir", label: "Tam Kagir" },
+    { value: "Betonarme", label: "Betonarme" },
     { value: "Yığma", label: "Yığma" },
     { value: "Diğer", label: "Diğer" },
 ];
@@ -970,13 +1048,18 @@ const onNextStep = () => {
 const onSubmitKonut = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
+        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+            // @ts-ignore
+            formData.append(key, val === true ? 1 : 0);
+            continue;
+        }
         // @ts-ignore
         formData.append(key, val);
     }
     // @ts-ignore
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+    // for (const pair of formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1]);
+    // }
 
     await konutStore.konutFormSubmit(formData).then((res) => {
         if (res === true) {
@@ -989,19 +1072,19 @@ const onSubmitKonut = async () => {
 // ************* Form Field states *************** /
 const step = ref(1);
 const formFields = ref({
-    KullaniciAdi: "Ali",
-    KullaniciSoyAdi: "sahin",
-    MusteriTcKimlikNo: "76876876786",
-    MusteriDogumYeri: "Tkm",
-    MusteriCinsiyet: "Erkek",
-    MusteriUyruk: 2,
-    MusteriEPosta: "azamat1696@gmail.com", // input
+    KullaniciAdi: "",
+    KullaniciSoyAdi: "",
+    MusteriTcKimlikNo: "",
+    MusteriDogumYeri: "",
+    MusteriCinsiyet: "",
+    MusteriUyruk: "",
+    MusteriEPosta: "", // input
     AcenteNo: "", // input
-    MusteriCepTelefonNo: "05488321621", // input
-    MusteriDogumTarihi: "01 / 02 /2023",
-    SigortalanacakKonutunAdresi: "Sigortalı adresi",
+    MusteriCepTelefonNo: "", // input
+    MusteriDogumTarihi: "",
+    SigortalanacakKonutunAdresi: "",
     SigortalSifati: "",
-    Rehinli: "Rehinli değil",
+    Rehinli: "",
     KonutKullanim: "",
     BinaYapi: "",
     KonutTipi: "",
@@ -1022,13 +1105,24 @@ const formFields = ref({
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
     MusteriCSBMKodu: "", // select box
-    MusteriApartmanAdi: "apartman adı", //
-    MusteriApartmanNo: "34", // input
+    MusteriApartmanAdi: "", //
+    MusteriApartmanNo: "", // input
     uyar: false, // 'accepted'
     TCVat: false,
     TeminatLimitiDovic:"",
+    contact_email: false,
+    contact_phone: false,
+    contact_sms: false,
 });
-
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
 </script>
 
 <style>

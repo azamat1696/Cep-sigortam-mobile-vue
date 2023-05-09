@@ -31,7 +31,7 @@ export const useTrafikSigortaCreateStore = defineStore("trafikSigortaCreate", {
          async createTrafikSigorta(payload: any) {
                 Loading.show();
                   await api.post("/Kayet310Cep", payload).then((response) => {
-                      console.log('>>>>>>>>>',response.data);
+                      //console.log('>>>>>>>>>',response.data);
                       if(response.data.status === 'success') {
                           this.createdTrafikSigorta = response.data;
                           this.router.push({name: "TrafikSigortaSuccess"});

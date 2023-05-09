@@ -63,6 +63,9 @@
                                 v-model="formFields.MusteriTcKimlikNo"
                                 :label="$t('identity_no')"
                                 hide-bottom-space
+                                mask="#### #### ###"
+                                unmasked-value
+                                @update:model-value="onIdCardChange"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -75,6 +78,7 @@
                                 dense
                                 :label="$t('tc_citizen')"
                                 class="text-subtitle2"
+                                :disable="checkIdCardNumber"
                             />
                             <q-input
                                 v-model="formFields.MusteriDogumTarihi"
@@ -94,7 +98,8 @@
                                                 v-model="
                                                     formFields.MusteriDogumTarihi
                                                 "
-                                                mask="DD / MM /YYYY"
+                                                mask="DD/MM/YYYY"
+                                                :locale="dateLocale"
                                             >
                                                 <div
                                                     class="row items-center justify-end"
@@ -179,6 +184,8 @@
                                 :label="$t('phone_no')"
                                 hide-bottom-space
                                 prefix="+90"
+                                mask="### ### ## ##"
+                                unmasked-value
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -190,7 +197,7 @@
                                 dense
                                 outlined
                                 v-model="formFields.MusteriEPosta"
-                                type="text"
+                                type="email"
                                 :label="$t('email_address')"
                                 hide-bottom-space
                                 lazy-rules
@@ -326,7 +333,7 @@
 
                                     <q-select
                                         outlined
-                                        v-model="formFields.DovicSelect"
+                                        v-model="formFields.TeminatLimitiDovic"
                                         :options="currencyOptions"
                                         :option-label="(option) => option.label"
                                         option-value="value"
@@ -408,9 +415,14 @@
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+                                        || $t('required'),]"
                             />
-
+                            <div class="text-subtitle2 text-bold">
+                                {{$t('contact_type')}}
+                            </div>
+                            <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
+                            <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
+                            <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
@@ -461,6 +473,51 @@ import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import {useFerdiKazaStore} from "stores/ferdi-kaza-store";
 import HeaderComponent from "components/HeaderComponent.vue";
+
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
+
 const router = useRouter();
 const store = useMainStore();
 const authStore = useAuthStore();
@@ -535,10 +592,10 @@ const mahalleSelectOptions = ref([]);
 const mahalleOptions = ref([]);
 const sokakSelectOptions = ref([]);
 const sokakOptions = ref([]);
+const filterOfArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 const agentOptions = ref(agent.value);
 let currencyOptionsValue = ref();
-
-// ************* Fiters for the form  select *************** /
+ // ************* Fiters for the form  select *************** /
 const filterCountries = (val: any, update: any) => {
     if (val === "") {
         update(() => {
@@ -605,13 +662,13 @@ const filterSokak = (val: string, update: any) => {
 const filterAgent = (val: string, update: any) => {
     if (val === "") {
         update(() => {
-            agentOptions.value = agent.value;
+            agentOptions.value = agent.value.filter((item: any) => filterOfArray.includes(item.id));
         });
         return;
     }
     update(() => {
         const needle = val.toLowerCase();
-        agentOptions.value = agent.value.filter(
+        agentOptions.value = agent.value.filter((item: any) => filterOfArray.includes(item.id)).filter(
             // @ts-ignore
             (v) => v.Acente_Adi.toLowerCase().indexOf(needle) > -1
         );
@@ -676,6 +733,11 @@ const onNextStep = () => {
 const onSubmitFerdiKaza = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
+        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+            // @ts-ignore
+            formData.append(key, val === true ? 1 : 0);
+            continue;
+        }
         // @ts-ignore
         formData.append(key, val);
     }
@@ -692,30 +754,41 @@ const onSubmitFerdiKaza = async () => {
 // ************* Form Field states *************** /
 const step = ref(1);
 const formFields = ref({
-    KullaniciAdi: "Ali",
-    KullaniciSoyAdi: "sahin",
-    MusteriTcKimlikNo: "76876876786",
-    MusteriDogumYeri: "Tkm",
-    MusteriCinsiyet: "Erkek",
-    MusteriUyruk: 2,
-    MusteriDogumTarihi: "01 / 02 /2023",
+    KullaniciAdi: "",
+    KullaniciSoyAdi: "",
+    MusteriTcKimlikNo: "",
+    MusteriDogumYeri: "",
+    MusteriCinsiyet: "",
+    MusteriUyruk: '',
+    MusteriDogumTarihi: "",
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
     MusteriCSBMKodu: "", // select box
-    MusteriCepTelefonNo: "5488321621", // input
-    MusteriEPosta: "azamat1696@gmail.com", // input
+    MusteriCepTelefonNo: "", // input
+    MusteriEPosta: "", // input
     AcenteId: "", // input
     uyar: false, // 'accepted'
     TeminatLimiti: "", // select box
     Lehtar: "", // select box
     Meslegi: "", // select box
-    DovicSelect:"",
-    TCVat: false
+    TeminatLimitiDovic:"",
+    TCVat: false,
+    contact_email: false,
+    contact_phone: false,
+    contact_sms: false,
 
 });
-
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
 </script>
 
 <style>
