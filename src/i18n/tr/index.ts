@@ -136,7 +136,7 @@ export default {
     insurance_teminati: "Sigorta Teminatı",
     cardHolder: "Kart Sahibi",
     cardHolderName: "Kart Sahibi Adı",
-    expires: "Son Kullanma Tarihi",
+    expires: "SKT",
     cardNumber: "Kart Numarası",
     expirationDate: "Son Kullanma Tarihi",
     month: "Ay",

@@ -362,7 +362,7 @@ const  formFields = ref({
 const checkIdCardNumber = ref(true);
  const onIdCardChange = (val:string) => {
     formFields.value.id_card = val;
-    if (val.length === 11) {
+    if (val?.length === 11) {
         formFields.value.TCVat = true;
      } else {
         formFields.value.TCVat = false;

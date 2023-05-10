@@ -455,6 +455,9 @@
                                     clearable
                                     hide-bottom-space
                                     behavior="menu"
+                                    lazy-rules
+                                    :rules="[val => val !== null && val !== ''
+                                          || $t('required'),]"
                                 />
                                 <q-select
                                     outlined

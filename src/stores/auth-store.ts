@@ -72,15 +72,14 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                     this.user = JSON.parse(localStorage.getItem("user")!);
                     api.defaults.headers.common["Authorization"] = `Bearer ${this.authToken}`;
                     const user = await api.get('/userInfo')
+
                     if (user.status === 200) {
                         this.user = user.data;
                         localStorage.setItem("user", JSON.stringify(this.user));
                     }
                     if (localStorage.getItem("coockie") && localStorage.getItem("coockie") !== "undefined") {
-                        console.log("coockie")
-                        this.coockie = JSON.parse(<string>localStorage.getItem("coockie"));
-                        console.log(this.coockie)
-                    }else{
+                         this.coockie = JSON.parse(<string>localStorage.getItem("coockie"));
+                     }else{
                         this.coockie = true;
                     }
 

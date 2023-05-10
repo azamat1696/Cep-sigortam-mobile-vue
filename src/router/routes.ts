@@ -7,11 +7,10 @@ const routes: RouteRecordRaw[] = [
         path: "/",
         component: () => import("layouts/MainLayout.vue"),
         children: [
-
             {
                 meta : {requiresAuth : false},
                 path: "",
-                redirect: { name: "sliderPage" }
+                redirect: { name: localStorage.getItem("authToken") && localStorage.getItem("authToken") !== "undefined" ? "homeLogin" :  "sliderPage"},
             },
             {
                 meta : {requiresAuth : false},
@@ -24,7 +23,6 @@ const routes: RouteRecordRaw[] = [
                 path: "/home-login",
                 name: "homeLogin",
                 component: () => import("pages/Home/HomePageWithLogin.vue"),
-
             },
         ],
     },
