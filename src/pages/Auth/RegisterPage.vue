@@ -1,10 +1,10 @@
 <template>
-    <div class=" full-width flex flex-center no-padding">
+    <div class=" full-width flex flex-center no-padding ">
         <q-card
-            class="no-shadow transparent"
+            class="no-shadow transparent q-pt-xl"
             style="  min-width: 370px; margin-top: 0px"
         >
-            <q-card-section class="q-pb-xs">
+            <q-card-section class="q-pb-xs q-pt-xl">
                 <div class="text-primary text-uppercase text-left cep-sigortam">
                     {{ $t("register_title") }}
                 </div>
