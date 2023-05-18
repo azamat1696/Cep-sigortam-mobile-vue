@@ -1,0 +1,4 @@
+#Tue Apr 25 09:49:35 EEST 2023
+base.0=C\:\\wamp64\\www\\Cep-sigortam-mobile-vue\\src-capacitor\\android\\app\\build\\intermediates\\dex\\release\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
