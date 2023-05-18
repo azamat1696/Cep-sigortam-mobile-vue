@@ -1,11 +1,11 @@
 <template>
-    <div class="q-pa-md row">
-        <div class="col-12 text-center" >
+    <div class="q-pa-md row q-pt-xl">
+        <div class="col-12 text-center q-pt-xl" >
             <img src="/nesuygulamaikon.svg" alt="" height="100" width="160" />
             <!--             <div class="text-h5 text-primary text-custom-1">CEP SIGORTA</div>-->
             <!--             <div class="text-h5 text-primary text-custom-2">Sizin İçin Çalışır O</div>-->
         </div>
-        <div class="col-12">
+        <div class="col-12 ">
 
             <q-carousel
                 animated
