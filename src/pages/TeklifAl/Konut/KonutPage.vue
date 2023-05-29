@@ -314,7 +314,7 @@
                             style="min-height: 200px"
                         >
                             <q-form @submit="onNextStep" class="q-gutter-md">
-                                <q-select
+<!--                                <q-select
                                     outlined
                                     v-model="formFields.MusteriCSBMKodu"
                                     :options="sokakOptions"
@@ -332,8 +332,22 @@
                                     lazy-rules
                                     :rules="[val => val !== null && val !== ''
                                     || $t('required'),]"
-                                />
+                                />-->
 
+                                <q-input
+                                    dense
+                                    outlined
+                                    v-model="formFields.sokakIsme"
+                                    type="text"
+                                    :label="$t('street_name')"
+                                    hide-bottom-space
+                                    lazy-rules
+                                    :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                        $t('required') ,
+                                ]"
+                                />
                                 <q-input
                                     dense
                                     outlined
@@ -671,9 +685,9 @@
                                 <div class="text-subtitle2 text-bold">
                                     {{$t('contact_type')}}
                                 </div>
-                                <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
-                                <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
-                                <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
+                                <q-checkbox v-model="formFields.email_fav" :label="$t('email')" dense  />
+                                <q-checkbox v-model="formFields.phone_fav" :label="$t('phone')" dense  />
+                                <q-checkbox v-model="formFields.sms_fav" :label="$t('sms')" dense   />
                                 <q-stepper-navigation>
                                     <q-btn
                                         type="submit"
@@ -721,7 +735,7 @@ import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../../../stores/main-store";
 import { api } from "boot/axios";
-import { Loading, Notify } from "quasar";
+import {date, Loading, Notify} from "quasar";
 import { useRouter } from "vue-router";
 import { useKonutStore } from "stores/konut-store";
 import { useAuthStore } from "stores/auth-store";
@@ -781,28 +795,14 @@ const {
     mahalleSelect,
     sokakSelect,
     agent,
-} = storeToRefs(useMainStore());
+} = storeToRefs(store);
 const {user,authToken} = storeToRefs(authStore)
-const {
-    countriesGet: countriesGet,
-    ilGet: ilGet,
-    ilceSelectGet: ilceSelectGet,
-    belediyeSelectGet: belediyeSelectGet,
-    mahalleSelectGet: mahalleSelectGet,
-    sokakSelectGet: sokakSelectGet,
-    agentGet: agentGet,
-} = useMainStore();
 
-countriesGet();
-ilGet();
-ilceSelectGet();
-belediyeSelectGet();
-mahalleSelectGet();
-sokakSelectGet();
-agentGet();
+
+
 const genderOptions = [
-    { value: "Erkek", label: "Erkek" },
-    { value: "Kadın", label: "Kadın" },
+    { value: "E", label: "Erkek" },
+    { value: "K", label: "Kadın" },
 ];
 const sigortalSifatiOptions = [
     { value: "Mal Sahibi", label: "Mal Sahibi" },
@@ -1073,27 +1073,28 @@ const onSubmitKonut = async () => {
 
 
 // ************* Form Field states *************** /
+
 const step = ref(1);
 const formFields = ref({
-    KullaniciAdi: "",
-    KullaniciSoyAdi: "",
-    MusteriTcKimlikNo: "",
-    MusteriDogumYeri: "",
-    MusteriCinsiyet: "",
-    MusteriUyruk: "",
-    MusteriEPosta: "", // input
-    AcenteNo: "", // input
-    MusteriCepTelefonNo: "", // input
-    MusteriDogumTarihi: "",
+    KullaniciAdi: user.value?.name,
+    KullaniciSoyAdi: user.value?.surname,
+    MusteriTcKimlikNo: user.value?.id_card,
+    MusteriDogumYeri: user.value?.birthplace,
+    MusteriCinsiyet: user.value?.gender,
+    MusteriUyruk: 601,
+    MusteriEPosta: user.value?.email, // input
+    AcenteNo: 1, // input
+    MusteriCepTelefonNo: user.value?.phone, // input
+    MusteriDogumTarihi: date.formatDate(user.value.birth_date,'DD/MM/YYYY'),
     SigortalanacakKonutunAdresi: "",
-    SigortalSifati: "",
+    SigortalSifati: "Mal Sahibi",
     Rehinli: "",
-    KonutKullanim: "",
-    BinaYapi: "",
-    KonutTipi: "",
-    KatBilgisi: "",
+    KonutKullanim: "Daimi İkametgah",
+    BinaYapi: "Betonarme",
+    KonutTipi: "Apartman",
+    KatBilgisi: "Ara",
     YasayanKisiSayisi: "",
-    HasarDurumu: "", // select box
+    HasarDurumu: "Hasarsız", // select box
     insaYili: "",
     M2: "",
     BinaBedeli: "",
@@ -1107,15 +1108,16 @@ const formFields = ref({
     MusteriBucakKodu: "", // select box
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
-    MusteriCSBMKodu: "", // select box
+    MusteriCSBMKodu: 999999, // select box
+    sokakIsme: "", // text box
     MusteriApartmanAdi: "", //
     MusteriApartmanNo: "", // input
     uyar: false, // 'accepted'
-    TCVat: false,
-    TeminatLimitiDovic:"",
-    contact_email: false,
-    contact_phone: false,
-    contact_sms: false,
+    TCVat: user.value?.id_type === 1 ? true : false,
+    TeminatLimitiDovic:"TL",
+    email_fav: false,
+    phone_fav: false,
+    sms_fav: false,
 });
 const checkIdCardNumber = ref(true);
 const onIdCardChange = (val:string) => {

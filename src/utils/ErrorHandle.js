@@ -7,6 +7,14 @@ import {routerInstance} from 'boot/customRouteInstance'
     let errors = errorsObj.response.data?.errors
     let errorMessage = errorsObj.response.data?.message
     let status = errorsObj.response.status
+    /*   alert(JSON.stringify(errorsObj.response.data)    )
+
+       Notify.create({
+              type:'negative',
+              timeout:10000,
+              message:JSON.stringify(errorsObj.response.data)
+       })
+       return false*/
     if (status === 401) {
         localStorage.removeItem('authToken')
         localStorage.removeItem('user')
@@ -31,7 +39,7 @@ import {routerInstance} from 'boot/customRouteInstance'
         Notify.create({
             type:'negative',
             message: locale === 'tr' ? data.errorTr : data.errorEng || data.errorEng || data.Error2|| data.Error1 || errorsObj.response.data.error|| "Something went wrong",
-            timeout:1000,
+            //timeout:1000,
             position:'bottom',
             progress:true,
             closeBtn:'X',
@@ -40,7 +48,7 @@ import {routerInstance} from 'boot/customRouteInstance'
         Notify.create({
             type:'negative',
             message: data.Error1 || data.errorEng || data.Error2 || errorsObj.response.data.error|| "Something went wrong",
-            timeout:1000,
+            //timeout:1000,
             position:'bottom',
             progress:true,
             closeBtn:'X',
@@ -48,7 +56,7 @@ import {routerInstance} from 'boot/customRouteInstance'
         Notify.create({
             type:'negative',
             message: data.Error2 || data.errorEng || data.Error2 || data.Error1 || errorsObj.response.data.error|| "Something went wrong",
-            timeout:1000,
+            //timeout:1000,
             position:'bottom',
             progress:true,
             closeBtn:'X',
@@ -58,7 +66,7 @@ import {routerInstance} from 'boot/customRouteInstance'
         Notify.create({
             type:'negative',
             message: data.errorTr || data.errorEng || data.error || data.message || "Something went wrong",
-            timeout:1000,
+            //timeout:1000,
             position:'bottom',
             progress:true
         })
@@ -66,7 +74,7 @@ import {routerInstance} from 'boot/customRouteInstance'
         Notify.create({
             type:'negative',
             message:  "Sunucu hatası oluştu lütfen daha sonra tekrar deneyiniz",
-            timeout:1000,
+            //timeout:1000,
             position:'bottom',
             progress:true
         })
@@ -74,7 +82,7 @@ import {routerInstance} from 'boot/customRouteInstance'
         Notify.create({
             type:'negative',
             message: data.errorTr || data.errorEng || error || customMessage || "Something went wrong",
-            timeout:1000,
+           // timeout:1000,
             position:'bottom',
             progress:true
         })

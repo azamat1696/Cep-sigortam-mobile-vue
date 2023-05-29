@@ -19,7 +19,7 @@
             <div class="q-pt-xs">
                 <q-card class="no-shadow q-pa-sm">
                     <q-card-section style="padding-bottom: 10px">
-                        <div class="text-body2 text-grey-9">{{user.name+' '+user.surname}}</div>
+                        <div class="text-body2 text-grey-9">{{logedInUser.name+' '+logedInUser.surname}}</div>
                     </q-card-section>
                     <q-card-section>
                         <div class="flex justify-between items-start">
@@ -28,7 +28,7 @@
                                      {{$t('identity_no')}}
                                 </div>
                                 <div class="text-caption text-grey-8 q-pt-xs">
-                                    {{user.id_card}}
+                                    {{logedInUser.id_card}}
                                 </div>
                             </div>
                             <div>
@@ -76,7 +76,7 @@
                                 src="~assets/phone_in_talk.png"
                                 width="24px"
                             />
-                            <span class="q-pl-sm">{{user.phone}}</span>
+                            <span class="q-pl-sm">{{logedInUser.phone}}</span>
                             <q-tooltip v-model="formField.showingTooltip"  max-width="300px" anchor="center middle" self="center middle">
 
                                 {{$t('contact_info_selection2')}}
@@ -86,7 +86,7 @@
                     <q-card-section>
                         <div class="text-caption text-grey-8">
                             <q-img src="~assets/mail.png" width="24px" />
-                            <span class="q-pl-sm">{{user.email}}</span>
+                            <span class="q-pl-sm">{{logedInUser.email}}</span>
                         </div>
                     </q-card-section>
                     <q-card-section>
@@ -101,7 +101,7 @@
                                 />
                             </div>
                             <span class="q-pl-sm" style="font-size: 12px"
-                                >{{user?.address}}</span
+                                >{{logedInUser?.address}}</span
                             >
                         </div>
                     </q-card-section>
@@ -160,15 +160,15 @@ import { reactive, toRefs } from "vue";
  import {storeToRefs} from "pinia";
 
  const authStore = useAuthStore();
- const {user} = storeToRefs(authStore);
+ const {logedInUser} = storeToRefs(authStore);
  const {updateProfile} = authStore
  const formField = reactive({
      // @ts-ignore
-     sms_fav: user.value?.sms_fav === 1,
+     sms_fav: logedInUser.value?.sms_fav === 1,
      // @ts-ignore
-     phone_fav: user.value?.phone_fav === 1,
+     phone_fav: logedInUser.value?.phone_fav === 1,
      // @ts-ignore
-     email_fav: user.value?.email_fav === 1,
+     email_fav: logedInUser.value?.email_fav === 1,
      showingTooltip:  false,
      showingTooltip2:  false,
   });
@@ -198,13 +198,13 @@ const onCheckboxChange = (value:any) => {
       updateProfile(formData).then((res) => {
          if (res){
              // @ts-ignore
-                user.value.sms_fav = formField.sms_fav ? 1 : 0;
+                logedInUser.value.sms_fav = formField.sms_fav ? 1 : 0;
              // @ts-ignore
-                user.value.phone_fav = formField.phone_fav ? 1 : 0;
+                logedInUser.value.phone_fav = formField.phone_fav ? 1 : 0;
              // @ts-ignore
-                user.value.email_fav = formField.email_fav ? 1 : 0;
+                logedInUser.value.email_fav = formField.email_fav ? 1 : 0;
 
-             localStorage.setItem('user', JSON.stringify(user.value));
+             localStorage.setItem('user', JSON.stringify(logedInUser.value));
          }
     });
 };

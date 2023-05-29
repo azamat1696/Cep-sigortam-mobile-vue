@@ -53,7 +53,7 @@ export default {
     message: "Mesaj",
     // trafik sigorta teklif al
     motor_offer_success: "Başvurunuz alınmış olup size en yakın sürede geri dönüş sağlanacaktır. Near East Sigorta'yı tercih ettiğiniz için teşekkürler.",
-    motor_offer_success2: "Poliçeniz başarı ile oluşturulmuştur. Near East Sigorta’yı tercih ettiğiniz için teşekkürler",
+    motor_offer_success2: "Poliçeniz başarı ile oluşturulmuştur. Near East Sigorta’yı tercih ettiğiniz için teşekkürler. Uygulama üzerinden oluşturduğunuz poliçeyi ve diğer detayları incelemek için üye olabilirsiniz.",
     motor_offer_success_pdf: "Poliçenizi görüntülemek için linki tıklayınız.",
 
     home_page: "Anasayfa",
@@ -83,6 +83,7 @@ export default {
     municipality_select: "Mahalle Seçiniz",
     neighborhood_select: "Mahalle Seçiniz",
     street_select: "Sokak Seçiniz",
+    street_name: "Sokak Adı",
     building_no: "Bina No",
     apartment_no: "Daire No",
     phone_no: "Telefon Numarası",
@@ -123,6 +124,7 @@ export default {
     death_and_permanent_disability: "Teminat Limiti (Ölüm-Sürekli Sakatlık)",
     calculated_premium: "Hesaplanan Prim",
     warning_text3: "Düzenlenen poliçenin genel ve özel şartları ile tüm içerik ve şartlarını okumuş olup, onaylar ve kabul ederim. İşbu poliçeyi, seçmiş olduğum acenteden teslim alacağımı ve/veya teslim alma yükümlülüğüm olduğunu, poliçemi ilgili acenteden teslim almamam halinde ise poliçede yer alan tüm genel ve özel şartlar ile tüm içerik ve şartları gibi hukuki sonuç doğuracağını kabul ve taahhüt ederim.",
+    warning_text4:"Lütfen linki tıklayarak genel şartlar ve içerikleri okuyunuz.",
     go_to_payment: "Ödemeye Gidiniz",
     for_policy_payment: "Poliçe işlemlerinizi tamamlamak için ödemenizi yapınız.",
     start: "Başlangıç",
@@ -199,4 +201,14 @@ export default {
     personel_accident_insurance: "Ferdi Kaza Sigortası",
     contact_type: "İletişim tercihini seçiniz.",
 
+    //kaza sonrası yapılması gerekenler
+    accident_after: "Kaza Sonrası Yapılması Gerekenler",
+    accident_after_text1: "Kaza yerine trafik polisi çağrılmalı ve polis gelene kadar araç olay mahallinden kaldırılmamalıdır. Polis raporu olmayan hasarlardan şirketimiz sorumlu değildir.",
+    accident_after_text2: "Meydana gelen hasarlar en geç 24 saat içinde merkez ofisimize veya şubelerimize bildirilmelidir.",
+    accident_after_text3: "Kazanın oluşundan itibaren ilk 60 dakika içerisinde alkol testi yapılmalıdır. Polis raporunda alkol testi sonucu bulunmayan hasarlardan şirketimiz sorumlu değildir.",
+    accident_after_text4: "Şirketimizin talimatı olmadan hiçbir surette tamirat başlatılmamalıdır. Şirket onayı alınmadan tamiratı yaptırılan hasarlardan şirketimiz sorumlu değildir.",
+    accident_after_text5: "Kaza sonrası yapılması gereken işlemlerden herhangi birinin yapılmaması veya eksik yapılması durumunda meydana gelen hasardan şirketimiz sorumlu değildir.",
+    call_ambulance: "Ambulans Ara",
+    call_police: "Polis Ara",
+    whatsapp_up: "WhatsApp hattı",
 };

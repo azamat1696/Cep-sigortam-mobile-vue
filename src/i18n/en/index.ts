@@ -83,6 +83,7 @@ export default {
     municipality_select: "Select Neighborhood",
     neighborhood_select: "Select Neighborhood",
     street_select: "Select Street",
+    street_name: "Street Name",
     building_no: "Building No",
     apartment_no: "Apartment No",
     phone_no: "Phone Number",
@@ -122,6 +123,7 @@ export default {
     death_and_permanent_disability: "Death and Permanent Disability Limit",
     calculated_premium: "Calculated Premium",
     warning_text3: "I have read and accept all the contents and conditions of the general and specific provisions of the policy. I acknowledge and undertake that I will receive my policy from the chosen agent and/or that I am obligated to receive it, and if I do not receive my policy from the relevant agent, all the general and special conditions, as well as all the contents and provisions of the policy, will have legal consequences.",
+    warning_text4: "Please press the link below to view the general and special conditions of the policy.",
     go_to_payment: "Go to Payment",
     for_policy_payment: "To complete your policy transactions, make your payment.",
     start: "Start",
@@ -199,7 +201,15 @@ export default {
     contact_type: "Contact Type",
 
 
-
+    accident_after: "After the Accident: What to Do",
+    accident_after_text1: "Call the traffic police to the accident scene and do not move the vehicle from the scene until the police arrive. Our company is not responsible for damages without a police report.",
+    accident_after_text2: "Any damages should be reported to our main office or branches within 24 hours of the incident.",
+    accident_after_text3: "An alcohol test should be conducted within the first 60 minutes after the accident. Our company is not responsible for damages without alcohol test results in the police report.",
+    accident_after_text4: "Repairs should not be initiated without company instructions. Our company is not responsible for damages repaired without company approval.",
+    accident_after_text5: "If any of the required post-accident procedures are not performed or are incomplete, our company is not responsible for resulting damages.",
+    call_ambulance: "Call an Ambulance",
+    call_police: "Call the Police",
+    whatsapp_up: "WhatsApp Helpline"
 
 
 

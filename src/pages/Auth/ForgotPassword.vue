@@ -72,7 +72,7 @@ export default defineComponent({
     name: "ForgotPassword",
     setup() {
         const authStore = useAuthStore();
-        const {user,permenantUser,authToken} = storeToRefs(authStore);
+        const {permenantUser,authToken} = storeToRefs(authStore);
         const {updatePassword} = authStore
         const router = useRouter();
         onMounted(() => {

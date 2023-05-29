@@ -29,15 +29,18 @@
                         {{$t('motor_offer_success2')}}
                     </div>
                     <div class="text-center ">
-         
+
                         {{$t('motor_offer_success_pdf')}}
 
                     </div>
                 </div>
             </q-card-section>
-            <q-card-section class="text-center" >
-                <q-btn color="primary" no-caps :to="{ name: `${authToken ? 'homeLogin':'home'}` }"
-                    >{{$t('home_page')}}</q-btn
+            <q-card-section class="flex justify-between">
+                <q-btn color="primary" no-caps :to="{ name: `${ authToken ? 'homeLogin' : 'home' }` }"
+                >{{$t('home_page')}}</q-btn
+                >
+                <q-btn color="primary" v-show="checkForReadonly()" v-no-caps :to="{ name: 'registerPage' }"
+                >{{$t('register')}}</q-btn
                 >
             </q-card-section>
         </q-card>
@@ -46,13 +49,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { useRouter } from "vue-router";
 import {useAuthStore} from "stores/auth-store";
 import {storeToRefs} from "pinia";
 const authStore = useAuthStore();
-const { user,authToken } = storeToRefs(authStore);
+const { authToken } = storeToRefs(authStore);
 const router = useRouter();
+const checkForReadonly = () => {
+    if(authToken.value && authToken.value !== ''){
+        return false
+    }
+    return true
+
+};
 // setTimeout(() => {
 //    authToken.value ? router.push({ name: "homeLogin" }) : router.push({ name: "home" });
 // }, 5000);

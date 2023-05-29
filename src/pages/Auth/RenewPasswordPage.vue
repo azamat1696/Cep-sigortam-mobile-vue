@@ -102,7 +102,6 @@ export default defineComponent({
 
         },
         validateForm() {
-
             if (this.formFields.password !== this.formFields.password_again) {
                 this.formFields.password_again = "";
                 return false;

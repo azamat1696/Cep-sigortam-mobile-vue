@@ -16,12 +16,12 @@
                  <div class="box_border1">
                     <div class="q-pa-sm"> <q-icon name="phone_in_talk" size="lg"/></div>
                     <div class="text-subtitle2 text-weight-bold"> Bizi Arayın</div>
-                    <div class="text-subtitle2 text-weight-medium"> +90 (392) 444 0 637</div>
+                    <div class="text-subtitle2 text-weight-medium"><a href="tel:+903924440637">+90 (392) 444 0 637</a></div>
                  </div>
                  <div class="box_border2">
                      <div class="q-pa-sm"><q-icon name="sms" size="lg" /></div>
                      <div class="text-subtitle2 text-weight-bold">Bize Yazin</div>
-                     <div class="text-subtitle2 text-weight-medium"> info@neareastsigorta.com</div>
+                     <div class="text-subtitle2 text-weight-medium"><a href="mailto:info@neareastsigorta.com">info@neareastsigorta.com</a> </div>
                  </div>
              </div>
          </q-card-section>

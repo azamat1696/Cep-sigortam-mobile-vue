@@ -17,7 +17,7 @@
                                 >
 
                                 <span style="font-size: 12px"
-                                >{{$t('identity_no')}}: {{user.id_card}}</span
+                                >{{$t('identity_no')}}: {{ferdiKaza.info.MusteriTcKimlikNo}}</span
                                 >
                                 </q-card-section>
                                 <q-card-section
@@ -68,6 +68,9 @@
                             style="font-size: 12px"
                         >
                         {{$t('warning_text3')}}
+                            <a :href="url" target="_blank">
+                                {{$t('warning_text4')}}
+                            </a>
                         </div>
                     </div>
                     <div class="q-pt-md">
@@ -77,7 +80,7 @@
                             :label="$t('go_to_payment')"
                             no-caps
                             class="full-width"
-                            :to="{ name: 'FerdiKazaPayment' }"
+                            @click="$emit('goToPayment')"
                             :disable="!formField.uyar2"
                         />
                     </div>
@@ -86,17 +89,16 @@
 
 <script setup lang="ts">
 import {useFerdiKazaCreateStore} from "stores/ferdi-kaza-create";
-import {useAuthStore} from "stores/auth-store";
 import {storeToRefs} from "pinia";
 import {reactive} from "vue";
 import {date} from "quasar";
 const ferdiKazaCreateStore = useFerdiKazaCreateStore();
-const authStore = useAuthStore();
 const { ferdiKaza } = storeToRefs(ferdiKazaCreateStore);
-const { user } = storeToRefs(authStore);
 const formField = reactive({
   uyar2: false,
 })
+let url = process.env.WEB_URL+'/useragreement260';
+
 </script>
 
 <style>
@@ -112,7 +114,6 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
 input[type="number"] {
     -moz-appearance: textfield;
 }

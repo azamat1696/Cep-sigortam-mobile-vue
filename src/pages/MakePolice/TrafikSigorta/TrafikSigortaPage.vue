@@ -35,7 +35,7 @@ input[type="number"] {
                 <q-avatar size="sm">
                     <q-icon
                         name="chevron_left"
-                        @click="$router.push({ name: 'homeLogin' })"
+                        @click="authToken && authToken !== undefined ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
                         size="md"
                         class="cursor-pointer"
                     />
@@ -72,7 +72,7 @@ input[type="number"] {
                                 v-model="formFields.KullaniciAdi"
                                 :label="$t('name')"
                                 hide-bottom-space
-                                readonly
+                                :readonly="checkForReadonly()"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -85,7 +85,7 @@ input[type="number"] {
                                 outlined
                                 v-model="formFields.KullaniciSoyAdi"
                                 :label="$t('surname')"
-                                readonly
+                                :readonly="checkForReadonly()"
                                 hide-bottom-space
                                 lazy-rules
                                 :rules="[
@@ -99,8 +99,11 @@ input[type="number"] {
                                 outlined
                                 v-model="formFields.MusteriTcKimlikNo"
                                 :label="$t('identity_no')"
-                                 hide-bottom-space
-                                readonly
+                                hide-bottom-space
+                                mask="#### #### ###"
+                                unmasked-value
+                                :readonly="checkForReadonly()"
+                                @update:model-value="onIdCardChange"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -108,12 +111,20 @@ input[type="number"] {
                                         $t('required'),
                                 ]"
                             />
+                            <q-checkbox
+                                v-if="!checkForReadonly()"
+                                v-model="formFields.TCVat"
+                                dense
+                                :label="$t('tc_citizen')"
+                                class="text-subtitle2"
+                                :disable="checkIdCardNumber"
+                            />
 
                             <q-input
                                 v-model="formFields.MusteriDogumTarihi"
                                 outlined
                                 dense
-                                readonly
+                                :readonly="checkForReadonly()"
                                 hide-bottom-space
                                 :label="$t('birth_date')"
                             >
@@ -129,6 +140,7 @@ input[type="number"] {
                                                     formFields.MusteriDogumTarihi
                                                 "
                                                 mask="DD/MM/YYYY"
+                                                :locale="dateLocale"
                                             >
                                                 <div
                                                     class="row items-center justify-end"
@@ -214,7 +226,7 @@ input[type="number"] {
                                 v-model="formFields.MusteriDogumYeri"
                                 :label="$t('birthplace')"
                                 hide-bottom-space
-                                readonly
+                                :readonly="checkForReadonly()"
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -230,7 +242,7 @@ input[type="number"] {
                                 option-value="value"
                                 :label="$t('gender')"
                                 dense
-                                readonly
+                                :readonly="checkForReadonly()"
                                 emit-value
                                 map-options
                                 hide-bottom-space
@@ -466,7 +478,7 @@ input[type="number"] {
 <!--                                        $t('required'),-->
 <!--                                ]"-->
 <!--                            />-->
-                            <q-input
+<!--                            <q-input
                                 dense
                                 outlined
                                 v-model="formFields.AracMotorNo"
@@ -479,8 +491,8 @@ input[type="number"] {
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
-                            <q-input
+                            />-->
+<!--                            <q-input
                                 dense
                                 outlined
                                 v-model="formFields.AracSasiNo"
@@ -493,7 +505,7 @@ input[type="number"] {
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
+                            />-->
                             <q-select
                                 outlined
                                 v-model="formFields.AracDireksiyonTarafi"
@@ -906,12 +918,53 @@ input[type="number"] {
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../../../stores/main-store";
-import { api } from "boot/axios";
-import { Loading, Notify } from "quasar";
 import { useRouter } from "vue-router";
 import { useTrafikSigortaStore } from "stores/trafik-store";
 import {useTrafikSigortaCreateStore} from "stores/trafik-sigorta-create";
 import {useAuthStore} from "stores/auth-store";
+import {useI18n} from "vue-i18n";
+const { locale } = useI18n();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
 import { date } from "quasar";
 import HesaplananPirimTrafik from "pages/MakePolice/TrafikSigorta/HesaplananPirimTrafik.vue";
 import PaymentPirimTrafik from "pages/MakePolice/TrafikSigorta/PaymentPirimTrafik.vue";
@@ -919,11 +972,10 @@ import PaymentTrafik from "pages/MakePolice/TrafikSigorta/PaymentTrafik.vue";
 const router = useRouter();
 const store = useMainStore();
 const authStore = useAuthStore();
-const {user} = storeToRefs(authStore);
+const {logedInUser,authToken,user} = storeToRefs(authStore);
 const trafikSigortaCreateStore = useTrafikSigortaCreateStore();
 const {trafikSigorta} = storeToRefs(trafikSigortaCreateStore);
-const trafikSigortaStore = useTrafikSigortaStore();
-const {
+ const {
     countries: countries,
     aracMarka: aracMarka,
     aracTipi: aracTipi,
@@ -936,32 +988,8 @@ const {
     mahalleSelect,
     sokakSelect,
     agent,
-} = storeToRefs(useMainStore());
-const {
-    countriesGet: countriesGet,
-    aracMarkaGet: aracMarkaGet,
-    aracModelSelectGet,
-    renkGet: renkGet,
-    ilGet: ilGet,
-    ilceSelectGet: ilceSelectGet,
-    belediyeSelectGet: belediyeSelectGet,
-    mahalleSelectGet: mahalleSelectGet,
-    sokakSelectGet: sokakSelectGet,
-    agentGet: agentGet,
-    aracTipiGet: aracTipiGet,
-} = useMainStore();
+} = storeToRefs(store);
 
-countriesGet();
-aracMarkaGet();
-aracModelSelectGet();
-renkGet();
-ilGet();
-ilceSelectGet();
-belediyeSelectGet();
-mahalleSelectGet();
-sokakSelectGet();
-agentGet();
-aracTipiGet()
 const genderOptions = [
     { value: "E", label: "Erkek" },
     { value: "K", label: "Kadın" },
@@ -993,8 +1021,7 @@ let aracMarkaOptions = ref(aracMarka.value);
 let aracTipiOptions = ref(aracTipi.value);
 const aracModelSelectOptions = ref([]);
 let aracModelOptions = ref([]);
-let filteredArachModel = aracModelSelect.value;
-let renkOptions = ref(renk.value);
+ let renkOptions = ref(renk.value);
 const ilOptions = ref(il.value);
 let ilceSelectGetOptions = ref([]);
 let ilceOptions = ref([]);
@@ -1005,7 +1032,6 @@ const mahalleOptions = ref([]);
 const sokakSelectOptions = ref();
 const agentOptions = ref(agent.value);
 const sokakOptions = ref([]);
-
 
 // ************* Fiters for the form  select *************** /
 const filterCountries = (val: any, update: any) => {
@@ -1213,6 +1239,7 @@ const onPrevStep = () => {
 };
 // ************* Form Submit *************** /
 const onSubmitKasko = async () => {
+    user.value = formFields.value;
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
         if (key === "uyar")
@@ -1226,12 +1253,7 @@ const onSubmitKasko = async () => {
         }
 
     }
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    // }
-
     await trafikSigortaCreateStore.hesaplaTrafikSigorta(formData).then((res) => {
-        console.log(res);
         if (res)
         {
             onNextStep();
@@ -1241,28 +1263,28 @@ const onSubmitKasko = async () => {
 };
 // ************* Form Field states *************** /
 const step = ref(1);
-const formFields = ref({
-    KullaniciAdi: user.value?.name, //ok
-    KullaniciSoyAdi: user.value?.surname, //ok
-    MusteriTcKimlikNo: user.value.id_card, //ok
-    MusteriDogumYeri: user.value.birthplace, //ok
-    MusteriCinsiyet: user.value.gender, //ok
+ const formFields = ref({
+    KullaniciAdi: logedInUser.value?.name, //ok
+    KullaniciSoyAdi: logedInUser.value?.surname, //ok
+    MusteriTcKimlikNo: logedInUser.value?.id_card, //ok
+    MusteriDogumYeri: logedInUser.value?.birthplace, //ok
+    MusteriCinsiyet: logedInUser.value?.gender, //ok
     MusteriUyruk: '',
-    MusteriDogumTarihi: date.formatDate(user.value.birth_date,'DD/MM/YYYY'),
+    MusteriDogumTarihi: date.formatDate(logedInUser.value.birth_date,'DD/MM/YYYY'),
     AracPlaka1: "",
     AracPlaka2: "",
     AracPlakaIlKodu: "", // select box
     AracMarka: "", // select box
     AracModelYili: "", // select box
-    AracTarz: "", // select box
-    _YakitTipi: "", // select box
+    AracTarz: 1, // select box
+    _YakitTipi: "1", // select box
     Motor_cc: "",
     // AracBedeli: "87897979",
     ipotekli: "",
     AracMotorNo: "",
     AracSasiNo: "",
-    AracDireksiyonTarafi: "", // select box
-    _AracVitesBilgisi: "", // select box
+    AracDireksiyonTarafi: "Sağ", // select box
+    _AracVitesBilgisi: "Otomatik", // select box
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
     MusteriBelediyeKodu: "", // select box
@@ -1270,13 +1292,13 @@ const formFields = ref({
     MusteriCSBMKodu: "", // select box
     MusteriApartmanAdi: "", //
     MusteriApartmanNo: "", // input
-    MusteriCepTelefonNo: user.value?.phone, // input // ok
-    MusteriEPosta: user.value?.email, // input // ok
-    AcenteId: '', // input
-    _SbmCarColorCode: "", // select box
-    uyar: false, // 'accepted'
-    TCVat: false
-});
+    MusteriCepTelefonNo: logedInUser.value?.phone, // input // ok
+    MusteriEPosta: logedInUser.value?.email, // input // ok
+    AcenteId: 1, // input
+    _SbmCarColorCode: 1, // select box
+     uyar: false, // 'accepted'
+     TCVat: logedInUser.value?.id_card?.length === 11 ? true : false,
+ });
 // ************* Garanti ödeme test *************** /
 // const data ={
 //
@@ -1295,6 +1317,26 @@ watch(formFields.value, (value, oldValue, onCleanup) => {
         formFields.value.AracPlaka1 = value.AracPlaka1.toUpperCase();
     }
 });
+
+const checkForReadonly = () => {
+  if(authToken.value && authToken.value !== null && authToken.value !== undefined && authToken.value !== ''){
+      return true
+  }
+      return false
+
+};
+
+
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
+
 // let testdata = {"message":"The given data was invalid.","errors":{"uyar":["The uyar must be accepted."]}}
 // for (const [key, value] of Object.entries(testdata?.errors)) {
 //   Notify.create({
@@ -1305,5 +1347,4 @@ watch(formFields.value, (value, oldValue, onCleanup) => {
 //   })
 // }
 </script>
-
 

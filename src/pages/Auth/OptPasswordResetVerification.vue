@@ -130,8 +130,7 @@ export default defineComponent({
             }
         };
         const focus = (index:number) => {
-            console.log(index)
-            if (index >= 0) {
+             if (index >= 0) {
                 if (index < length.value) {
                     fields?.value[index].select();
 

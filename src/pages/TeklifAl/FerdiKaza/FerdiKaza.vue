@@ -420,9 +420,9 @@
                             <div class="text-subtitle2 text-bold">
                                 {{$t('contact_type')}}
                             </div>
-                            <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
-                            <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
-                            <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
+                            <q-checkbox v-model="formFields.email_fav" :label="$t('email')" dense  />
+                            <q-checkbox v-model="formFields.phone_fav" :label="$t('phone')" dense  />
+                            <q-checkbox v-model="formFields.sms_fav" :label="$t('sms')" dense   />
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
@@ -733,7 +733,7 @@ const onNextStep = () => {
 const onSubmitFerdiKaza = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
-        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+        if(key === "email_fav" || key === "phone_fav" || key === 'sms_fav' ) {
             // @ts-ignore
             formData.append(key, val === true ? 1 : 0);
             continue;
@@ -775,9 +775,9 @@ const formFields = ref({
     Meslegi: "", // select box
     TeminatLimitiDovic:"",
     TCVat: false,
-    contact_email: false,
-    contact_phone: false,
-    contact_sms: false,
+    email_fav: false,
+    phone_fav: false,
+    sms_fav: false,
 
 });
 const checkIdCardNumber = ref(true);

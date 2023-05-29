@@ -70,36 +70,42 @@
                 </q-item>
                 <div class="absolute-bottom">
                     <q-item class="flex flex-center q-pb-none">
-                        <q-item-section class="text-center q-pl-lg">
+                        <q-item-section class="text-center q-pl-sm">
                             {{ $t('social_media') }}
                         </q-item-section>
 
                         <q-item-section class="text-end"> </q-item-section>
                     </q-item>
-                    <q-item class="flex flex-center q-pt-none">
-                        <q-item-section avatar class="items-end q-pr-sm">
-                            <q-img
-                                src="~assets/twitter.png"
-                                style="width: 29px"
-                            />
+                    <q-item class="flex  q-pt-none ">
+                        <!--                            <q-item-section avatar class="items-end q-pr-sm">
+                                                        <q-img
+                                                            src="~assets/twitter.png"
+                                                            style="width: 29px"
+                                                        />
+                                                    </q-item-section>-->
+                        <!--                            <q-item-section avatar class="items-end q-pr-sm">
+                                                        <q-img
+                                                            src="~assets/linkdin.png"
+                                                            style="width: 29px"
+                                                        />
+                                                    </q-item-section>-->
+                        <q-item-section avatar class="items-end q-pl-lg">
+                            <a href="https://www.facebook.com/neareastsigorta/">
+                                <q-img
+                                    src="~assets/facebook.png"
+                                    style="width: 29px"
+                                />
+                            </a>
+
                         </q-item-section>
                         <q-item-section avatar class="items-end q-pr-sm">
-                            <q-img
-                                src="~assets/linkdin.png"
-                                style="width: 29px"
-                            />
-                        </q-item-section>
-                        <q-item-section avatar class="items-end q-pr-sm">
-                            <q-img
-                                src="~assets/facebook.png"
-                                style="width: 29px"
-                            />
-                        </q-item-section>
-                        <q-item-section avatar class="items-end q-pr-sm">
-                            <q-img
-                                src="~assets/instagram.png"
-                                style="width: 29px"
-                            />
+                            <a href="https://www.instagram.com/neareastsigorta/">
+                                <q-img
+                                    src="~assets/instagram.png"
+                                    style="width: 29px"
+                                />
+                            </a>
+
                         </q-item-section>
                     </q-item>
                 </div>
@@ -120,11 +126,10 @@ export default defineComponent({
     name: "DrawerComponent",
     setup() {
         const {logout} = useAuthStore();
-        const { user,authToken } = storeToRefs(useAuthStore())
+        const {authToken } = storeToRefs(useAuthStore())
         const { locale } = useI18n({ useScope: 'global' })
         const leftDrawerOpen = ref(false);
          return {
-            user,
             authToken,
             logout,
             locale,

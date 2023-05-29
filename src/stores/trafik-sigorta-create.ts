@@ -15,7 +15,6 @@ export const useTrafikSigortaCreateStore = defineStore("trafikSigortaCreate", {
           async hesaplaTrafikSigorta(payload: any) {
               Loading.show();
             return   await api.post("/hesapla310Cep", payload).then((response) => {
-                  console.log('>>>>>>>>>',response.data);
                   if(response.data.status === 'success') {
                       this.trafikSigorta = response.data;
                       //this.router.push({name: "TrafikSigortaHesaplananPirim"});

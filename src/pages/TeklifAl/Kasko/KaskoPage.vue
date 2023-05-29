@@ -469,7 +469,7 @@
                                 hide-bottom-space
 
                             />
-                            <q-input
+<!--                            <q-input
                                 dense
                                 outlined
                                 v-model="formFields.AracMotorNo"
@@ -477,8 +477,8 @@
                                 :label="$t('motor_no')"
                                 hide-bottom-space
 
-                            />
-                            <q-input
+                            />-->
+<!--                            <q-input
                                 dense
                                 outlined
                                 v-model="formFields.AracSasiNo"
@@ -486,7 +486,7 @@
                                 :label="$t('chassis_no')"
                                 hide-bottom-space
 
-                            />
+                            />-->
                             <q-select
                                 outlined
                                 v-model="formFields.AracDireksiyonTarafi"
@@ -635,7 +635,7 @@
                                 :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
                             />
-                            <q-select
+<!--                            <q-select
                                 outlined
                                 v-model="formFields.MusteriCSBMKodu"
                                 :options="sokakOptions"
@@ -653,6 +653,15 @@
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
+                            />-->
+                            <q-input
+                                dense
+                                outlined
+                                v-model="formFields.sokakIsme"
+                                type="text"
+                                :label="$t('street_name')"
+                                hide-bottom-space
+
                             />
                             <q-input
                                 dense
@@ -725,9 +734,9 @@
                             <div class="text-subtitle2 text-bold">
                                 {{$t('contact_type')}}
                             </div>
-                            <q-checkbox v-model="formFields.contact_email" :label="$t('email')" dense  />
-                            <q-checkbox v-model="formFields.contact_phone" :label="$t('phone')" dense  />
-                            <q-checkbox v-model="formFields.contact_sms" :label="$t('sms')" dense   />
+                            <q-checkbox v-model="formFields.email_fav" :label="$t('email')" dense  />
+                            <q-checkbox v-model="formFields.phone_fav" :label="$t('phone')" dense  />
+                            <q-checkbox v-model="formFields.sms_fav" :label="$t('sms')" dense   />
                             <q-stepper-navigation>
                                 <q-btn
                                     type="submit"
@@ -775,14 +784,15 @@ import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useMainStore } from "../../../stores/main-store";
 import { api } from "boot/axios";
-import { Loading, Notify } from "quasar";
+import {date, Loading, Notify} from "quasar";
 import { useRouter } from "vue-router";
 import { useKaskoStore } from "stores/kosko-store";
 import {useAuthStore} from "stores/auth-store";
 
 import {useI18n} from "vue-i18n";
 const { locale } = useI18n();
-const dateTranslate ={
+
+ const dateTranslate ={
     months: [
         "Ocak",
         "Şubat",
@@ -828,6 +838,8 @@ const router = useRouter();
 const store = useMainStore();
 const kaskoStore = useKaskoStore();
 const authStore = useAuthStore();
+const {user,authToken} = storeToRefs(authStore);
+
 const {
     countries: countries,
     aracMarka: aracMarka,
@@ -840,36 +852,11 @@ const {
     mahalleSelect,
     sokakSelect,
     agent,
-} = storeToRefs(useMainStore());
-const {user,authToken} = storeToRefs(authStore);
-const {
-    countriesGet: countriesGet,
-    aracMarkaGet: aracMarkaGet,
-    aracModelSelectGet,
-    renkGet: renkGet,
-    ilGet: ilGet,
-    ilceSelectGet: ilceSelectGet,
-    belediyeSelectGet: belediyeSelectGet,
-    mahalleSelectGet: mahalleSelectGet,
-    sokakSelectGet: sokakSelectGet,
-    agentGet: agentGet,
-    aracTipiGet: aracTipiGet,
-} = useMainStore();
+} = storeToRefs(store);
 
-countriesGet();
-aracMarkaGet();
-aracModelSelectGet();
-renkGet();
-ilGet();
-ilceSelectGet();
-belediyeSelectGet();
-mahalleSelectGet();
-sokakSelectGet();
-agentGet();
-aracTipiGet();
 const genderOptions = [
-    { value: "Erkek", label: "Erkek" },
-    { value: "Kadın", label: "Kadın" },
+    { value: "E", label: "Erkek" },
+    { value: "K", label: "Kadın" },
 ];
 const aracPlakaIlKoduOptions = [
     { value: "KKTC", label: "KKTC" },
@@ -1113,7 +1100,7 @@ const getMahalleOnSelect = (data: number) => {
 const onSubmitKasko = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
-        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+        if(key === "email_fav" || key === "phone_fav" || key === 'sms_fav' || key === 'TCVat' ) {
             // @ts-ignore
             formData.append(key, val === true ? 1 : 0);
             continue;
@@ -1133,46 +1120,47 @@ const onSubmitKasko = async () => {
 };
 // ************* Form Field states *************** /
 const step = ref(1);
-const formFields = ref({
-    KullaniciAdi: "",
-    KullaniciSoyAdi: "",
-    MusteriTcKimlikNo: "",
-    TCVat: false,
-    MusteriDogumYeri: "",
-    MusteriCinsiyet: "",
-    MusteriUyruk: '',
-    MusteriDogumTarihi: "",
+ const formFields = ref({
+    KullaniciAdi: user.value?.name || "",
+    KullaniciSoyAdi: user.value?.surname || "",
+    MusteriTcKimlikNo: user.value?.id_card || "",
+    TCVat: user.value?.id_card?.length === 11 ? true : false,
+    MusteriDogumYeri: user.value?.birthplace || "",
+    MusteriCinsiyet: user.value?.gender || "",
+    MusteriUyruk: 601,
+    MusteriDogumTarihi: date.formatDate(user.value.birth_date,'DD/MM/YYYY'),
     AracPlaka1: "",
     AracPlaka2: "",
     AracPlakaIlKodu: "", // select box
     AracMarka:"", // select box
     AracTipi: "", // select box
     AracModelYili: "", // select box
-    AracTarz: "", // select box
-    _YakitTipi: "", // select box
+    AracTarz: 1, // select box
+    _YakitTipi: "Benzin", // select box
     Motor_cc: "",
     AracBedeli: "",
     ipotekli: "",
     AracMotorNo: "",
     AracSasiNo: "",
-    AracDireksiyonTarafi: "", // select box
-    _AracVitesBilgisi: "", // select box
+    AracDireksiyonTarafi: "Sağ", // select box
+    _AracVitesBilgisi: "Otomatik", // select box
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
     MusteriBelediyeKodu: "", // select box
     MusteriMahalleKodu: "", // select box
-    MusteriCSBMKodu: "", // select box
+    MusteriCSBMKodu: 999999, // select box
+    sokakIsme: "", // input box
     MusteriApartmanAdi: "", //
     MusteriApartmanNo: "", // input
-    MusteriCepTelefonNo: "", // input
-    MusteriEPosta: "", // input
-    AcenteNo: "", // input
-    _SbmCarColorCode: "", // select box
+    MusteriCepTelefonNo: user.value?.phone || '', // input
+    MusteriEPosta: user.value?.email || '', // input
+    AcenteNo: 1, // input
+    _SbmCarColorCode: 1, // select box
     uyar: false, // 'accepted'
-    TeminatLimitiDovic: "", // select box
-    contact_email: false,
-    contact_phone: false,
-    contact_sms: false,
+    TeminatLimitiDovic: "TL", // select box
+    email_fav: false,
+    phone_fav: false,
+    sms_fav: false,
 
 });
 const currencyOptions = [

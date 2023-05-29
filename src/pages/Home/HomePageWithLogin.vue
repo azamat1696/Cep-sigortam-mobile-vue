@@ -4,15 +4,15 @@
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeIn"
     >
-    <q-page
+     <q-page
         key="home-login"
         class="row items-top justify-evenly"
     >
         <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
             <div class="pickgradient">
-                <img src="~assets/home_page.png" />
+                <img src="~assets/home_page.png" width="100%"/>
                 <div class="centeredUp">{{locale === 'tr'? greetingsLang.tr:greetingsLang.en}}</div>
-                <div class="centeredDown">{{user.name +' '+user.surname}} </div>
+                <div class="centeredDown">{{logedInUser.name +' '+logedInUser.surname}} </div>
             </div>
             <q-list>
                 <q-item clickable class="q-pa-lg" :to="{ name: 'showPolice' }">
@@ -160,7 +160,7 @@
             </q-list>
         </q-card>
     </q-page>
-    </transition-group>
+     </transition-group>
 </template>
 <!--to="/auth/login"-->
 <script lang="ts" setup>
@@ -171,7 +171,7 @@ import {useMainStore} from "stores/main-store";
 import { useI18n } from "vue-i18n";
 const { locale } = useI18n();
 const authStore = useAuthStore();
-const { user,policy,hasarPolicy,greetingsLang} = storeToRefs(authStore);
+const { logedInUser,policy,hasarPolicy,greetingsLang} = storeToRefs(authStore);
 const { getAllPolicy,getHasarPolicy } = authStore
 const {
     countriesGet: countriesGet,
@@ -182,6 +182,10 @@ const {
     sokakSelectGet: sokakSelectGet,
     agentGet: agentGet,
     getJobs: getJobs,
+    aracModelSelectGet: aracModelSelectGet,
+    aracTipiGet: aracTipiGet,
+    renkGet: renkGet,
+    aracMarkaGet: aracMarkaGet,
 } = useMainStore();
 
 onMounted(() => {
@@ -195,6 +199,10 @@ onMounted(() => {
     mahalleSelectGet();
     sokakSelectGet();
     agentGet();
+    aracMarkaGet();
+    aracModelSelectGet();
+    renkGet();
+    aracTipiGet()
 });
 
 </script>
@@ -217,11 +225,11 @@ onMounted(() => {
         rgba(0, 0, 0, 0) 102.16%
     );
 }
-
 .pickgradient > img {
     display: block;
     height: 115px;
     width: 100%;
+    margin-left: 15px;
 }
 .centeredUp {
     position: absolute;

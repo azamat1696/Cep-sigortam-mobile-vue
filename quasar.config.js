@@ -70,6 +70,7 @@ module.exports = configure(function (/* ctx */) {
             // analyze: true,
             env: {
                 API_URL: "https://test.neareastsigorta.com/api",
+                WEB_URL: "https://test.neareastsigorta.com",
             },
             // rawDefine: {}
             // ignorePublicFolder: true,

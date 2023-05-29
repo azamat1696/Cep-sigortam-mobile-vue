@@ -13,6 +13,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
             hasarPolicy: [],
             greetingsLang: {},
             coockie: false,
+            logedInUser: {},
         }),
         getters: {
             getActivePolicies(state) {
@@ -59,8 +60,8 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
             },
             getUserInfo() {
                 api.get('/userInfo').then((res) => {
-                    this.user = res.data;
-                    localStorage.setItem("user", JSON.stringify(this.user));
+                    this.logedInUser = res.data;
+                    localStorage.setItem("user", JSON.stringify(this.logedInUser));
                 }).catch((err) => {
                     ErrorHandle(err)
                 })
@@ -69,13 +70,13 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
 
                 if (localStorage.getItem("authToken") && localStorage.getItem("authToken") !== "undefined") {
                     this.authToken = localStorage.getItem("authToken")!;
-                    this.user = JSON.parse(localStorage.getItem("user")!);
+                    this.logedInUser = JSON.parse(localStorage.getItem("user")!);
                     api.defaults.headers.common["Authorization"] = `Bearer ${this.authToken}`;
                     const user = await api.get('/userInfo')
 
                     if (user.status === 200) {
-                        this.user = user.data;
-                        localStorage.setItem("user", JSON.stringify(this.user));
+                        this.logedInUser = user.data;
+                        localStorage.setItem("user", JSON.stringify(this.logedInUser));
                     }
                     if (localStorage.getItem("coockie") && localStorage.getItem("coockie") !== "undefined") {
                          this.coockie = JSON.parse(<string>localStorage.getItem("coockie"));
@@ -108,7 +109,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
             logout() {
                 api.post("/logoutCep")
                 this.authToken = "";
-                this.user = {};
+                this.logedInUser = {};
                 localStorage.removeItem("authToken");
                 localStorage.removeItem("user");
                 api.defaults.headers.common["Authorization"] = "";
@@ -142,8 +143,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                         this.router.push({name: "renewPasswordPage"});
                     }
                 }).catch((err) => {
-                    console.log(err)
-                    ErrorHandle(err)
+                     ErrorHandle(err)
                 }).finally(() => {
                     Loading.hide();
                 });
@@ -278,7 +278,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                             message: "Başarılı Şekilde Giriş Yaptınız",
                         });
                         this.authToken = response.data.accessToken;
-                        this.user = response.data.user;
+                        this.logedInUser = response.data.user;
 
                         api.defaults.headers.common["Authorization"] = `Bearer ${response.data.accessToken}`;
                         localStorage.setItem("authToken", response.data.accessToken);

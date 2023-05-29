@@ -111,7 +111,8 @@ import { storeToRefs} from "pinia";
 import { useAuthStore } from "stores/auth-store";
 import { useRouter } from "vue-router";
 const router = useRouter();
-const { authToken,user,permenantUser } = storeToRefs(useAuthStore());
+const authStore = useAuthStore();
+const { authToken,permenantUser } = storeToRefs(authStore);
 const { login } = useAuthStore();
 const formFields = ref({
     // id_card: "14918431832",

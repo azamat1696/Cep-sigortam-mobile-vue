@@ -33,7 +33,7 @@
                 <q-item
                     clickable
                     class="q-pa-lg"
-                    :to="{ name: 'TrafikSigortaRegister' }"
+                    :to="{ name: 'TrafikSigortaCreate' }"
                 >
                     <q-item-section avatar>
                         <img
@@ -46,10 +46,29 @@
                         />
                     </q-item-section>
                     <q-item-section>
-                        <q-item-label>{{$t('motor_insurance')}}</q-item-label>
+                        <q-item-label>{{$t('motor_insurance_commercial_paper_create')}}</q-item-label>
                     </q-item-section>
                 </q-item>
-
+                <q-separator inset />
+                <q-item
+                    clickable
+                    class="q-pa-lg"
+                    :to="{ name: 'FerdiKazaCreate' }"
+                >
+                    <q-item-section avatar>
+                        <img
+                            src="~assets/car_crash.png"
+                            style="
+                                width: 26px;
+                                height: 26px;
+                                object-fit: contain;
+                            "
+                        />
+                    </q-item-section>
+                    <q-item-section>
+                        <q-item-label>{{$t('personel_accident_insurance_commercial_paper_create')}}</q-item-label>
+                    </q-item-section>
+                </q-item>
                 <q-separator inset />
                 <q-item
                     clickable
@@ -92,26 +111,7 @@
                         <q-item-label>{{$t('home_insurance')}}</q-item-label>
                     </q-item-section>
                 </q-item>
-                <q-separator inset />
-                <q-item
-                    clickable
-                    class="q-pa-lg"
-                    :to="{ name: 'FerdiKazaRegister' }"
-                >
-                    <q-item-section avatar>
-                        <img
-                            src="~assets/car_crash.png"
-                            style="
-                                width: 26px;
-                                height: 26px;
-                                object-fit: contain;
-                            "
-                        />
-                    </q-item-section>
-                    <q-item-section>
-                        <q-item-label>{{$t('personel_accident_insurance_quote')}}</q-item-label>
-                    </q-item-section>
-                </q-item>
+
                 <div class="q-pa-md">
                     <q-btn
                         color="primary"
@@ -150,7 +150,11 @@ const {
     mahalleSelectGet: mahalleSelectGet,
     sokakSelectGet: sokakSelectGet,
     agentGet: agentGet,
-    getJobs: getJobs
+    getJobs: getJobs,
+    aracMarkaGet: aracMarkaGet,
+    aracModelSelectGet: aracModelSelectGet,
+    renkGet: renkGet,
+    aracTipiGet: aracTipiGet
 } = mainStore;
 
 onMounted( () => {
@@ -162,7 +166,10 @@ onMounted( () => {
     mahalleSelectGet();
     sokakSelectGet();
     agentGet();
-
+    aracMarkaGet();
+    aracModelSelectGet();
+    renkGet();
+    aracTipiGet()
 });
 
 

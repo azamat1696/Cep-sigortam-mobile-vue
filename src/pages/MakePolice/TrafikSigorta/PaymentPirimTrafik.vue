@@ -18,7 +18,7 @@
                                 >
 
                                 <span style="font-size: 11px"
-                                >{{$t('identity_no')}}: {{user.id_card}}</span
+                                >{{$t('identity_no')}}: {{ trafikSigorta.info.MusteriTcKimlikNo }}</span
                                 >
                                 </q-card-section>
                                 <q-card-section
@@ -64,6 +64,9 @@
                             style="font-size: 12px"
                         >
                        {{$t('warning_text3')}}
+                            <a :href="url" target="_blank">
+                                {{$t('warning_text4')}}
+                            </a>
                         </div>
                     </div>
                     <div class="q-pt-md">
@@ -82,17 +85,15 @@
 
 <script setup lang="ts">
 import {useTrafikSigortaCreateStore} from "stores/trafik-sigorta-create";
-import {useAuthStore} from "stores/auth-store";
-import {storeToRefs} from "pinia";
+ import {storeToRefs} from "pinia";
 import {reactive} from "vue";
 import {date} from "quasar";
 const trafikCreateStore = useTrafikSigortaCreateStore();
-const authStore = useAuthStore();
-const { trafikSigorta } = storeToRefs(trafikCreateStore);
-const { user } = storeToRefs(authStore);
-const formField = reactive({
+ const { trafikSigorta } = storeToRefs(trafikCreateStore);
+ const formField = reactive({
   uyar2: false,
 })
+let url = process.env.WEB_URL+'/useragreement310';
 
 </script>
 

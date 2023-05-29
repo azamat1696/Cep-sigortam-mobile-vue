@@ -263,7 +263,7 @@
                     />
                     <div class="flex justify-between q-pt-md">
                         <div
-                            class="custom-text text-subtitle1 text-bold cursor-pointer"
+                            class="text-subtitle1 text-bold text-grey-9 cursor-pointer"
                             @click="$router.push({ name: 'loginPage' })"
                         >
                             {{ $t('login') }}
@@ -283,16 +283,18 @@ import {useAuthStore} from "stores/auth-store";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import { date } from "quasar";
+
 const {locale} = useI18n();
- const {
-    user,
-    authToken
-} = storeToRefs(useAuthStore());
+
 const {
     register,
 } = useAuthStore();
 const router = useRouter();
 const store = useAuthStore();
+const {
+    user,
+    authToken
+} = storeToRefs(store);
 const dateTranslate ={
     months: [
         "Ocak",
@@ -340,19 +342,18 @@ const genderOptions = [
     { value: "K", label: "Kadın" },
 ];
 const test = ref(false)
-
 const  formFields = ref({
-    id_card: "",
-    TCVat: false,
-    phone: "",
-    surname: "",
-    name: "",
+    id_card: user.value?.id_card || user.value?.MusteriTcKimlikNo ||"",
+    TCVat: user.value?.id_card?.length === 11 ? true : false,
+    phone: user.value?.phone || user.value?.MusteriCepTelefonNo || "",
+    surname: user.value?.surname || user.value?.KullaniciSoyAdi || "",
+    name: user.value?.name || user.value?.KullaniciAdi || "",
     password: "",
     password_confirmation: "",
-    email: "",
-    birthplace: "",
-    gender: "",
-    birth_date: "",
+    email: user.value?.email || user.value?.MusteriEPosta || "",
+    birthplace: user.value?.birthplace || user.value?.MusteriDogumYeri || "",
+    gender: user.value?.gender || user.value?.MusteriCinsiyet || "",
+    birth_date: user.value?.MusteriDogumTarihi || "",
     address: "",
     email_fav: false,
     phone_fav: false,

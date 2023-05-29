@@ -14,15 +14,13 @@
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    margin: 0;
+     margin: 0;
 }
 
 input[type="number"] {
     -moz-appearance: textfield;
 }
-.q-stepper--horizontal .q-stepper__step-inner {
-    padding-top: 0px !important;
-}
+
 </style>
 <template>
     <transition-group
@@ -30,504 +28,586 @@ input[type="number"] {
         enter-active-class="animated fadeIn"
         leave-active-class="animated fadeIn"
     >
-            <q-header key="ferdiKazaCreate"   elevated>
-                <q-toolbar>
-                    <q-avatar size="sm">
-                        <q-icon
-                            name="chevron_left"
-                            @click="$router.push({ name: 'homeLogin' })"
-                            size="md"
-                            class="cursor-pointer"
-                        />
-                    </q-avatar>
-                    <q-toolbar-title class="text-subtitle2 text-bold text-center"
-                    >{{$t('personel_accident')}}</q-toolbar-title
-                    >
-                </q-toolbar>
-            </q-header>
-            <q-page-container>
-                <div class=" ">
-                <q-stepper
-                     v-model="step"
-                    header-nav
-                    ref="stepper"
-                    color="primary"
-                    active-icon="none"
-                    animated
-                    class="no-shadow"
-                    header-class="no-border hide_header"
-                >
-                    <q-step
-                        :name="1"
-                        :prefix="1"
-                        title=""
-                        :done="step > 1"
-                        :header-nav="step > 1"
-                        class="q-pt-none"
-                    >
-                        <q-form @submit="onNextStep" class="q-gutter-md">
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.KullaniciAdi"
-                                :label="$t('name')"
-                                hide-bottom-space
-                                lazy-rules
-                                readonly
-                                :rules="[
+   <q-page  key="ferdiKazaCreate" >
+       <q-page-container>
+           <q-header >
+               <q-toolbar>
+                   <q-avatar size="sm">
+                       <q-icon
+                           name="chevron_left"
+                           @click="authToken && authToken !== undefined ? $router.push({ name: 'homeLogin'}) : $router.push({ name: 'home'})"
+                           size="md"
+                           class="cursor-pointer"
+                       />
+                   </q-avatar>
+                   <q-toolbar-title class="text-subtitle2 text-bold text-center"
+                   >{{$t('personel_accident')}}</q-toolbar-title
+                   >
+               </q-toolbar>
+           </q-header>
+           <div class=" ">
+               <q-stepper
+                   v-model="step"
+                   header-nav
+                   ref="stepper"
+                   color="primary"
+                   active-icon="none"
+                   animated
+                   class="no-shadow"
+                   header-class="no-border hide_header"
+               >
+                   <q-step
+                       :name="1"
+                       :prefix="1"
+                       title=""
+                       :done="step > 1"
+                       :header-nav="step > 1"
+                       class="q-pt-none"
+                   >
+                       <q-form @submit="onNextStep" class="q-gutter-md">
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.KullaniciAdi"
+                               :label="$t('name')"
+                               hide-bottom-space
+                               lazy-rules
+                               :readonly="checkForReadonly()"
+                               :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.KullaniciSoyAdi"
-                                :label="$t('surname')"
-                                readonly
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                           />
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.KullaniciSoyAdi"
+                               :label="$t('surname')"
+                               :readonly="checkForReadonly()"
+                               hide-bottom-space
+                               lazy-rules
+                               :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriTcKimlikNo"
-                                :label="$t('identity_no')"
-                                readonly
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                           />
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.MusteriTcKimlikNo"
+                               :label="$t('identity_no')"
+                               hide-bottom-space
+                               mask="#### #### ###"
+                               unmasked-value
+                               :readonly="checkForReadonly()"
+                               @update:model-value="onIdCardChange"
+                               lazy-rules
+                               :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
+                           />
+                           <q-checkbox
+                               v-if="!checkForReadonly()"
+                               v-model="formFields.TCVat"
+                               dense
+                               :label="$t('tc_citizen')"
+                               class="text-subtitle2"
+                               :disable="checkIdCardNumber"
+                           />
+                           <q-input
+                               v-model="formFields.MusteriDogumTarihi"
+                               outlined
+                               dense
+                               hide-bottom-space
+                               :readonly="checkForReadonly()"
+                               label="Doğum Tarihi"
+                               :label="$t('birth_date')"
 
-                            <q-input
-                                v-model="formFields.MusteriDogumTarihi"
-                                outlined
-                                dense
-                                hide-bottom-space
-                                readonly
-                                label="Doğum Tarihi"
-                                :label="$t('birth_date')"
-
-                            >
-                                <template v-slot:append>
-                                    <q-icon name="event" class="cursor-pointer">
-                                        <q-popup-proxy
-                                            cover
-                                            transition-show="scale"
-                                            transition-hide="scale"
-                                        >
-                                            <q-date
-                                                v-model="
+                           >
+                               <template v-slot:append>
+                                   <q-icon name="event" class="cursor-pointer">
+                                       <q-popup-proxy
+                                           cover
+                                           transition-show="scale"
+                                           transition-hide="scale"
+                                       >
+                                           <q-date
+                                               v-model="
                                                     formFields.MusteriDogumTarihi
                                                 "
-                                                mask="DD / MM /YYYY"
-                                            >
-                                                <div
-                                                    class="row items-center justify-end"
-                                                >
-                                                    <q-btn
-                                                        v-close-popup
-                                                        :label="$t('close')"
-                                                        color="primary"
-                                                        flat
-                                                    />
-                                                </div>
-                                            </q-date>
-                                        </q-popup-proxy>
-                                    </q-icon>
-                                </template>
-                            </q-input>
+                                               mask="DD/MM/YYYY"
+                                               :locale="dateLocale"
+                                           >
+                                               <div
+                                                   class="row items-center justify-end"
+                                               >
+                                                   <q-btn
+                                                       v-close-popup
+                                                       :label="$t('close')"
+                                                       color="primary"
+                                                       flat
+                                                   />
+                                               </div>
+                                           </q-date>
+                                       </q-popup-proxy>
+                                   </q-icon>
+                               </template>
+                           </q-input>
 
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriDogumYeri"
-                                :label="$t('birthplace')"
-                                hide-bottom-space
-                                lazy-rules
-                                readonly
-                                :rules="[
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.MusteriDogumYeri"
+                               :label="$t('birthplace')"
+                               hide-bottom-space
+                               lazy-rules
+                               :readonly="checkForReadonly()"
+                               :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriCinsiyet"
-                                :options="genderOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                :label="$t('gender')"
-                                dense
-                                emit-value
-                                map-options
-                                hide-bottom-space
-                                behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.MusteriCinsiyet"
+                               :options="genderOptions"
+                               :option-label="(option) => option.label"
+                               option-value="value"
+                               :label="$t('gender')"
+                               dense
+                               :readonly="checkForReadonly()"
+                               emit-value
+                               map-options
+                               hide-bottom-space
+                               behavior="menu"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
+                           />
 
-<!--                            <q-select-->
-<!--                                outlined-->
-<!--                                v-model="formFields.MusteriUyruk"-->
-<!--                                :options="countriesOptions"-->
-<!--                                :option-label="(item) => item.Aciklama"-->
-<!--                                option-value="id"-->
-<!--                                emit-value-->
-<!--                                map-options-->
-<!--                                use-input-->
-<!--                                input-debounce="0"-->
-<!--                                options-dense-->
-<!--                                :label="$t('country')"-->
-<!--                                dense-->
-<!--                                hide-bottom-space-->
-<!--                                clearable-->
-<!--                                @filter="filterCountries"-->
-<!--                                behavior="menu"-->
-<!--                                lazy-rules-->
-<!--                                :rules="[val => val !== null && val !== ''-->
-<!--                                || $t('required'),]"-->
-<!--                            >-->
-<!--                                <template v-slot:no-option>-->
-<!--                                    <q-item>-->
-<!--                                        <q-item-section class="text-grey">-->
-<!--                                            {{ $t('no_results')}}-->
-<!--                                        </q-item-section>-->
-<!--                                    </q-item>-->
-<!--                                </template>-->
-<!--                            </q-select>-->
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriCepTelefonNo"
-                                type="text"
-                                readonly
-                                :label="$t('phone_no')"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                           <!--                            <q-select-->
+                           <!--                                outlined-->
+                           <!--                                v-model="formFields.MusteriUyruk"-->
+                           <!--                                :options="countriesOptions"-->
+                           <!--                                :option-label="(item) => item.Aciklama"-->
+                           <!--                                option-value="id"-->
+                           <!--                                emit-value-->
+                           <!--                                map-options-->
+                           <!--                                use-input-->
+                           <!--                                input-debounce="0"-->
+                           <!--                                options-dense-->
+                           <!--                                :label="$t('country')"-->
+                           <!--                                dense-->
+                           <!--                                hide-bottom-space-->
+                           <!--                                clearable-->
+                           <!--                                @filter="filterCountries"-->
+                           <!--                                behavior="menu"-->
+                           <!--                                lazy-rules-->
+                           <!--                                :rules="[val => val !== null && val !== ''-->
+                           <!--                                || $t('required'),]"-->
+                           <!--                            >-->
+                           <!--                                <template v-slot:no-option>-->
+                           <!--                                    <q-item>-->
+                           <!--                                        <q-item-section class="text-grey">-->
+                           <!--                                            {{ $t('no_results')}}-->
+                           <!--                                        </q-item-section>-->
+                           <!--                                    </q-item>-->
+                           <!--                                </template>-->
+                           <!--                            </q-select>-->
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.MusteriCepTelefonNo"
+                               prefix="+90"
+                               mask="### ### ## ##"
+                               unmasked-value
+                               :readonly="checkForReadonly()"
+                               :label="$t('phone_no')"
+                               hide-bottom-space
+                               lazy-rules
+                               :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
                                         $t('required'),
                                 ]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.MusteriEPosta"
-                                type="text"
-                                readonly
-                                :label="$t('email_address')"
-                                hide-bottom-space
-                                lazy-rules
-                                :rules="[
+                           />
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.MusteriEPosta"
+                               type="text"
+                               :readonly="checkForReadonly()"
+                               :label="$t('email_address')"
+                               hide-bottom-space
+                               lazy-rules
+                               :rules="[
                                     (val) =>
                                         (val && val.length > 7) ||
                                         $t('required'),
                                 ]"
-                            />
+                           />
 
-                            <q-stepper-navigation>
-                                <q-btn
-                                    type="submit"
-                                    color="primary"
-                                    :label="$t('forward')"
-                                    no-caps
-                                    class="full-width"
-                                />
-                            </q-stepper-navigation>
+                           <q-stepper-navigation>
+                               <q-btn
+                                   type="submit"
+                                   color="primary"
+                                   :label="$t('forward')"
+                                   no-caps
+                                   class="full-width"
+                               />
+                           </q-stepper-navigation>
 
-                        </q-form>
+                       </q-form>
 
-                    </q-step>
+                   </q-step>
 
-                    <q-step
-                        :name="2"
-                        :prefix="2"
-                        :done="step > 2"
-                        title=""
-                        :header-nav="step > 2"
-                        style="min-height: 200px"
-                    >
-                        <q-form @submit="onSubmitFerdiKaza" class="q-gutter-md">
+                   <q-step
+                       :name="2"
+                       :prefix="2"
+                       :done="step > 2"
+                       title=""
+                       :header-nav="step > 2"
+                       style="min-height: 200px"
+                   >
+                       <q-form @submit="onSubmitFerdiKaza" class="q-gutter-md">
 
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriIlceKodu"
-                                :options="ilOptions"
-                                :option-label="(option) => option.Aciklama"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                :label="$t('province_select')"
-                                dense
-                                hide-bottom-space
-                                behavior="menu"
-                                clearable
-                                use-input
-                                @filter="filterIl"
-                                @update:model-value="getIlOnSelect"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           <q-select
+                               outlined
+                               v-model="formFields.MusteriIlceKodu"
+                               :options="ilOptions"
+                               :option-label="(option) => option.Aciklama"
+                               option-value="id"
+                               emit-value
+                               map-options
+                               :label="$t('province_select')"
+                               dense
+                               hide-bottom-space
+                               behavior="menu"
+                               clearable
+                               use-input
+                               @filter="filterIl"
+                               @update:model-value="getIlOnSelect"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriBucakKodu"
-                                :options="ilceOptions"
-                                :option-label="(option) => option.ilce_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                :label="$t('district_select')"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                                use-input
-                                @filter="filterIlce"
-                                @update:model-value="getIlceOnSelect"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.MusteriBucakKodu"
+                               :options="ilceOptions"
+                               :option-label="(option) => option.ilce_Adi"
+                               option-value="id"
+                               emit-value
+                               map-options
+                               :label="$t('district_select')"
+                               dense
+                               clearable
+                               hide-bottom-space
+                               behavior="menu"
+                               use-input
+                               @filter="filterIlce"
+                               @update:model-value="getIlceOnSelect"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriBelediyeKodu"
-                                :options="belediyeOptions"
-                                :option-label="(option) => option.Belediye_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                :label="$t('council_select')"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                behavior="menu"
-                                use-input
-                                @filter="filterBelediye"
-                                @update:model-value="getBelediyeOnSelect"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.MusteriBelediyeKodu"
+                               :options="belediyeOptions"
+                               :option-label="(option) => option.Belediye_Adi"
+                               option-value="id"
+                               emit-value
+                               map-options
+                               :label="$t('council_select')"
+                               dense
+                               clearable
+                               hide-bottom-space
+                               behavior="menu"
+                               use-input
+                               @filter="filterBelediye"
+                               @update:model-value="getBelediyeOnSelect"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
 
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriMahalleKodu"
-                                :options="mahalleOptions"
-                                :option-label="(option) => option.Mahalle_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                :label="$t('municipality_select')"
-                                dense
-                                clearable
-                                hide-bottom-space
-                                use-input
-                                @filter="filterMahalle"
-                                @update:model-value="getMahalleOnSelect"
-                                behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.MusteriMahalleKodu"
+                               :options="mahalleOptions"
+                               :option-label="(option) => option.Mahalle_Adi"
+                               option-value="id"
+                               emit-value
+                               map-options
+                               :label="$t('municipality_select')"
+                               dense
+                               clearable
+                               hide-bottom-space
+                               use-input
+                               @filter="filterMahalle"
+                               @update:model-value="getMahalleOnSelect"
+                               behavior="menu"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.MusteriCSBMKodu"
-                                :options="sokakOptions"
-                                :option-label="(option) => option.Sokak_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                :label="$t('street_select')"
-                                dense
-                                clearable
-                                use-input
-                                @filter="filterSokak"
-                                hide-bottom-space
-                                behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.MusteriCSBMKodu"
+                               :options="sokakOptions"
+                               :option-label="(option) => option.Sokak_Adi"
+                               option-value="id"
+                               emit-value
+                               map-options
+                               :label="$t('street_select')"
+                               dense
+                               clearable
+                               use-input
+                               @filter="filterSokak"
+                               hide-bottom-space
+                               behavior="menu"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.TeminatLimiti"
-                                :options="tlCurrencyOptions"
-                                :option-label="(option) => option.label"
-                                option-value="value"
-                                emit-value
-                                map-options
-                                :label="$t('death_and_permanent_disability')"
-                                dense
-                                clearable
-                                use-input
-                                hide-bottom-space
-                                behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.TeminatLimiti"
+                               :options="tlCurrencyOptions"
+                               :option-label="(option) => option.label"
+                               option-value="value"
+                               emit-value
+                               map-options
+                               :label="$t('death_and_permanent_disability')"
+                               dense
+                               clearable
+                               use-input
+                               hide-bottom-space
+                               behavior="menu"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
-                            <q-input
-                                dense
-                                outlined
-                                v-model="formFields.Lehtar"
-                                type="text"
-                                :label="$t('lehtar')"
-                                hide-bottom-space
-                            />
-                            <q-select
-                                outlined
-                                v-model="formFields.Meslegi"
-                                :options="jobOptions"
-                                :option-label="(option) => option.MeslekSinifi"
-                                option-value="MeslekSinifi"
-                                emit-value
-                                map-options
-                                :label="$t('job_select')"
-                                dense
-                                clearable
-                                use-input
-                                hide-bottom-space
-                                behavior="menu"
-                                @filter="filterJob"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           />
+                           <q-input
+                               dense
+                               outlined
+                               v-model="formFields.Lehtar"
+                               type="text"
+                               :label="$t('lehtar')"
+                               hide-bottom-space
+                           />
+                           <q-select
+                               outlined
+                               v-model="formFields.Meslegi"
+                               :options="jobOptions"
+                               :option-label="(option) => option.MeslekSinifi"
+                               option-value="MeslekSinifi"
+                               emit-value
+                               map-options
+                               :label="$t('job_select')"
+                               dense
+                               clearable
+                               use-input
+                               hide-bottom-space
+                               behavior="menu"
+                               @filter="filterJob"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
+                           />
 
 
 
-                            <q-select
-                                outlined
-                                v-model="formFields.AcenteId"
-                                :options="agentOptions"
-                                :option-label="(option) => option.Acente_Adi"
-                                option-value="id"
-                                emit-value
-                                map-options
-                                :label="$t('agent_select')"
-                                dense
-                                clearable
-                                use-input
-                                @filter="filterAgent"
-                                hide-bottom-space
-                                behavior="menu"
-                                lazy-rules
-                                :rules="[val => val !== null && val !== ''
+                           <q-select
+                               outlined
+                               v-model="formFields.AcenteId"
+                               :options="agentOptions"
+                               :option-label="(option) => option.Acente_Adi"
+                               option-value="id"
+                               emit-value
+                               map-options
+                               :label="$t('agent_select')"
+                               dense
+                               clearable
+                               use-input
+                               @filter="filterAgent"
+                               hide-bottom-space
+                               behavior="menu"
+                               lazy-rules
+                               :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
+                           />
 
-                            <q-stepper-navigation>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <q-btn
-                                            color="primary"
-                                            :label="$t('backward')"
-                                            no-caps
-                                            @click="onPrevStep"
-                                        />
+                           <q-stepper-navigation>
+                               <div class="row">
+                                   <div class="col-6">
+                                       <q-btn
+                                           color="primary"
+                                           :label="$t('backward')"
+                                           no-caps
+                                           @click="onPrevStep"
+                                       />
 
-                                    </div>
-                                    <div class="col-6 text-right">
-                                        <q-btn
-                                            type="submit"
-                                            color="primary"
-                                            :label="$t('calculate')"
-                                            no-caps
-                                            class="full-width"
-                                        />
+                                   </div>
+                                   <div class="col-6 text-right">
+                                       <q-btn
+                                           type="submit"
+                                           color="primary"
+                                           :label="$t('calculate')"
+                                           no-caps
+                                           class="full-width"
+                                       />
 
-                                    </div>
-                                </div>
+                                   </div>
+                               </div>
 
-                            </q-stepper-navigation>
-                            <div class="row">
-                                <div class="col-1">
-                                    <q-checkbox
-                                        v-model="formFields.uyar"
-                                        color="primary"
-                                        dense
-                                    />
-                                </div>
-                                <div
-                                    class="col-11 text-grey-8"
-                                    style="font-size: 11px"
-                                >
-                                    <b>{{$t('warning')}}:</b> {{$t('warning_text')}}
-                                </div>
-                                <div class="col-12">
-                                    <q-separator spaced />
-                                </div>
-                                <div class="col-12">
-                                    {{$t('warning_text_lehtar')}}
-                                </div>
-                            </div>
-                        </q-form>
-                    </q-step>
-                    <q-step
-                        :name="3"
-                        :title="$t('calculated_premium')"
-                        :done="step > 3"
-                        :header-nav="step > 3"
-                        style="min-height: 200px"
-                    >
-                         <HesaplananPirim />
-                        <q-stepper-navigation>
-                            <q-btn
-                                type="submit"
-                                color="primary"
-                                :label="$t('forward')"
-                                no-caps
-                                class="full-width"
-                                @click="onNextStep"
-                            />
-                        </q-stepper-navigation>
-                    </q-step>
+                           </q-stepper-navigation>
+                           <div class="row">
+                               <div class="col-1">
+                                   <q-checkbox
+                                       v-model="formFields.uyar"
+                                       color="primary"
+                                       dense
+                                   />
+                               </div>
+                               <div
+                                   class="col-11 text-grey-8"
+                                   style="font-size: 11px"
+                               >
+                                   <b>{{$t('warning')}}:</b> {{$t('warning_text')}}
+                               </div>
+                               <div class="col-12">
+                                   <q-separator spaced />
+                               </div>
+                               <div class="col-12">
+                                   {{$t('warning_text_lehtar')}}
+                               </div>
+                           </div>
+                       </q-form>
+                   </q-step>
+                   <q-step
+                       :name="3"
+                       :title="$t('calculated_premium')"
+                       :done="step > 3"
+                       :header-nav="step > 3"
+                       style="min-height: 200px"
+                   >
+                       <HesaplananPirim />
+                       <q-stepper-navigation>
+                           <div class="row">
+                               <div class="col-6">
+                                   <q-btn
+                                       color="primary"
+                                       :label="$t('backward')"
+                                       no-caps
+                                       @click="onPrevStep"
+                                   />
 
-                    <q-step
-                        :name="4"
-                        :title="$t('payment_submit')"
-                        :done="step > 4"
-                        :header-nav="step >4"
-                        style="min-height: 200px"
-                    >
-                         <PaymentPirim />
-<!--                        <q-stepper-navigation>-->
-<!--                            <q-btn-->
-<!--                                type="submit"-->
-<!--                                color="primary"-->
-<!--                                :label="$t('forward')"-->
-<!--                                no-caps-->
-<!--                                class="full-width"-->
-<!--                                @click="onNextStep"-->
-<!--                            />-->
-<!--                        </q-stepper-navigation>-->
+                               </div>
+                               <div class="col-6 text-right">
+                                                                 <q-btn
+                                                                     type="submit"
+                                                                     color="primary"
+                                                                     :label="$t('forward')"
+                                                                     no-caps
+                                                                     @click="onNextStep"
+                                                                 />
 
-                    </q-step>
-                </q-stepper>
-                </div>
-            </q-page-container>
+                               </div>
+                           </div>
+
+
+                       </q-stepper-navigation>
+                   </q-step>
+
+                   <q-step
+                       :name="4"
+                       :title="$t('payment_submit')"
+                       :done="step > 4"
+                       :header-nav="step >4"
+                       style="min-height: 200px"
+                   >
+                       <PaymentPirim @go-to-payment="onNextStep" />
+
+                       <q-stepper-navigation>
+                           <div class="row">
+                               <div class="col-6">
+                                   <q-btn
+                                       color="primary"
+                                       :label="$t('backward')"
+                                       no-caps
+                                       @click="onPrevStep"
+                                   />
+
+                               </div>
+                               <div class="col-6 text-right">
+                                   <!--                              <q-btn-->
+                                   <!--                                  type="submit"-->
+                                   <!--                                  color="primary"-->
+                                   <!--                                  :label="$t('forward')"-->
+                                   <!--                                  no-caps-->
+                                   <!--                                  @click="onNextStep"-->
+                                   <!--                              />-->
+
+                               </div>
+                           </div>
+
+                       </q-stepper-navigation>
+
+                   </q-step>
+                   <q-step
+                       :name="5"
+                       :title="$t('payment_submit')"
+                       :done="step > 5"
+                       :header-nav="step >5"
+                       style="min-height: 200px"
+                   >
+                       <PaymentFerdiKaza />
+
+                       <q-stepper-navigation>
+                           <div class="row">
+                               <div class="col-6">
+                                   <q-btn
+                                       color="primary"
+                                       :label="$t('backward')"
+                                       no-caps
+                                       @click="onPrevStep"
+                                   />
+
+                               </div>
+                               <div class="col-6 text-right">
+                                   <!--                              <q-btn-->
+                                   <!--                                  type="submit"-->
+                                   <!--                                  color="primary"-->
+                                   <!--                                  :label="$t('forward')"-->
+                                   <!--                                  no-caps-->
+                                   <!--                                  @click="onNextStep"-->
+                                   <!--                              />-->
+
+                               </div>
+                           </div>
+
+                       </q-stepper-navigation>
+
+                   </q-step>
+
+               </q-stepper>
+           </div>
+       </q-page-container>
+   </q-page>
 
     </transition-group>
 
 </template>
 
 <script  lang="ts" setup>
-import { ref, watch } from "vue";
+import {reactive, ref, watch} from "vue";
 import { storeToRefs } from "pinia";
 import { Loading, Notify, date } from "quasar";
 import { useRouter } from "vue-router";
@@ -537,15 +617,57 @@ import {useAuthStore} from "stores/auth-store";
 import {useMainStore} from "stores/main-store";
 import HesaplananPirim from "pages/MakePolice/FerdiKaza/HesaplananPirim.vue";
 import PaymentPirim from "pages/MakePolice/FerdiKaza/PaymentPirim.vue";
-
+import {useI18n} from "vue-i18n";
+import PaymentFerdiKaza from "pages/MakePolice/FerdiKaza/PaymentFerdiKaza.vue";
+const { locale } = useI18n();
+const dateTranslate ={
+    months: [
+        "Ocak",
+        "Şubat",
+        "Mart",
+        "Nisan",
+        "Mayıs",
+        "Haziran",
+        "Temmuz",
+        "Ağustos",
+        "Eylül",
+        "Ekim",
+        "Kasım",
+        "Aralık",
+    ],
+    monthsShort: [
+        "Oca",
+        "Şub",
+        "Mar",
+        "Nis",
+        "May",
+        "Haz",
+        "Tem",
+        "Ağu",
+        "Eyl",
+        "Eki",
+        "Kas",
+        "Ara",
+    ],
+    days: [
+        "Pazar",
+        "Pazartesi",
+        "Salı",
+        "Çarşamba",
+        "Perşembe",
+        "Cuma",
+        "Cumartesi",
+    ],
+    daysShort: ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"],
+};
+const dateLocale = locale.value === 'tr'? dateTranslate : null;
 
 const router = useRouter();
 const store = useMainStore();
 const authStore = useAuthStore();
-const ferdiKazaStore = useFerdiKazaStore();
 const ferdiKazaCreate  = useFerdiKazaCreateStore();
 const {ferdiKaza} = storeToRefs(ferdiKazaCreate);
-const {user} = storeToRefs(authStore);
+const {user,authToken,logedInUser} = storeToRefs(authStore);
 const {
     countries: countries,
     il: il,
@@ -555,25 +677,7 @@ const {
     sokakSelect,
     agent,
     jobs,
-} = storeToRefs(useMainStore());
-const {
-    countriesGet: countriesGet,
-    ilGet: ilGet,
-    ilceSelectGet: ilceSelectGet,
-    belediyeSelectGet: belediyeSelectGet,
-    mahalleSelectGet: mahalleSelectGet,
-    sokakSelectGet: sokakSelectGet,
-    agentGet: agentGet,
-    getJobs: getJobs,
-} = useMainStore();
-getJobs();
-countriesGet();
-ilGet();
-ilceSelectGet();
-belediyeSelectGet();
-mahalleSelectGet();
-sokakSelectGet();
-agentGet();
+} = storeToRefs(store);
 const genderOptions = [
     { value: "E", label: "Erkek" },
     { value: "K", label: "Kadın" },
@@ -739,7 +843,6 @@ const getBelediyeOnSelect = (data: number) => {
      }
 };
 const getMahalleOnSelect = (data: number) => {
-    console.log(sokakSelectOptions)
       sokakSelectOptions.value = sokakSelect.value.filter(
         // @ts-ignore
         (item) => +item.mahallenin_Kodu === +data
@@ -753,18 +856,20 @@ const onPrevStep = () => {
 };
 // ************* Form Submit *************** /
 const onSubmitFerdiKaza = async () => {
-    let formData = new FormData();
+    // set to satate for the form
+    user.value = formFields.value
+     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
-        if(key === 'uyar'  ){
+        if(key === 'uyar'){
             formData.append(key, val ? '1' : '0');
-        }else {
+        }else if(key==='TCVat'){
+            formData.append(key, val ? '1' : '0');
+        }
+    else {
             // @ts-ignore
             formData.append(key, val);
         }
     }
-    // for (const pair of formData.entries()) {
-    //   console.log(pair[0] + ', ' + pair[1]);
-    // }
 
     await ferdiKazaCreate.hesaplaFerdiKaza(formData).then((res) => {
         if (res){
@@ -772,22 +877,22 @@ const onSubmitFerdiKaza = async () => {
         }
     });
 };
-// ************* Form Field states *************** /
+ // ************* Form Field states *************** /
 const step = ref(1);
 const formFields = ref({
     //@ts-ignore
-    KullaniciAdi: user.value?.name, //ok
+    KullaniciAdi: logedInUser.value?.name, //ok
     //@ts-ignore
-    KullaniciSoyAdi: user.value?.surname, //ok
+    KullaniciSoyAdi: logedInUser.value?.surname, //ok
     //@ts-ignore
-    MusteriTcKimlikNo: user.value.id_card, //ok
+    MusteriTcKimlikNo: logedInUser.value?.id_card, //ok
     //@ts-ignore
-    MusteriDogumYeri: user.value.birthplace, //ok
+    MusteriDogumYeri: logedInUser.value?.birthplace, //ok
 
-    MusteriCinsiyet: "E", // ok
+    MusteriCinsiyet: logedInUser.value?.gender, // ok
     MusteriUyruk: '', // ok
     //@ts-ignore
-    MusteriDogumTarihi: date.formatDate(user.value.birth_date,'DD/MM/YYYY'), //ok
+    MusteriDogumTarihi: date.formatDate(logedInUser.value?.birth_date,'DD/MM/YYYY'), //ok
 
     MusteriIlceKodu: '', // select box // ok
     MusteriBucakKodu: '', // select box // ok
@@ -795,17 +900,34 @@ const formFields = ref({
     MusteriMahalleKodu: '', // select box // ok
     MusteriCSBMKodu: '', // select box  // ok
     //@ts-ignore
-    MusteriCepTelefonNo: user.value.phone, // input // ok
+    MusteriCepTelefonNo: logedInUser.value?.phone, // input // ok
     //@ts-ignore
-    MusteriEPosta: user.value.email, // input // ok
-    AcenteId: "", // input // ok
+    MusteriEPosta: logedInUser.value?.email, // input // ok
+    AcenteId: ref(1), // input // ok
     uyar: false, // 'accepted' // ok
     TeminatLimiti: "", // select box // ok
     Lehtar: "", // select box // ok
     Meslegi: "", // select box // ok
     //@ts-ignore
-    TCVat: user.value.id_type,
+    TCVat: logedInUser.value?.id_card?.length === 11 ? true : false, // input // ok
 });
+const checkForReadonly = () => {
+    if(authToken.value && authToken.value !== null && authToken.value !== undefined && authToken.value !== ''){
+        return true
+    }
+    return false
+
+};
+
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
 
 </script>
 

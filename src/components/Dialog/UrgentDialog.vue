@@ -18,29 +18,21 @@
                                <q-img src="/app-icons/after-crash.png" height="32px" width="32px" />
                         </q-item-section>
                         <q-item-section class="text-white">
-                            <div class="text-subtitle2 text-weight-bold">Kaza Sonrası Yapılması Gerekenler</div>
+                            <div class="text-subtitle2 text-weight-bold">{{ $t('accident_after') }}</div>
                             <div class="text-caption text-weight-medium q-pt-sm">
-                                1. Kaza yerine trafik polisi çağrılmalı ve
-                                polis gelene kadar araç olay mahallinden kaldırılmamalıdır.
-                                Polis raporu olmayan hasarlardan şirketimiz sorumlu değildir.
+                                1. {{ $t('accident_after_text1') }}
                             </div>
                             <div class="text-caption text-weight-medium  q-pt-sm">
-                                2. Meydana gelen hasarlar en geç 24 saat
-                                içinde merkez ofisimize veya şubelerimize bildirilmelidir.
+                                2. {{ $t('accident_after_text2') }}
                             </div>
                             <div class="text-caption text-weight-medium  q-pt-sm">
-                                3. Kazanın oluşundan itibaren ilk 60 dakika içerisinde alkol testi
-                                yapılmalıdır. Polis raporunda alkol testi sonucu bulunmayan
-                                hasarlardan şirketimiz sorumlu değildir.
+                                3. {{ $t('accident_after_text3') }}
                             </div>
                             <div class="text-caption text-weight-medium q-pt-sm">
-                                4. Şirketimizin talimatı olmadan hiçbir surette tamirat başlatılmamalıdır.
-                                Şirket onayı alınmadan tamiratı yaptırılan hasarlardan şirketimiz sorumlu değildir.
+                                4. {{ $t('accident_after_text4') }}
                             </div>
                             <div class="text-caption text-weight-medium q-pt-sm">
-                                5. Kaza sonrası yapılması gereken işlemlerden herhangi birinin
-                                yapılmaması veya eksik yapılması durumunda meydana gelen
-                                hasardan şirketimiz sorumlu değildir.
+                                5. {{ $t('accident_after_text5') }}
                             </div>
                         </q-item-section>
                     </q-item>
@@ -51,7 +43,7 @@
                             </q-item-section>
 
                             <q-item-section class="text-white">
-                                <div class="text-subtitle2 text-weight-bold">Ambulans Ara</div>
+                                <div class="text-subtitle2 text-weight-bold">{{$t('call_ambulance')}}</div>
                                 <div class="text-subtitle2 text-weight-medium q-pt-sm">
                                     112
                                 </div>
@@ -65,7 +57,7 @@
                             </q-item-section>
 
                             <q-item-section class="text-white">
-                                <div class="text-subtitle2 text-weight-bold">Polisi Ara</div>
+                                <div class="text-subtitle2 text-weight-bold">{{$t('call_police')}}</div>
                                 <div class="text-subtitle2 text-weight-medium q-pt-sm">
                                     155
                                 </div>
@@ -80,8 +72,11 @@
                         </q-item-section>
 
                         <q-item-section class="text-white">
-                            <a href="tel:05488292277" style="text-decoration: none" class="text-white">
-                                <div class="text-subtitle2 text-weight-bold text-white">WhatsApp Hattı</div>
+                            <a href="https://wa.me/+905488292277" style="text-decoration: none" class="text-white">
+                                <div class="text-subtitle2 text-weight-bold text-white">{{$t('whatsapp_up')}}</div>
+                                <div class="text-subtitle2 text-weight-medium q-pt-sm">
+                                    +905488292277
+                                </div>
                             </a>
                         </q-item-section>
                     </q-item>
