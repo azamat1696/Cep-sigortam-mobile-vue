@@ -8,9 +8,9 @@
         key="home"
         class="row items-top justify-evenly"
     >
-        <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
-            <div class="pickgradient">
-                <img src="~assets/home_page.png" />
+        <q-card class="my-card no-shadow full-width" style="border-radius: 0px;">
+            <div class="pickgradient" >
+                <img src="~assets/main-page.jpg" />
                 <div class="centeredUp">{{locale === 'tr'?greetingsLang.tr:greetingsLang.en}}</div>
                 <div class="centeredDown no-wrap">Cep Sigortam'a {{$t('welcome_to')}} </div>
             </div>
@@ -23,8 +23,7 @@
                         >
                            {{$t('home_text')}}
                             <br />
-                            <br />
-                            {{$t('home_text2')}}
+                             {{$t('home_text2')}}
                         </div>
                     </q-item-section>
                 </q-item>
@@ -180,6 +179,8 @@ onMounted( () => {
 .pickgradient {
     position: relative;
     display: inline-block;
+    width: 100%;
+    height: 115px;
 }
 .pickgradient:after {
     content: "";
@@ -200,6 +201,8 @@ onMounted( () => {
     display: block;
     height: 100%;
     width: 100%;
+    object-fit: fill;
+
 }
 .centeredUp {
     position: absolute;

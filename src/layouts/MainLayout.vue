@@ -159,8 +159,8 @@
                 </router-view>
 
         </q-page-container>
-        <q-page-sticky class="q-pa-lg">
-            <q-btn color="primary"   @click="urgentHandleBtn()"  round  icon="phone"  no-caps />
+         <q-page-sticky class="q-pa-lg">
+            <q-btn color="primary"  class="shadow-15"  @click="urgentHandleBtn()"  round  icon="phone"  no-caps />
         </q-page-sticky>
 
         <q-dialog v-model="coockie" persistent  transition-show="scale" transition-hide="scale">

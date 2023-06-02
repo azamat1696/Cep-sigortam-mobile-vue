@@ -146,6 +146,7 @@
                                     v-model="formFields.MusteriDogumTarihi"
                                     outlined
                                     dense
+                                    mask="##/##/####"
                                     hide-bottom-space
                                     :label="$t('birth_date')"
                                 >
@@ -1051,7 +1052,22 @@ const onNextStep = () => {
 const onSubmitKonut = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
-        if(key === "contact_email" || key === "contact_phone" || key === 'contact_sms' ) {
+        if (key === "email_fav") {
+            // @ts-ignore
+            formData.append(key, val === true ? 'e-posta' : '');
+            continue;
+        }
+        if (key === "phone_fav") {
+            // @ts-ignore
+            formData.append(key, val === true ? 'telefon' : '');
+            continue;
+        }
+        if (key === "sms_fav") {
+            // @ts-ignore
+            formData.append(key, val === true ? 'sms' : '');
+            continue;
+        }
+        if(key === 'TCVat' ) {
             // @ts-ignore
             formData.append(key, val === true ? 1 : 0);
             continue;

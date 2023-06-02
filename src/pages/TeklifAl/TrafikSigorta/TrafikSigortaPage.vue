@@ -92,6 +92,7 @@
                                 v-model="formFields.MusteriDogumTarihi"
                                 outlined
                                 dense
+                                mask="##/##/####"
                                 hide-bottom-space
                                 :label="$t('birth_date')"
                             >

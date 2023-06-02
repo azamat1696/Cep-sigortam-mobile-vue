@@ -32,14 +32,14 @@
                                 class="flex justify-between items-start"
                             >
                                <span style="font-size: 12px"
-                               >{{$t('identity_no')}}: {{user.id_card}}</span
+                               >{{$t('identity_no')}}: {{logedInUser.id_card}}</span
                                >
                             </q-card-section>
                             <q-card-section
                                 class="flex justify-between items-start"
                             >
                                 <span style="font-size: 12px"
-                                    >{{$t('name_surname')}}: {{user.name+' '+user.surname}}</span
+                                    >{{$t('name_surname')}}: {{logedInUser.name+' '+logedInUser.surname}}</span
                                 >
                             </q-card-section>
                             <q-card-section
@@ -93,7 +93,7 @@
  import {useAuthStore} from "stores/auth-store";
  import {storeToRefs} from "pinia";
   const authStore = useAuthStore();
- const {policy,user} = storeToRefs(authStore);
+ const {policy,logedInUser} = storeToRefs(authStore);
  const {getAllPolicy} = authStore
     getAllPolicy();
 </script>

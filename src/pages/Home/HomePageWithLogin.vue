@@ -10,7 +10,7 @@
     >
         <q-card class="my-card no-shadow full-width" style="border-radius: 0px">
             <div class="pickgradient">
-                <img src="~assets/home_page.png" width="100%"/>
+                <img src="~assets/main-page.jpg"/>
                 <div class="centeredUp">{{locale === 'tr'? greetingsLang.tr:greetingsLang.en}}</div>
                 <div class="centeredDown">{{logedInUser.name +' '+logedInUser.surname}} </div>
             </div>
@@ -210,6 +210,8 @@ onMounted(() => {
 .pickgradient {
     position: relative;
     display: inline-block;
+    width: 100%;
+    height: 115px;
 }
 .pickgradient:after {
     content: "";
@@ -227,9 +229,9 @@ onMounted(() => {
 }
 .pickgradient > img {
     display: block;
-    height: 115px;
+    height: 100%;
     width: 100%;
-    margin-left: 15px;
+    object-fit: fill;
 }
 .centeredUp {
     position: absolute;

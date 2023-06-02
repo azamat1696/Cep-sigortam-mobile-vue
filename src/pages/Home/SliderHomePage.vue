@@ -1,4 +1,4 @@
-<template>
+3<template>
     <div class="q-pa-md row q-pt-xl">
         <div class="col-12 text-center q-pt-xl" >
             <img src="/nesuygulamaikon.svg" alt="" height="100" width="160" />
@@ -45,7 +45,7 @@
                 <q-carousel-slide :name="1" >
                     <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
                         <div >
-                            <q-img  src="/slides/slide1.png"/>
+                            <q-img  src="/slides/slide1.jpg"/>
                         </div>
                         <div >
                             <div class="slider_text q-pt-md">
@@ -58,7 +58,7 @@
                 <q-carousel-slide :name="2" >
                     <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
                         <div >
-                            <q-img  src="/slides/slide2.png"/>
+                            <q-img  src="/slides/slide2.jpg"/>
                         </div>
                         <div >
                             <div class="slider_text q-pt-md">
@@ -71,7 +71,7 @@
                 <q-carousel-slide :name="3">
                     <div class="q-card--bordered rounded-borders q-pa-md" style="border-radius: 9px">
                         <div >
-                            <q-img  src="/slides/slide3.png"/>
+                            <q-img  src="/slides/slide3.jpg"/>
                         </div>
                         <div >
                             <div class="slider_text q-pt-md">

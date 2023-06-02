@@ -109,7 +109,11 @@ const {
     mahalleSelectGet: mahalleSelectGet,
     sokakSelectGet: sokakSelectGet,
     agentGet: agentGet,
-    getJobs: getJobs
+    getJobs: getJobs,
+    aracMarkaGet: aracMarkaGet,
+    aracModelSelectGet: aracModelSelectGet,
+    renkGet: renkGet,
+    aracTipiGet: aracTipiGet
 } = mainStore;
 
 onMounted( () => {
@@ -121,7 +125,10 @@ onMounted( () => {
     mahalleSelectGet();
     sokakSelectGet();
     agentGet();
-
+    aracMarkaGet();
+    aracModelSelectGet();
+    renkGet();
+    aracTipiGet();
 });
 </script>
 

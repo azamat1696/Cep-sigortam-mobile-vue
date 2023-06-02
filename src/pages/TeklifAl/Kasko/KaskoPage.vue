@@ -95,6 +95,7 @@
                                 v-model="formFields.MusteriDogumTarihi"
                                 outlined
                                 dense
+                                mask="##/##/####"
                                 hide-bottom-space
                                 :label="$t('birth_date')"
                             >
@@ -109,7 +110,7 @@
                                                 v-model="
                                                     formFields.MusteriDogumTarihi
                                                 "
-                                                mask="DD / MM /YYYY"
+                                                mask="DD/MM/YYYY"
                                                 :locale="dateLocale"
                                             >
                                                 <div
@@ -282,7 +283,7 @@
                                     </q-item>
                                 </template>
                             </q-select>
-                            <q-select
+<!--                            <q-select
                                 outlined
                                 v-model="formFields.AracTipi"
                                 :options="aracModelOptions"
@@ -310,7 +311,20 @@
                                         </q-item-section>
                                     </q-item>
                                 </template>
-                            </q-select>
+                            </q-select>-->
+                            <q-input
+                                dense
+                                outlined
+                                v-model="formFields.AracTipi"
+                                 :label="$t('car_model')"
+                                hide-bottom-space
+                                lazy-rules
+                                :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                         $t('required'),
+                                ]"
+                            />
                             <q-input
                                 dense
                                 outlined
@@ -1100,13 +1114,29 @@ const getMahalleOnSelect = (data: number) => {
 const onSubmitKasko = async () => {
     let formData = new FormData();
     for (const [key, val] of Object.entries(formFields.value)) {
-        if(key === "email_fav" || key === "phone_fav" || key === 'sms_fav' || key === 'TCVat' ) {
+        if (key === "email_fav") {
+            // @ts-ignore
+            formData.append(key, val === true ? 'e-posta' : '');
+            continue;
+        }
+        if (key === "phone_fav") {
+            // @ts-ignore
+            formData.append(key, val === true ? 'telefon' : '');
+            continue;
+        }
+        if (key === "sms_fav") {
+            // @ts-ignore
+            formData.append(key, val === true ? 'sms' : '');
+            continue;
+        }
+        if(key === 'TCVat' ) {
             // @ts-ignore
             formData.append(key, val === true ? 1 : 0);
             continue;
         }
         // @ts-ignore
         formData.append(key, val);
+        //e-posta, telefon, sms
     }
     // for (const pair of formData.entries()) {
     //   console.log(pair[0] + ', ' + pair[1]);

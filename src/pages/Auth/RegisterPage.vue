@@ -18,7 +18,7 @@
                         :label="$t('identity_no')"
                         clearable
                         dense
-                        mask="#### #### ###"
+                        mask="###########"
                         unmasked-value
                         @update:model-value="onIdCardChange"
                         class="q-pt-sm q-pb-sm"
@@ -179,6 +179,7 @@
                         v-model="formFields.birth_date"
                         outlined
                         dense
+                        mask="##/##/####"
                         hide-bottom-space
                         class="q-pt-sm q-pb-sm"
                         :label="$t('birth_date')"
@@ -195,8 +196,6 @@
                                         v-model="formFields.birth_date"
                                          mask="DD/MM/YYYY"
                                         :locale="dateLocale"
-
-
                                     >
                                         <div
                                             class="row items-center justify-end"

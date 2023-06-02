@@ -1,6 +1,7 @@
 <style  >
 .hide_header {
-    display: none !important;
+      height: 20px;
+        visibility: hidden !important;
 }
 
 .q-field--outlined .q-field__control {
@@ -124,6 +125,7 @@ input[type="number"] {
                                 v-model="formFields.MusteriDogumTarihi"
                                 outlined
                                 dense
+                                mask="##/##/####"
                                 :readonly="checkForReadonly()"
                                 hide-bottom-space
                                 :label="$t('birth_date')"

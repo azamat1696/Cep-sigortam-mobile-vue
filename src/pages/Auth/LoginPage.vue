@@ -17,13 +17,17 @@
                         color="#EBEBEB"
                         :label="$t('identity_no')"
                         clearable
+                        mask="###########"
+                        unmasked-value
                         class="q-pt-sm q-pb-sm"
-                        lazy-rules
+                        @update:model-value="onIdCardChange"
+                         lazy-rules
                         :rules="[val => val.length > 0]"
                     />
                     <q-checkbox
                         v-model="formFields.TCVat"
                         dense
+                        :disable="checkIdCardNumber"
                         :label="$t('tc_citizen')"
                         class="q-pt-sm q-pb-sm text-subtitle2"
                     />
@@ -61,9 +65,9 @@
                     />
 
 
-                    <div class="flex justify-between q-pt-sm">
+                    <div class="flex justify-between q-pt-md">
                         <div
-                            class="custom-text cursor-pointer"
+                            class="h6 text-weight-bolder cursor-pointer text-grey-9"
                             @click="$router.push({ name: 'forgotPasswordPage' })"
                         >
                             {{ $t('forgot_password')}}
@@ -73,7 +77,7 @@
                             v-model="formFields.rememberMe"
                             dense
                             :label="$t('remember_me')"
-                            class=" text-subtitle2"
+                            class=" h6 text-weight-bolder text-grey-9 cursor-pointer"
                         />
                     </div>
                 </q-form>
@@ -155,6 +159,15 @@ onMounted(() => {
         router.push({ name: 'homeLogin' });
     }
 })
+const checkIdCardNumber = ref(true);
+const onIdCardChange = (val:string) => {
+    formFields.value.id_card = val;
+    if (val?.length === 11) {
+        formFields.value.TCVat = true;
+    } else {
+        formFields.value.TCVat = false;
+    }
+};
 </script>
 
 <style scoped>

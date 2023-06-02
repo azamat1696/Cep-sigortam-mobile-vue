@@ -1,7 +1,8 @@
 
 <style>
 .hide_header {
-    display: none !important;
+    height: 20px;
+    visibility: hidden !important;
 }
 
 .q-field--outlined .q-field__control {
@@ -122,6 +123,7 @@ input[type="number"] {
                                v-model="formFields.MusteriDogumTarihi"
                                outlined
                                dense
+                               mask="##/##/####"
                                hide-bottom-space
                                :readonly="checkForReadonly()"
                                label="Doğum Tarihi"
@@ -251,31 +253,6 @@ input[type="number"] {
                                         $t('required'),
                                 ]"
                            />
-
-                           <q-stepper-navigation>
-                               <q-btn
-                                   type="submit"
-                                   color="primary"
-                                   :label="$t('forward')"
-                                   no-caps
-                                   class="full-width"
-                               />
-                           </q-stepper-navigation>
-
-                       </q-form>
-
-                   </q-step>
-
-                   <q-step
-                       :name="2"
-                       :prefix="2"
-                       :done="step > 2"
-                       title=""
-                       :header-nav="step > 2"
-                       style="min-height: 200px"
-                   >
-                       <q-form @submit="onSubmitFerdiKaza" class="q-gutter-md">
-
                            <q-select
                                outlined
                                v-model="formFields.MusteriIlceKodu"
@@ -316,27 +293,52 @@ input[type="number"] {
                                :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
                            />
-                           <q-select
-                               outlined
-                               v-model="formFields.MusteriBelediyeKodu"
-                               :options="belediyeOptions"
-                               :option-label="(option) => option.Belediye_Adi"
-                               option-value="id"
-                               emit-value
-                               map-options
-                               :label="$t('council_select')"
-                               dense
-                               clearable
-                               hide-bottom-space
-                               behavior="menu"
-                               use-input
-                               @filter="filterBelediye"
-                               @update:model-value="getBelediyeOnSelect"
-                               lazy-rules
-                               :rules="[val => val !== null && val !== ''
+                           <q-stepper-navigation>
+                               <q-btn
+                                   type="submit"
+                                   color="primary"
+                                   :label="$t('forward')"
+                                   no-caps
+                                   class="full-width"
+                               />
+                           </q-stepper-navigation>
+
+                       </q-form>
+
+                   </q-step>
+
+                   <q-step
+                       :name="2"
+                       :prefix="2"
+                       :done="step > 2"
+                       title=""
+                       :header-nav="step > 2"
+                       style="min-height: 200px"
+                   >
+                       <q-space />
+                        <q-form @submit="onSubmitFerdiKaza" class="q-gutter-md">
+                            <q-select
+                                outlined
+                                v-model="formFields.MusteriBelediyeKodu"
+                                :options="belediyeOptions"
+                                :option-label="(option) => option.Belediye_Adi"
+                                option-value="id"
+                                emit-value
+                                map-options
+                                :label="$t('council_select')"
+                                dense
+                                clearable
+                                hide-bottom-space
+                                behavior="menu"
+                                use-input
+                                @filter="filterBelediye"
+                                @update:model-value="getBelediyeOnSelect"
+                                lazy-rules
+                                :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
 
-                           />
+                            />
+
                            <q-select
                                outlined
                                v-model="formFields.MusteriMahalleKodu"
