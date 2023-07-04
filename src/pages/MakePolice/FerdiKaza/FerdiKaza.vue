@@ -21,6 +21,10 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+.q-field__messages div {
+    font-size: 13px !important;
+    color: black;
+}
 
 </style>
 <template>
@@ -73,6 +77,7 @@ input[type="number"] {
                                :label="$t('name')"
                                hide-bottom-space
                                lazy-rules
+                               clearable
                                :readonly="checkForReadonly()"
                                :rules="[
                                     (val) =>
@@ -100,8 +105,9 @@ input[type="number"] {
                                v-model="formFields.MusteriTcKimlikNo"
                                :label="$t('identity_no')"
                                hide-bottom-space
-                               mask="#### #### ###"
+                               mask="###########"
                                unmasked-value
+                                 clearable
                                :readonly="checkForReadonly()"
                                @update:model-value="onIdCardChange"
                                lazy-rules
@@ -125,9 +131,15 @@ input[type="number"] {
                                dense
                                mask="##/##/####"
                                hide-bottom-space
+                               clearable
                                :readonly="checkForReadonly()"
                                label="Doğum Tarihi"
                                :label="$t('birth_date')"
+                                 lazy-rules
+                                 :rules="[
+                                        (val) =>
+                                         (val && val.length > 0) ||
+                                         $t('required')]"
 
                            >
                                <template v-slot:append>
@@ -167,6 +179,7 @@ input[type="number"] {
                                :label="$t('birthplace')"
                                hide-bottom-space
                                lazy-rules
+                               clearable
                                :readonly="checkForReadonly()"
                                :rules="[
                                     (val) =>
@@ -186,10 +199,11 @@ input[type="number"] {
                                emit-value
                                map-options
                                hide-bottom-space
+                               clearable
                                behavior="menu"
                                lazy-rules
                                :rules="[val => val !== null && val !== ''
-                                || $t('required'),]"
+                                || $t('required')]"
                            />
 
                            <!--                            <q-select-->
@@ -235,7 +249,7 @@ input[type="number"] {
                                :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
-                                        $t('required'),
+                                        $t('required')
                                 ]"
                            />
                            <q-input
@@ -369,6 +383,7 @@ input[type="number"] {
                                map-options
                                :label="$t('street_select')"
                                dense
+                               hint="* Sokak adını bulamazsınız isimsiz olarak seçiniz"
                                clearable
                                use-input
                                @filter="filterSokak"
@@ -403,6 +418,7 @@ input[type="number"] {
                                type="text"
                                :label="$t('lehtar')"
                                hide-bottom-space
+                               clearable
                            />
                            <q-select
                                outlined
@@ -809,7 +825,6 @@ const filterAgent = (val: string, update: any) => {
 // ************* Select box on update for the form *************** /
 
 const getIlOnSelect = (data: number) => {
-
    if (data !== null) {
         ilceSelectGetOptions.value = ilce.value.filter(
             // @ts-ignore
@@ -905,7 +920,7 @@ const formFields = ref({
     MusteriCepTelefonNo: logedInUser.value?.phone, // input // ok
     //@ts-ignore
     MusteriEPosta: logedInUser.value?.email, // input // ok
-    AcenteId: ref(1), // input // ok
+    AcenteId: '', // input // ok
     uyar: false, // 'accepted' // ok
     TeminatLimiti: "", // select box // ok
     Lehtar: "", // select box // ok

@@ -71,7 +71,7 @@
                                     v-model="formFields.MusteriTcKimlikNo"
                                     :label="$t('identity_no')"
                                     hide-bottom-space
-                                    mask="#### #### ###"
+                                    mask="###########"
                                     unmasked-value
                                     @update:model-value="onIdCardChange"
                                     lazy-rules
@@ -1099,7 +1099,7 @@ const formFields = ref({
     MusteriCinsiyet: user.value?.gender,
     MusteriUyruk: 601,
     MusteriEPosta: user.value?.email, // input
-    AcenteNo: 1, // input
+    AcenteNo: '', // input
     MusteriCepTelefonNo: user.value?.phone, // input
     MusteriDogumTarihi: date.formatDate(user.value.birth_date,'DD/MM/YYYY'),
     SigortalanacakKonutunAdresi: "",

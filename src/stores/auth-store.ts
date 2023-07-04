@@ -14,6 +14,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
             greetingsLang: {},
             coockie: false,
             logedInUser: {},
+            rememberMe: false,
         }),
         getters: {
             getActivePolicies(state) {
@@ -73,7 +74,6 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
                     this.logedInUser = JSON.parse(localStorage.getItem("user")!);
                     api.defaults.headers.common["Authorization"] = `Bearer ${this.authToken}`;
                     const user = await api.get('/userInfo')
-
                     if (user.status === 200) {
                         this.logedInUser = user.data;
                         localStorage.setItem("user", JSON.stringify(this.logedInUser));
@@ -91,8 +91,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
             async login(payload: any) {
                  Loading.show();
                  await api.post("/loginCep", payload).then((res) => {
-
-                    this.router.push({name: "optVerificationPage"});
+                     this.router.push({name: "optVerificationPage"});
                  if (res.data.status === "success") {
                      Notify.create({
                          type: "positive",
@@ -265,7 +264,7 @@ import {ErrorHandle} from "src/utils/ErrorHandle";
 
                 }
             },
-            async verifySmsCode(payload: any) {
+            verifySmsCode: async function (payload: any) {
                 try {
                     Loading.show();
                     const response = await api.post("/loginSMSCep", payload);

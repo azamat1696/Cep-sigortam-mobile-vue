@@ -23,6 +23,10 @@ input[type="number"] {
 .q-stepper--horizontal .q-stepper__step-inner {
     padding-top: 0px !important;
 }
+.q-field__messages div {
+    font-size: 13px !important;
+    color: black;
+}
 </style>
 <template>
     <transition-group
@@ -101,7 +105,7 @@ input[type="number"] {
                                 v-model="formFields.MusteriTcKimlikNo"
                                 :label="$t('identity_no')"
                                 hide-bottom-space
-                                mask="#### #### ###"
+                                mask="###########"
                                 unmasked-value
                                 :readonly="checkForReadonly()"
                                 @update:model-value="onIdCardChange"
@@ -129,6 +133,12 @@ input[type="number"] {
                                 :readonly="checkForReadonly()"
                                 hide-bottom-space
                                 :label="$t('birth_date')"
+                                lazy-rules
+                                :rules="[
+                                    (val) =>
+                                        (val && val.length > 0) ||
+                                        $t('required'),
+                                ]"
                             >
                                 <template v-slot:append>
                                     <q-icon name="event" class="cursor-pointer">
@@ -172,16 +182,12 @@ input[type="number"] {
                                             outlined
                                             v-model="formFields.AracPlaka1"
                                             hide-bottom-space
+                                            placeholder="AB"
                                             lazy-rules
-                                            @input="
-                                                (v) => {
-                                                    console.log(v);
-                                                }
-                                            "
                                             :rules="[
                                                 (val) =>
                                                     (val && val.length > 0) ||
-                                                    ' ',
+                                                    '',
                                             ]"
                                             class="q-mr-xs q-ml-xs"
                                         />
@@ -192,6 +198,7 @@ input[type="number"] {
                                             outlined
                                             v-model="formFields.AracPlaka2"
                                             hide-bottom-space
+                                            placeholder="123"
                                             lazy-rules
                                             :rules="[
                                                 (val) =>
@@ -230,6 +237,7 @@ input[type="number"] {
                                 hide-bottom-space
                                 :readonly="checkForReadonly()"
                                 lazy-rules
+                                clearable
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
@@ -244,6 +252,7 @@ input[type="number"] {
                                 option-value="value"
                                 :label="$t('gender')"
                                 dense
+                                clearable
                                 :readonly="checkForReadonly()"
                                 emit-value
                                 map-options
@@ -350,6 +359,7 @@ input[type="number"] {
                                 type="number"
                                 :label="$t('car_model_year')"
                                 hide-bottom-space
+                                clearable
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -446,6 +456,7 @@ input[type="number"] {
                                 :label="$t('motor_cc')"
                                 hide-bottom-space
                                 lazy-rules
+                                clearable
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 0) ||
@@ -539,12 +550,14 @@ input[type="number"] {
                                 use-input
                                 hide-bottom-space
                                 clearable
-                                @filter="filterRenk"
+                                  @filter="filterRenk"
                                 behavior="menu"
                                 lazy-rules
                                 :rules="[val => val !== null && val !== ''
                                 || $t('required'),]"
-                            />
+                            >
+
+                            </q-select>
                             <q-select
                                 outlined
                                 v-model="formFields._AracVitesBilgisi"
@@ -579,7 +592,6 @@ input[type="number"] {
                                         color="primary"
                                         :label="$t('forward')"
                                         no-caps
-
                                         @click="onNextStep"
                                     />
 
@@ -688,6 +700,7 @@ input[type="number"] {
                                 map-options
                                 :label="$t('street_select')"
                                 dense
+                                hint="* Sokak adını bulamazsınız isimsiz olarak seçiniz"
                                 clearable
                                 use-input
                                 @filter="filterSokak"
@@ -718,6 +731,7 @@ input[type="number"] {
                                 type="text"
                                 :label="$t('apartment_no')"
                                 hide-bottom-space
+                                clearable
                                 lazy-rules
                                 :rules="[
                                     (val) =>
@@ -732,6 +746,7 @@ input[type="number"] {
                                 type="text"
                                 :label="$t('phone_no')"
                                 hide-bottom-space
+                                clearable
                                 prefix="+90"
                                 mask="### ### ## ##"
                                 unmasked-value
@@ -750,6 +765,7 @@ input[type="number"] {
                                 :label="$t('email_address')"
                                 hide-bottom-space
                                 lazy-rules
+                                clearable
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 7) ||
@@ -1014,8 +1030,8 @@ const aracVitesOptions = [
     { value: "Triptonik", label: "Triptonik" },
 ];
 const aracDireksiyonOptions = [
-    { value: "Sağ", label: "Sağ" },
-    { value: "Sol", label: "Sol" },
+    { value: "R", label: "Sağ" },
+    { value: "L", label: "Sol" },
 ];
 // ************* Options for the form *************** /
 let countriesOptions = ref(countries.value);
@@ -1285,7 +1301,7 @@ const step = ref(1);
     ipotekli: "",
     AracMotorNo: "",
     AracSasiNo: "",
-    AracDireksiyonTarafi: "Sağ", // select box
+    AracDireksiyonTarafi: "R", // select box
     _AracVitesBilgisi: "Otomatik", // select box
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
@@ -1296,8 +1312,8 @@ const step = ref(1);
     MusteriApartmanNo: "", // input
     MusteriCepTelefonNo: logedInUser.value?.phone, // input // ok
     MusteriEPosta: logedInUser.value?.email, // input // ok
-    AcenteId: 1, // input
-    _SbmCarColorCode: 1, // select box
+    AcenteId: '', // input
+    _SbmCarColorCode: '', // select box
      uyar: false, // 'accepted'
      TCVat: logedInUser.value?.id_card?.length === 11 ? true : false,
  });

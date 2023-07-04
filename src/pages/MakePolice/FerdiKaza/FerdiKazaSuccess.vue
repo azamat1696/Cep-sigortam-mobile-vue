@@ -28,9 +28,14 @@
                     >
                         {{$t('motor_offer_success2')}}
                     </div>
-                    <div class="text-center ">
-
-                        {{$t('motor_offer_success_pdf')}}
+                    <div class="text-center" >
+                        <q-btn
+                        :label="$t('motor_offer_success_pdf')"
+                        target="_blank"
+                        flat
+                        no-caps
+                        :href="createdFerdiKaza.PoliceBasimiPDF"
+                        />
 
                     </div>
                 </div>
@@ -52,8 +57,14 @@
  import { useRouter } from "vue-router";
 import {useAuthStore} from "stores/auth-store";
 import {storeToRefs} from "pinia";
+import {useFerdiKazaCreateStore} from "stores/ferdi-kaza-create";
 const authStore = useAuthStore();
+const ferdiKaza = useFerdiKazaCreateStore();
 const { authToken } = storeToRefs(authStore);
+const { createdFerdiKaza } = storeToRefs(ferdiKaza);
+
+ console.log('>>>>><<>><>>>><<>><<>><<<<><><<>>>>><',createdFerdiKaza)
+
 const router = useRouter();
 
  const checkForReadonly = () => {

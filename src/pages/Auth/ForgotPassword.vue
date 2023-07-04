@@ -16,6 +16,8 @@
                         outlined
                         color="#EBEBEB"
                         :label="$t('identity_no')"
+                        mask="###########"
+                        unmasked-value
                         clearable
                         class="q-pt-sm q-pb-md"
                         lazy-rules
@@ -83,8 +85,8 @@ export default defineComponent({
         return {
             test: ref(false),
             formFields: reactive({
-                id_card: "2830404084",
-                phone: "5428872827",
+                id_card: "",
+                phone: "",
             }),
             updatePassword,
             permenantUser

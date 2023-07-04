@@ -75,7 +75,7 @@ export default {
     ipotekli: "İpotekli İse Banka ve Şube İsmi",//yok
     chassis_no: "Şase No",
     car_direction: "Direksiyon Tarafı",
-    car_color: "Araç Rengi",
+    car_color: "Araç Rengi SEÇİNİZ",
     gear_type: "Vites Tipi",
     province_select: "İl Seçiniz",
     district_select: "İlçe Seçiniz",
@@ -86,10 +86,10 @@ export default {
     street_name: "Sokak Adı",
     building_no: "Bina No",
     apartment_no: "Daire No",
-    phone_no: "Telefon Numarası",
+    phone_no: "Telefon Numarası (Başında sıfır olmadan giriş yapınız)",
     motor_no: "Motor No",
     email_address: "E-Posta Adresi",
-    agent_select: "Acentenizi Seçiniz",
+    agent_select: "Acentenizi SEÇİNİZ",
 
     get_offer: "Teklif Al",
     warning: "Uyarı",

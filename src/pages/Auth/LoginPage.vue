@@ -118,18 +118,19 @@ const router = useRouter();
 const authStore = useAuthStore();
 const { authToken,permenantUser } = storeToRefs(authStore);
 const { login } = useAuthStore();
+const userInfo = JSON.parse(localStorage.getItem('rememberMe') || '{}');
 const formFields = ref({
     // id_card: "14918431832",
     // TCVat: true,
-    // phone: "5338510513",
+    // phone: "5338510513"
     // password: "123456",
     // rememberMe: false,
-    id_card: "",
-    TCVat: false,
-    phone: "",
-    password: '',
-    rememberMe: false,
-})
+    id_card: userInfo.id_card || "",
+    TCVat: userInfo.TCVat || false,
+    phone: userInfo.phone || "",
+    password: userInfo.password || "",
+    rememberMe: userInfo.rememberMe || false,
+ })
 
 const onSubmit = () => {
     let formData = new FormData();
@@ -150,6 +151,12 @@ const onSubmit = () => {
     }
     login(formData).then(() => {
             permenantUser.value = formFields.value;
+            if (formFields.value.rememberMe) {
+                localStorage.setItem('rememberMe', JSON.stringify(formFields.value));
+            } else {
+                localStorage.removeItem('rememberMe');
+            }
+
     }).catch((err) => {
         console.log('err',err);
     });

@@ -30,8 +30,14 @@
                     </div>
                     <div class="text-center ">
 
-                        {{$t('motor_offer_success_pdf')}}
-
+                        <q-btn
+                            :label="$t('motor_offer_success_pdf')"
+                            target="_blank"
+                            flat
+                            no-caps
+                            unelevated
+                            :href="createdTrafikSigorta.PoliceBasimiPDF"
+                        />
                     </div>
                 </div>
             </q-card-section>
@@ -52,8 +58,11 @@
 import { useRouter } from "vue-router";
 import {useAuthStore} from "stores/auth-store";
 import {storeToRefs} from "pinia";
+import {useTrafikSigortaCreateStore} from "stores/trafik-sigorta-create";
 const authStore = useAuthStore();
+const trafikSigortaCreateStore = useTrafikSigortaCreateStore();
 const { authToken } = storeToRefs(authStore);
+const { createdTrafikSigorta } = storeToRefs(trafikSigortaCreateStore);
 const router = useRouter();
 const checkForReadonly = () => {
     if(authToken.value && authToken.value !== ''){

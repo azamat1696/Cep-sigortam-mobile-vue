@@ -72,7 +72,7 @@
                                 v-model="formFields.MusteriTcKimlikNo"
                                 :label="$t('identity_no')"
                                 hide-bottom-space
-                                mask="#### #### ###"
+                                mask="###########"
                                 unmasked-value
                                 @update:model-value="onIdCardChange"
                                 lazy-rules
@@ -141,7 +141,8 @@
                                             outlined
                                             v-model="formFields.AracPlaka1"
                                             hide-bottom-space
-                                            lazy-rules
+                                            placeholder="AB"
+                                             lazy-rules
                                             @input="
                                                 (v) => {
                                                     console.log(v);
@@ -161,7 +162,8 @@
                                             outlined
                                             v-model="formFields.AracPlaka2"
                                             hide-bottom-space
-                                            lazy-rules
+                                            placeholder="123"
+                                              lazy-rules
                                             :rules="[
                                                 (val) =>
                                                     (val && val.length > 0) ||
@@ -547,6 +549,9 @@
                                 hide-bottom-space
                                 clearable
                                 behavior="menu"
+                                lazy-rules
+                                :rules="[val => val !== null && val !== ''
+                                          || $t('required'),]"
 
                             />
                             <q-stepper-navigation>
@@ -673,6 +678,7 @@
                                 outlined
                                 v-model="formFields.sokakIsme"
                                 type="text"
+                                clearable
                                 :label="$t('street_name')"
                                 hide-bottom-space
 
@@ -682,6 +688,7 @@
                                 outlined
                                 v-model="formFields.MusteriApartmanAdi"
                                 type="text"
+                                clearable
                                 :label="$t('building_no')"
                                 hide-bottom-space
 
@@ -691,6 +698,7 @@
                                 outlined
                                 v-model="formFields.MusteriApartmanNo"
                                 type="text"
+                                clearable
                                 :label="$t('apartment_no')"
                                 hide-bottom-space
 
@@ -720,6 +728,7 @@
                                 :label="$t('email_address')"
                                 hide-bottom-space
                                 lazy-rules
+                                clearable
                                 :rules="[
                                     (val) =>
                                         (val && val.length > 7) ||
@@ -889,8 +898,8 @@ const aracVitesOptions = [
     { value: "Triptonik", label: "Triptonik" },
 ];
 const aracDireksiyonOptions = [
-    { value: "Sağ", label: "Sağ" },
-    { value: "Sol", label: "Sol" },
+    { value: "R", label: "Sağ" },
+    { value: "L", label: "Sol" },
 ];
 // ************* Options for the form *************** /
 let countriesOptions = ref(countries.value);
@@ -1172,7 +1181,7 @@ const step = ref(1);
     ipotekli: "",
     AracMotorNo: "",
     AracSasiNo: "",
-    AracDireksiyonTarafi: "Sağ", // select box
+    AracDireksiyonTarafi: "R", // select box
     _AracVitesBilgisi: "Otomatik", // select box
     MusteriIlceKodu: "", // select box
     MusteriBucakKodu: "", // select box
@@ -1184,8 +1193,8 @@ const step = ref(1);
     MusteriApartmanNo: "", // input
     MusteriCepTelefonNo: user.value?.phone || '', // input
     MusteriEPosta: user.value?.email || '', // input
-    AcenteNo: 1, // input
-    _SbmCarColorCode: 1, // select box
+    AcenteNo: '', // input
+    _SbmCarColorCode: '', // select box
     uyar: false, // 'accepted'
     TeminatLimitiDovic: "TL", // select box
     email_fav: false,
